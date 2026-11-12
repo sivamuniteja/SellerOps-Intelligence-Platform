@@ -1,177 +1,83 @@
-# Relational Schema Specification
+# Relational Database Schema Architecture v2.0
 **SellerOps Intelligence Platform**
 
 ---
 
-## 1. Entity Relationship Overview
+## 1. Entity-Relationship Overview & Cardinalities
 
 ```mermaid
 erDiagram
-    SELLERS ||--o{ LISTINGS : owns
-    SELLERS ||--o{ ORDERS : fulfills
-    SELLERS ||--o{ ORDER_SETTLEMENTS : receives
-    SELLERS ||--o{ PAYOUT_BATCHES : paid_via
-    CUSTOMERS ||--o{ ORDERS : places
-    LISTINGS ||--o{ ORDERS : purchased_in
-    ORDERS ||--|| FULFILLMENTS : tracked_by
-    ORDERS ||--o| REVIEWS : receives
-    ORDERS ||--o{ DISPUTES : subject_of
-    ORDERS ||--|| ORDER_SETTLEMENTS : settled_by
-    PAYOUT_BATCHES ||--o{ PAYOUT_LINES : contains
-    ORDERS ||--o{ PAYOUT_LINES : disbursed_in
+    SELLERS ||--o{ LISTINGS : "owns (1:N)"
+    SELLERS ||--o{ SELLER_STATUS_EVENTS : "logs (1:N)"
+    SELLERS ||--o{ ORDER_LINES : "fulfills (1:N)"
+    SELLERS ||--o{ DISPUTES : "disputed_in (1:N)"
+    SELLERS ||--o{ PAYOUTS : "receives (1:N)"
+    SELLERS ||--o{ COMMISSION_LEDGER : "accrues (1:N)"
+    SELLERS ||--o{ RESERVE_LEDGER : "withholds (1:N)"
+    
+    CUSTOMERS ||--o{ ORDERS : "places (1:N)"
+    CUSTOMERS ||--o{ DISPUTES : "files (1:N)"
+    CUSTOMERS ||--o{ CUSTOMER_REVIEWS : "authors (1:N)"
+    
+    ORDERS ||--|{ ORDER_LINES : "contains (1:N Multi-Seller)"
+    LISTINGS ||--o{ ORDER_LINES : "purchased_in (1:N)"
+    
+    ORDER_LINES ||--|{ FULFILLMENTS : "fulfilled_by (1:N Partial Fulfillment)"
+    ORDER_LINES ||--o| CUSTOMER_REVIEWS : "reviewed_in (1:1)"
+    ORDER_LINES ||--o| COMMISSION_LEDGER : "settled_in (1:1)"
+    ORDER_LINES ||--o| RESERVE_LEDGER : "collateral_in (1:1)"
+    ORDER_LINES ||--o{ DISPUTES : "contested_in (1:N)"
+    ORDER_LINES ||--o{ REFUNDS : "refunded_in (1:N)"
+    ORDER_LINES ||--o{ PAYOUT_LINES : "disbursed_in (1:N)"
 
-    SELLERS {
-        string seller_id PK
-        string name
-        string tier
-        string status
-        float risk_score
-        float rating
-        string onboarding_date
-    }
-    CUSTOMERS {
-        string customer_id PK
-        string name
-        string email
-        string city
-        string state
-    }
-    LISTINGS {
-        string listing_id PK
-        string seller_id FK
-        string title
-        string category
-        float price
-        int inventory_count
-        string status
-    }
-    ORDERS {
-        string order_id PK
-        string customer_id FK
-        string seller_id FK
-        string listing_id FK
-        string order_date
-        int quantity
-        float unit_price
-        float gross_amount
-        string order_status
-    }
-    FULFILLMENTS {
-        string fulfillment_id PK
-        string order_id FK
-        string carrier
-        string tracking_number
-        string dispatched_at
-        string delivered_at
-        string sla_status
-    }
-    DISPUTES {
-        string dispute_id PK
-        string order_id FK
-        string seller_id FK
-        string customer_id FK
-        string dispute_date
-        string dispute_reason
-        float disputed_amount
-        string status
-        int clawback_applied
-    }
-    ORDER_SETTLEMENTS {
-        string settlement_id PK
-        string order_id FK
-        string seller_id FK
-        float gross_amount
-        float commission_rate
-        float commission_amount
-        float reserve_rate
-        float reserve_amount
-        string reserve_release_date
-        int reserve_released
-        float net_seller_amount
-        int is_eligible_for_payout
-    }
-    PAYOUT_BATCHES {
-        string payout_id PK
-        string seller_id FK
-        string batch_date
-        int total_orders_count
-        float gross_sales
-        float total_commission
-        float total_reserve_held
-        float net_payout_amount
-        string payout_status
-        string reconciliation_status
-    }
-    PAYOUT_LINES {
-        string line_id PK
-        string payout_id FK
-        string order_id FK
-        float order_amount
-        float commission_deducted
-        float reserve_deducted
-        float net_line_amount
-    }
+    FULFILLMENTS ||--|{ FULFILLMENT_EVENTS : "tracks (1:N Immutable Events)"
+    DISPUTES ||--|{ DISPUTE_EVENTS : "transitions (1:N Immutable Events)"
+    PAYOUTS ||--|{ PAYOUT_LINES : "aggregates (1:N)"
+    PAYOUTS ||--|{ PAYOUT_EVENTS : "audits (1:N Immutable Events)"
+    COMMISSION_RULES ||--o{ COMMISSION_LEDGER : "governs (1:N)"
 ```
 
 ---
 
-## 2. Table Definitions & Constraints
+## 2. Core Architectural Capabilities
 
-### 2.1 `sellers`
-- **Primary Key:** `seller_id` (`SLR-xxxxx`)
-- **Constraints:**
-  - `tier IN ('STANDARD', 'PREFERRED', 'ENTERPRISE', 'PROBATION', 'SUSPENDED')`
-  - `status IN ('ACTIVE', 'PROBATION', 'SUSPENDED', 'UNDER_REVIEW')`
-  - `risk_score BETWEEN 0.0 AND 100.0`
-  - `rating BETWEEN 1.0 AND 5.0`
+### 2.1 Multi-Seller Orders
+A single consumer purchase (`Order`, e.g. `ORD-2026-000001`) contains multiple items across different merchants (`OrderLine`, e.g. `ORDLN-2026-000001-01` and `ORDLN-2026-000001-02`). Each order line maintains its own `seller_id`, unit price, gross amount, commission ledger, and independent lifecycle status.
 
-### 2.2 `customers`
-- **Primary Key:** `customer_id` (`CST-xxxxx`)
-- **Attributes:** `name`, `email`, `city`, `state`, `country`, `created_at`
+### 2.2 Partial Fulfillment
+A single order line for 10 units may be fulfilled in batches from separate fulfillment centers:
+- `FUL-ORDLN-2026-000001-01-01`: 6 units shipped via FedEx.
+- `FUL-ORDLN-2026-000001-01-02`: 4 units shipped via UPS.
+Each fulfillment maintains distinct tracking numbers, dispatch dates, SLA statuses, and immutable `fulfillment_events` logs.
 
-### 2.3 `listings`
-- **Primary Key:** `listing_id` (`LST-xxxxxx`)
-- **Foreign Key:** `seller_id REFERENCES sellers(seller_id)`
-- **Constraints:** `price > 0.0`, `inventory_count >= 0`, `status IN ('ACTIVE', 'OUT_OF_STOCK', 'SUSPENDED', 'ARCHIVED')`
+### 2.3 Immutable Lifecycle History (Event Sourcing)
+Historical events are append-only and never overwritten:
+- `seller_status_events`: Tracks merchant status transitions (`ACTIVE` $\rightarrow$ `PROBATION` $\rightarrow$ `SUSPENDED`).
+- `fulfillment_events`: Logistics milestones (`LABEL_CREATED`, `PICKED_UP`, `IN_TRANSIT`, `OUT_FOR_DELIVERY`, `DELIVERED`).
+- `dispute_events`: Dispute adjudication audit trail (`BUYER`, `SELLER`, `ARBITRATOR`, `SYSTEM`).
+- `payout_events`: Banking gateway disbursement attempts and webhooks.
 
-### 2.4 `orders`
-- **Primary Key:** `order_id` (`ORD-xxxxxx`)
-- **Foreign Keys:**
-  - `customer_id REFERENCES customers(customer_id)`
-  - `seller_id REFERENCES sellers(seller_id)`
-  - `listing_id REFERENCES listings(listing_id)`
-- **Constraints:** `quantity > 0`, `gross_amount > 0.0`, `order_status IN ('PLACED', 'CONFIRMED', 'SHIPPED', 'DELIVERED', 'CANCELLED', 'RETURNED')`
+### 2.4 Absolute Financial Precision (Integer Cents / Paise)
+All currency values are stored as 64-bit signed integers (`*_cents INTEGER NOT NULL`), eliminating IEEE 754 floating-point drift:
+- \$10.50 is stored as `1050`.
+- Rate basis points: 1 basis point = 0.01% (e.g. 800 basis points = 8.00%).
+- Full double-entry balance check:
+  $$\text{Gross Cents} = \text{Commission Cents} + \text{Reserve Cents} + \text{Net Seller Cents}$$
 
-### 2.5 `fulfillments`
-- **Primary Key:** `fulfillment_id` (`FLF-xxxxxx`)
-- **Foreign Key:** `order_id UNIQUE REFERENCES orders(order_id)`
-- **Constraints:** `sla_status IN ('ON_TIME', 'LATE', 'CANCELLED', 'IN_TRANSIT')`
+---
 
-### 2.6 `reviews`
-- **Primary Key:** `review_id` (`REV-xxxxxx`)
-- **Foreign Key:** `order_id UNIQUE REFERENCES orders(order_id)`
-- **Constraints:** `rating BETWEEN 1 AND 5`
+## 3. Canonical ID Conventions
 
-### 2.7 `disputes`
-- **Primary Key:** `dispute_id` (`DSP-xxxxxx`)
-- **Foreign Keys:** `order_id`, `seller_id`, `customer_id`
-- **Constraints:** `disputed_amount > 0.0`, `status IN ('OPEN', 'UNDER_REVIEW', 'RESOLVED_BUYER_FAVOR', 'RESOLVED_SELLER_FAVOR', 'CHARGEBACK_LOST')`, `clawback_applied IN (0, 1)`
-
-### 2.8 `order_settlements`
-- **Primary Key:** `settlement_id`
-- **Foreign Keys:** `order_id UNIQUE`, `seller_id`
-- **Financial Balance:** `gross_amount = commission_amount + reserve_amount + net_seller_amount`
-
-### 2.9 `payout_batches`
-- **Primary Key:** `payout_id` (`PO-xxxxxx`)
-- **Foreign Key:** `seller_id`
-- **Constraints:** `payout_status IN ('SCHEDULED', 'PROCESSING', 'PAID', 'HELD', 'FAILED')`, `reconciliation_status IN ('MATCHED', 'DISCREPANCY', 'PENDING')`
-
-### 2.10 `payout_lines`
-- **Primary Key:** `line_id`
-- **Foreign Keys:** `payout_id REFERENCES payout_batches(payout_id)`, `order_id REFERENCES orders(order_id)`
-- **Balance:** `net_line_amount = order_amount - commission_deducted - reserve_deducted - dispute_deducted`
-
-### 2.11 `anomalies_ground_truth`
-- **Primary Key:** `anomaly_id` (`ANO-x-xxxx`)
-- **Attributes:** `anomaly_type`, `entity_type`, `entity_id`, `description`, `severity`, `detected`, `created_at`
+| Entity | Canonical Pattern | Example |
+| :--- | :--- | :--- |
+| **Seller** | `^SELL-\d{6}$` | `SELL-000001` |
+| **Listing** | `^LIST-SELL-\d{6}-\d{6}$` | `LIST-SELL-000001-000001` |
+| **Order** | `^ORD-\d{4}-\d{6}$` | `ORD-2026-000001` |
+| **Order Line** | `^ORDLN-\d{4}-\d{6}-\d{2}$` | `ORDLN-2026-000001-01` |
+| **Fulfillment** | `^FUL-ORDLN-\d{4}-\d{6}-\d{2}(-\d{2})?$` | `FUL-ORDLN-2026-000001-01` |
+| **Dispute** | `^DSP-\d{4}-\d{6}$` | `DSP-2026-000001` |
+| **Payout** | `^PAYOUT-\d{4}-\d{6}$` | `PAYOUT-2026-000001` |
+| **Payout Line** | `^PLN-PAYOUT-\d{4}-\d{6}-\d{2}$` | `PLN-PAYOUT-2026-000001-01` |
+| **Customer** | `^CUST-\d{6}$` | `CUST-000001` |
+| **Review** | `^REV-\d{4}-\d{6}$` | `REV-2026-000001` |
+| **Commission Rule** | `^CR-\d{6}$` | `CR-000001` |

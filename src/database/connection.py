@@ -1,14 +1,17 @@
-"""SQLite Database connection manager and query utility with strict PRAGMA enforcement."""
+"""SQLite Database connection manager and versioned migration utility."""
 
 import sqlite3
 from contextlib import contextmanager
+from datetime import datetime
 from pathlib import Path
 from typing import Generator, Optional, Union
 import pandas as pd
 
+CURRENT_SCHEMA_VERSION = 2
+
 
 class DatabaseManager:
-    """Manages SQLite database connections, schema setup, and query execution."""
+    """Manages SQLite database connections, schema setup, and versioned migrations."""
 
     def __init__(self, db_path: Union[str, Path] = "data/sellerops.db"):
         self.db_path = Path(db_path)
@@ -22,7 +25,7 @@ class DatabaseManager:
             detect_types=sqlite3.PARSE_DECLTYPES | sqlite3.PARSE_COLNAMES,
         )
         conn.row_factory = sqlite3.Row
-        # Enforce foreign key constraints and WAL performance
+        # Strict foreign keys enforcement & WAL performance
         conn.execute("PRAGMA foreign_keys = ON;")
         conn.execute("PRAGMA journal_mode = WAL;")
         conn.execute("PRAGMA synchronous = NORMAL;")
@@ -30,7 +33,7 @@ class DatabaseManager:
 
     @contextmanager
     def session(self) -> Generator[sqlite3.Connection, None, None]:
-        """Context manager yielding a transactional connection."""
+        """Context manager yielding a transactional connection with automatic rollback."""
         conn = self.get_connection()
         try:
             yield conn
@@ -41,8 +44,16 @@ class DatabaseManager:
         finally:
             conn.close()
 
+    def get_schema_version(self) -> int:
+        """Retrieve latest applied migration version."""
+        with self.session() as conn:
+            if not self.table_exists("schema_migrations"):
+                return 0
+            row = conn.execute("SELECT MAX(version) FROM schema_migrations;").fetchone()
+            return row[0] if row and row[0] is not None else 0
+
     def init_schema(self, schema_path: Optional[Union[str, Path]] = None) -> None:
-        """Initialize the database tables and indexes from schema.sql."""
+        """Initialize or upgrade database schema to current version."""
         path = schema_path or (Path(__file__).parent.parent / "models" / "schema.sql")
         if not Path(path).exists():
             raise FileNotFoundError(f"Schema file not found at: {path}")
@@ -52,6 +63,12 @@ class DatabaseManager:
 
         with self.session() as conn:
             conn.executescript(ddl_script)
+            # Record migration entry
+            conn.execute(
+                """INSERT OR REPLACE INTO schema_migrations (version, description, applied_at)
+                   VALUES (?, ?, ?);""",
+                (CURRENT_SCHEMA_VERSION, f"Relational Schema v{CURRENT_SCHEMA_VERSION}", datetime.now().isoformat()),
+            )
 
     def execute(self, sql: str, params: tuple = ()) -> sqlite3.Cursor:
         """Execute a single write statement."""
