@@ -226,7 +226,14 @@ if not filtered_sellers.empty:
     with c_s3:
         render_metric_card("Risk Score", f"{seller_rec['risk_score']:.1f} / 100", f"Rating: {seller_rec['rating']:.2f} ⭐")
     with c_s4:
-        render_metric_card("Onboarding Date", str(seller_rec["onboarding_date"]), "Account Active")
+        account_standing = (
+            "Account Suspended 🚨" if seller_rec["status"] == "SUSPENDED"
+            else ("Probationary Status ⚠️" if seller_rec["status"] == "PROBATION"
+            else ("Under Review ⚠️" if seller_rec["status"] == "UNDER_REVIEW"
+            else "Account Active ✅"))
+        )
+        standing_color = "danger" if seller_rec["status"] == "SUSPENDED" else ("warning" if seller_rec["status"] in ["PROBATION", "UNDER_REVIEW"] else "success")
+        render_metric_card("Onboarding Date", str(seller_rec["onboarding_date"]), account_standing, delta_color=standing_color)
 
     tab_events, tab_listings, tab_orders, tab_payouts = st.tabs([
         "📜 Status Lifecycle Audit Log",

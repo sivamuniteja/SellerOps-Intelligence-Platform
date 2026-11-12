@@ -4,7 +4,7 @@
 [![Python](https://img.shields.io/badge/Python-3.13+-2563EB.svg)](https://www.python.org/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.30+-FF4B4B.svg)](https://streamlit.io/)
 [![SQLite](https://img.shields.io/badge/SQLite-3.0+-003B57.svg)](https://www.sqlite.org/)
-[![PyTest](https://img.shields.io/badge/PyTest-72%20Passed-16A34A.svg)](https://pytest.org/)
+[![PyTest](https://img.shields.io/badge/PyTest-92%20Passed-16A34A.svg)](https://pytest.org/)
 [![Currency](https://img.shields.io/badge/Currency-INR%20(₹)-2563EB.svg)]()
 [![Anomaly Detection](https://img.shields.io/badge/F1--Score-1.0000-16A34A.svg)]()
 
@@ -76,7 +76,7 @@ Execute the entire test suite covering all 20 challenge areas and 5 mandatory fi
 ```bash
 pytest tests/ -v
 ```
-*(All 72 tests pass in ~4.5 seconds)*
+*(All 92 tests pass in ~5.6 seconds)*
 
 ---
 

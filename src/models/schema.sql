@@ -284,3 +284,8 @@ CREATE INDEX IF NOT EXISTS idx_payout_lines_payout ON payout_lines(payout_id);
 CREATE INDEX IF NOT EXISTS idx_payout_lines_order_line ON payout_lines(order_line_id);
 CREATE INDEX IF NOT EXISTS idx_commission_rules_cat_tier ON commission_rules(category, seller_tier, effective_from, effective_to);
 CREATE INDEX IF NOT EXISTS idx_ground_truth_type ON ground_truth(anomaly_type);
+CREATE INDEX IF NOT EXISTS idx_fulfillments_delivered_at ON fulfillments(delivered_at);
+CREATE INDEX IF NOT EXISTS idx_fulfillments_seller ON fulfillments(seller_id);
+CREATE INDEX IF NOT EXISTS idx_disputes_status ON disputes(status);
+CREATE INDEX IF NOT EXISTS idx_payouts_status ON payouts(payout_status);
+CREATE INDEX IF NOT EXISTS idx_listings_status ON listings(status);

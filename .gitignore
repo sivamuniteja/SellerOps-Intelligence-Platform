@@ -47,9 +47,15 @@ htmlcov/
 .DS_Store
 Thumbs.db
 
-# Large Generated Export Data Dumps
+# Large Generated Export Data Dumps & Scenarios
 data/exports/csv/
 data/exports/json/
 data/exports/sql/
+data/full/*
+!data/full/.gitkeep
+data/starter/*
+!data/starter/.gitkeep
+data/scenarios/*
+!data/scenarios/.gitkeep
 
 .streamlit/secrets.toml

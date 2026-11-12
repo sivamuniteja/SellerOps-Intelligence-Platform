@@ -72,36 +72,73 @@ CUSTOM_CSS = """
         background-color: #FFFFFF;
         border: 1px solid #E2E8F0;
         border-radius: 8px;
-        padding: 20px;
+        padding: 16px 18px;
         margin-bottom: 16px;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
         transition: transform 0.15s ease, box-shadow 0.15s ease;
+        height: 100%;
+        min-height: 125px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        box-sizing: border-box;
     }
     .metric-card:hover {
         border-color: #CBD5E1;
         box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07);
     }
+    .metric-header {
+        margin-bottom: 6px;
+    }
     .metric-title {
-        font-size: 0.8rem;
+        font-size: 0.78rem;
         font-weight: 600;
         color: #64748B !important;
         text-transform: uppercase;
         letter-spacing: 0.05em;
-        margin-bottom: 8px;
+        line-height: 1.35;
+        white-space: normal;
+        word-break: break-word;
+    }
+    .metric-value-container {
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        margin: 4px 0;
     }
     .metric-value {
-        font-size: 1.85rem;
+        font-size: clamp(1.15rem, 1.85vw, 1.65rem);
         font-weight: 700;
         color: #111827 !important;
-        line-height: 1.15;
+        line-height: 1.2;
+        word-break: break-word;
+        overflow-wrap: anywhere;
+        white-space: normal;
     }
     .metric-subtitle {
-        font-size: 0.82rem;
+        font-size: 0.80rem;
         color: #64748B !important;
-        margin-top: 8px;
+        margin-top: 6px;
         display: flex;
         align-items: center;
         gap: 6px;
+        flex-wrap: wrap;
+        line-height: 1.35;
+        word-break: break-word;
+    }
+
+    /* Column card alignment */
+    [data-testid="column"] {
+        display: flex;
+        flex-direction: column;
+    }
+    [data-testid="column"] > div {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    [data-testid="column"] .metric-card {
+        flex: 1 1 auto;
     }
     
     /* Status Badges */
@@ -124,6 +161,43 @@ CUSTOM_CSS = """
         border: 1px solid #E2E8F0 !important;
         border-radius: 8px !important;
         background-color: #FFFFFF !important;
+        overflow-x: auto !important;
+        width: 100% !important;
+    }
+
+    /* Multi-select and Filter Enhancements */
+    .stMultiSelect [data-baseweb="select"] {
+        min-height: 42px !important;
+        border-color: #E2E8F0 !important;
+        border-radius: 6px !important;
+    }
+    .stMultiSelect [data-baseweb="tag"] {
+        max-width: 100% !important;
+        white-space: normal !important;
+        height: auto !important;
+        padding: 3px 8px !important;
+        margin: 2px 3px 2px 0 !important;
+        background-color: #EFF6FF !important;
+        border: 1px solid #BFDBFE !important;
+        border-radius: 4px !important;
+    }
+    .stMultiSelect [data-baseweb="tag"] span {
+        font-size: 0.78rem !important;
+        font-weight: 500 !important;
+        color: #1E40AF !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+    }
+    .stSelectbox [data-baseweb="select"], .stTextInput > div > div {
+        border-color: #E2E8F0 !important;
+        border-radius: 6px !important;
+    }
+    .stSelectbox label, .stMultiSelect label, .stSlider label, .stTextInput label {
+        font-size: 0.85rem !important;
+        font-weight: 600 !important;
+        color: #374151 !important;
+        margin-bottom: 4px !important;
     }
 
     /* Filter Panels */
@@ -233,21 +307,27 @@ def render_page_header(title: str, subtitle: str, badge: Optional[str] = None):
 
 
 def render_metric_card(title: str, value: str, subtitle: str = "", delta_color: str = "text_secondary"):
-    """Render a styled enterprise metric card."""
-    badge_type = "neutral"
+    """Render a styled enterprise metric card with responsive sizing, uniform height, and tooltips."""
+    badge_style = ""
     if delta_color == "danger":
-        badge_type = "danger"
+        badge_style = 'color: #DC2626 !important; font-weight: 600;'
     elif delta_color == "warning":
-        badge_type = "warning"
+        badge_style = 'color: #D97706 !important; font-weight: 600;'
     elif delta_color == "success":
-        badge_type = "success"
+        badge_style = 'color: #16A34A !important; font-weight: 600;'
 
-    subtitle_html = f'<div class="metric-subtitle">{subtitle}</div>' if subtitle else ""
+    subtitle_html = f'<div class="metric-subtitle" style="{badge_style}">{subtitle}</div>' if subtitle else ""
+    clean_value = str(value).replace('"', '&quot;')
+
     st.markdown(
         f"""
-        <div class="metric-card">
-            <div class="metric-title">{title}</div>
-            <div class="metric-value">{value}</div>
+        <div class="metric-card" title="{clean_value}">
+            <div class="metric-header">
+                <div class="metric-title">{title}</div>
+            </div>
+            <div class="metric-value-container">
+                <div class="metric-value" title="{clean_value}">{value}</div>
+            </div>
             {subtitle_html}
         </div>
         """,

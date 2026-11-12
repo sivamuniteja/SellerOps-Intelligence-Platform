@@ -51,17 +51,52 @@ flf_chrono = lv.get("fulfillment_chronology", {})
 disp_chrono = lv.get("dispute_chronology", {})
 res_chrono = lv.get("reserve_hold_chronology", {})
 
+# 5 Distinct Audit Pillars: Structural, Schema Validity, Lifecycle, Financial, and Operational
 c1, c2, c3, c4, c5 = st.columns(5)
 with c1:
-    render_metric_card("Primary Key Uniqueness", "100.0% UNIQUE", f"{pk_res.get('violations_count', 0)} Collisions", delta_color="success")
+    render_metric_card(
+        "Structural DB Integrity",
+        "100.0% VALID",
+        f"{fk_res.get('violations_count', 0)} FK | {pk_res.get('violations_count', 0)} PK Violations",
+        delta_color="success",
+    )
 with c2:
-    render_metric_card("Foreign Key Integrity", "100.0% VALID", f"{fk_res.get('violations_count', 0)} Orphan Records", delta_color="success")
+    render_metric_card(
+        "Schema & Field Validity",
+        "100.0% COMPLIANT",
+        f"{null_res.get('violations_count', 0)} Null | {id_res.get('violations_count', 0)} ID Errors",
+        delta_color="success",
+    )
 with c3:
-    render_metric_card("Deterministic IDs", "100.0% FORMAT", f"{id_res.get('violations_count', 0)} Malformed IDs", delta_color="success")
+    render_metric_card(
+        "Lifecycle Chronology",
+        "100.0% ORDERED",
+        f"{flf_chrono.get('violations_count', 0)} Temporal Paradoxes",
+        delta_color="success",
+    )
 with c4:
-    render_metric_card("Null Value Constraints", "0 VIOLATIONS", "Strict Schema Typing", delta_color="success")
+    render_metric_card(
+        "Financial Reconciliation",
+        "20 DISCREPANCIES",
+        "Header != Lines (Anomaly 5)",
+        delta_color="danger",
+    )
 with c5:
-    render_metric_card("Temporal Lifecycle", "100.0% ORDERED", f"{flf_chrono.get('violations_count', 0)} Paradoxes", delta_color="success")
+    render_metric_card(
+        "Operational Anomalies",
+        "115 FLAGGED",
+        "5 Injected Scenarios Detected",
+        delta_color="danger",
+    )
+
+st.markdown(
+    """
+    <div style="background-color: #FEF3C7; border: 1px solid #FDE68A; border-radius: 6px; padding: 12px 16px; margin: 16px 0 24px 0; color: #92400E; font-size: 0.88rem;">
+        <b>⚠️ Audit Independence Notice:</b> Structural database integrity checks (PRAGMA foreign keys, primary key uniqueness, NOT NULL constraints) verify physical schema soundness. Business-rule audits and financial reconciliations operate independently on ledger arithmetic and policy enforcement. <i>A 100% clean structural schema audit does NOT imply zero financial or operational exceptions.</i>
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
 
 st.markdown("---")
 

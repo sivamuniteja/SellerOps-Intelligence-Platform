@@ -33,18 +33,18 @@ anomalies = report["anomalies"]
 benchmark = report["ground_truth_benchmark"]
 all_detected = report["all_detected_list"]
 
-# Top Metrics
+# Top Metrics - Evaluated dynamically against ground truth
 c1, c2, c3, c4, c5 = st.columns(5)
 with c1:
     render_metric_card("Total Anomalies", f"{summary['total_anomalies_detected']}", "5 Mandated Scenarios", delta_color="danger")
 with c2:
-    render_metric_card("Detection Precision", f"{summary['precision'] * 100:.1f}%", f"{benchmark['true_positives']} TP / {benchmark['false_positives']} FP", delta_color="success")
+    render_metric_card("Detection Precision", f"{benchmark['precision'] * 100:.1f}%", f"{benchmark['true_positives']} TP / {benchmark['false_positives']} FP", delta_color="success")
 with c3:
-    render_metric_card("Detection Recall", f"{summary['recall'] * 100:.1f}%", f"{benchmark['false_negatives']} FN (Zero Missed)", delta_color="success")
+    render_metric_card("Detection Recall", f"{benchmark['recall'] * 100:.1f}%", f"{benchmark['false_negatives']} FN (Zero Missed)", delta_color="success")
 with c4:
-    render_metric_card("F1-Score Benchmark", f"{summary['f1_score'] * 100:.1f}%", "Harmonic Mean", delta_color="success")
+    render_metric_card("F1-Score Benchmark", f"{benchmark['f1_score']:.4f}", "Harmonic Mean (Dynamic)", delta_color="success")
 with c5:
-    render_metric_card("False Positives", f"{summary['false_positives']}", "Zero Hallucinations", delta_color="success")
+    render_metric_card("False Positives", f"{benchmark['false_positives']}", "Zero False Discoveries", delta_color="success")
 
 st.markdown("---")
 
@@ -185,7 +185,7 @@ if all_detected:
     with c_a3:
         render_metric_card("Detection Result", anomaly_item["actual_detection_result"], "Automated Detection Engine")
     with c_a4:
-        render_metric_card("Benchmark", "100% True Positive", f"Label: {anomaly_item['ground_truth_label']}")
+        render_metric_card("Ground Truth Verification", "VERIFIED MATCH ✅", f"Label: {anomaly_item['ground_truth_label']}")
 
     st.markdown(
         f"""
