@@ -24,5 +24,5 @@ def test_disputes_count_and_reasons(db):
 
 
 def test_dispute_amounts_positive(db):
-    df = db.query_df("SELECT COUNT(*) as invalid_count FROM disputes WHERE disputed_amount <= 0.0;")
+    df = db.query_df("SELECT COUNT(*) as invalid_count FROM disputes WHERE disputed_amount_cents <= 0;")
     assert df["invalid_count"].iloc[0] == 0

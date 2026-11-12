@@ -20,13 +20,13 @@ def test_generation_reproducibility(tmp_path):
     db2_path = str(tmp_path / "test_run2.db")
 
     # Generate two starter datasets with the same seed
-    run_pipeline(target_mode="starter", db_path=db1_path, seed=42)
-    run_pipeline(target_mode="starter", db_path=db2_path, seed=42)
+    run_pipeline(target_mode="starter", db_path=db1_path, seed=20261022)
+    run_pipeline(target_mode="starter", db_path=db2_path, seed=20261022)
 
     db1 = get_db(db1_path)
     db2 = get_db(db2_path)
 
-    for table in ["sellers", "customers", "listings", "orders", "anomalies_ground_truth"]:
+    for table in ["sellers", "customers", "listings", "orders", "order_lines", "ground_truth"]:
         h1 = compute_table_hash(db1, table)
         h2 = compute_table_hash(db2, table)
         assert h1 == h2, f"Table {table} differed between deterministic runs"

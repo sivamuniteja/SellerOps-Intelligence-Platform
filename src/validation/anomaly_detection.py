@@ -53,27 +53,27 @@ class AnomalyDetectionEngine:
 
     def detect_premature_payouts(self) -> List[Dict[str, Any]]:
         """
-        Anomaly 1: Payout line item disbursed for an order that is either not DELIVERED
-        or whose reserve release date is in the future.
+        Anomaly 1: Payout line item disbursed for an order line that is either not DELIVERED
+        or where batch_date < release_scheduled_date.
         """
         q = """
             SELECT
                 pl.line_id,
                 pl.payout_id,
-                pl.order_id,
-                o.order_status,
-                s.reserve_release_date,
-                pb.batch_date,
-                pl.net_line_amount,
+                pl.order_line_id,
+                ol.line_status,
+                r.release_scheduled_date,
+                p.batch_date,
+                pl.net_line_amount_cents,
                 'PREMATURE_PAYOUT' as anomaly_type,
                 'CRITICAL' as severity,
-                'Payout disbursed before delivery confirmation or prior to reserve hold maturity' as description
+                'Payout disbursed before delivery confirmation or prior to reserve maturity' as description
             FROM payout_lines pl
-            JOIN orders o ON pl.order_id = o.order_id
-            JOIN order_settlements s ON pl.order_id = s.order_id
-            JOIN payout_batches pb ON pl.payout_id = pb.payout_id
-            WHERE o.order_status != 'DELIVERED'
-               OR pb.batch_date < s.reserve_release_date;
+            JOIN order_lines ol ON pl.order_line_id = ol.order_line_id
+            JOIN reserve_ledger r ON pl.order_line_id = r.order_line_id
+            JOIN payouts p ON pl.payout_id = p.payout_id
+            WHERE ol.line_status != 'DELIVERED'
+               OR p.batch_date < r.release_scheduled_date;
         """
         return self.db.query_df(q).to_dict(orient="records")
 
@@ -83,18 +83,17 @@ class AnomalyDetectionEngine:
         """
         q = """
             SELECT
-                s.settlement_id,
-                s.order_id,
-                s.seller_id,
-                s.gross_amount,
-                s.commission_amount,
-                s.commission_rate,
-                ROUND(s.commission_amount / s.gross_amount, 4) as effective_taken_rate,
+                c.entry_id,
+                c.order_line_id,
+                c.seller_id,
+                c.gross_amount_cents,
+                c.total_commission_cents,
+                c.rate_basis_points,
                 'DOUBLE_COMMISSION' as anomaly_type,
                 'HIGH' as severity,
-                'Platform commission fee applied twice on the same settlement' as description
-            FROM order_settlements s
-            WHERE s.commission_amount > (s.gross_amount * s.commission_rate * 1.5);
+                'Platform commission fee applied twice on the same line' as description
+            FROM commission_ledger c
+            WHERE c.total_commission_cents > ((c.gross_amount_cents * c.rate_basis_points / 10000.0 + c.fixed_fee_cents) * 1.5);
         """
         return self.db.query_df(q).to_dict(orient="records")
 
@@ -112,7 +111,7 @@ class AnomalyDetectionEngine:
                 l.status as listing_status,
                 'SUSPENDED_SELLER_ACTIVE' as anomaly_type,
                 'CRITICAL' as severity,
-                'Suspended seller continues listing active inventory or accepting orders' as description
+                'Suspended seller continues listing active inventory' as description
             FROM sellers s
             JOIN listings l ON s.seller_id = l.seller_id
             WHERE s.status = 'SUSPENDED' AND l.status = 'ACTIVE';
@@ -127,8 +126,9 @@ class AnomalyDetectionEngine:
             SELECT
                 d.dispute_id,
                 d.order_id,
+                d.order_line_id,
                 d.seller_id,
-                d.disputed_amount,
+                d.disputed_amount_cents,
                 d.status as dispute_status,
                 d.clawback_applied,
                 'UNCLAWBACKED_DISPUTE' as anomaly_type,
@@ -148,22 +148,23 @@ class AnomalyDetectionEngine:
             SELECT
                 p.payout_id,
                 p.seller_id,
-                ROUND(p.net_payout_amount, 2) as header_net,
-                ROUND(COALESCE(SUM(l.net_line_amount), 0.0), 2) as lines_net_sum,
-                ROUND(p.net_payout_amount - COALESCE(SUM(l.net_line_amount), 0.0), 2) as variance,
+                p.net_payout_amount_cents as header_net_cents,
+                COALESCE(SUM(l.net_line_amount_cents), 0) as lines_net_sum_cents,
+                (p.net_payout_amount_cents - COALESCE(SUM(l.net_line_amount_cents), 0)) as variance_cents,
                 'PAYOUT_TOTAL_MISMATCH' as anomaly_type,
                 'CRITICAL' as severity,
                 'Batch header net payout does not match arithmetic sum of payout lines' as description
-            FROM payout_batches p
+            FROM payouts p
             JOIN payout_lines l ON p.payout_id = l.payout_id
             GROUP BY p.payout_id
-            HAVING ABS(header_net - lines_net_sum) > 0.01;
+            HAVING ABS(header_net_cents - lines_net_sum_cents) > 0;
         """
         return self.db.query_df(q).to_dict(orient="records")
 
     def evaluate_against_ground_truth(self, detected_records: List[Dict[str, Any]]) -> Dict[str, Any]:
         """Compare detected anomalies against the ground-truth registry."""
-        gt_df = self.db.query_df("SELECT * FROM anomalies_ground_truth;")
+        gt_table = "ground_truth" if self.db.table_exists("ground_truth") else "anomalies_ground_truth"
+        gt_df = self.db.query_df(f"SELECT * FROM {gt_table};")
         if gt_df.empty:
             return {
                 "ground_truth_total": 0,
@@ -184,9 +185,9 @@ class AnomalyDetectionEngine:
         fp = 0
         for rec in detected_records:
             atype = rec.get("anomaly_type")
-            # Map anomaly type to entity_id key
             entity_id = (
                 rec.get("line_id")
+                or rec.get("entry_id")
                 or rec.get("settlement_id")
                 or rec.get("listing_id")
                 or rec.get("dispute_id")

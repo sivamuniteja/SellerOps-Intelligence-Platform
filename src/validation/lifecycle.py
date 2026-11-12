@@ -1,6 +1,5 @@
 """Lifecycle and Temporal State Machine Validator."""
 
-from datetime import datetime
 from typing import Dict, List, Any
 from src.database.connection import DatabaseManager
 
@@ -34,9 +33,9 @@ class LifecycleValidator:
     def check_fulfillment_chronology(self) -> Dict[str, Any]:
         """Verify order_date <= dispatched_at <= delivered_at."""
         q = """
-            SELECT o.order_id, o.order_date, f.dispatched_at, f.delivered_at
-            FROM orders o
-            JOIN fulfillments f ON o.order_id = f.order_id
+            SELECT f.fulfillment_id, o.order_id, o.order_date, f.dispatched_at, f.delivered_at
+            FROM fulfillments f
+            JOIN orders o ON f.order_id = o.order_id
             WHERE (f.dispatched_at IS NOT NULL AND f.dispatched_at < o.order_date)
                OR (f.delivered_at IS NOT NULL AND f.dispatched_at IS NOT NULL AND f.delivered_at < f.dispatched_at);
         """
@@ -65,13 +64,12 @@ class LifecycleValidator:
         }
 
     def check_status_consistency(self) -> Dict[str, Any]:
-        """Verify that delivered orders have delivery timestamps and valid SLA."""
+        """Verify that delivered fulfillments have delivered timestamps."""
         q = """
-            SELECT o.order_id, o.order_status, f.delivered_at, f.sla_status
-            FROM orders o
-            JOIN fulfillments f ON o.order_id = f.order_id
-            WHERE (o.order_status = 'DELIVERED' AND f.delivered_at IS NULL)
-               OR (o.order_status = 'CANCELLED' AND f.sla_status != 'CANCELLED');
+            SELECT f.fulfillment_id, f.order_line_id, f.sla_status, f.delivered_at
+            FROM fulfillments f
+            JOIN order_lines ol ON f.order_line_id = ol.order_line_id
+            WHERE (ol.line_status = 'DELIVERED' AND f.delivered_at IS NULL AND f.sla_status != 'CANCELLED');
         """
         df = self.db.query_df(q)
         violations = df.to_dict(orient="records")

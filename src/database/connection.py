@@ -52,7 +52,7 @@ class DatabaseManager:
             row = conn.execute("SELECT MAX(version) FROM schema_migrations;").fetchone()
             return row[0] if row and row[0] is not None else 0
 
-    def init_schema(self, schema_path: Optional[Union[str, Path]] = None) -> None:
+    def init_schema(self, schema_path: Optional[Union[str, Path]] = None, force_recreate: bool = False) -> None:
         """Initialize or upgrade database schema to current version."""
         path = schema_path or (Path(__file__).parent.parent / "models" / "schema.sql")
         if not Path(path).exists():
@@ -62,6 +62,16 @@ class DatabaseManager:
             ddl_script = f.read()
 
         with self.session() as conn:
+            current_ver = self.get_schema_version()
+            if force_recreate or current_ver < CURRENT_SCHEMA_VERSION:
+                # Disable FKs temporarily during table recreation
+                conn.execute("PRAGMA foreign_keys = OFF;")
+                tables = [r[0] for r in conn.execute("SELECT name FROM sqlite_master WHERE type='table';").fetchall()]
+                for t in tables:
+                    if t != "sqlite_sequence":
+                        conn.execute(f"DROP TABLE IF EXISTS {t};")
+                conn.execute("PRAGMA foreign_keys = ON;")
+
             conn.executescript(ddl_script)
             # Record migration entry
             conn.execute(

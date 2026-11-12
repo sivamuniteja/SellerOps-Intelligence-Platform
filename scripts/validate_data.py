@@ -45,9 +45,11 @@ def main():
     # 3. Financial Reconciliation
     fr = FinancialReconciliation(db).reconcile_all()
     payout_disc = fr["payouts"]["discrepancy_count"]
+    order_disc = fr["order_lines"]["discrepancy_count"]
     print("\n3. FINANCIAL RECONCILIATION:")
     print(f"   [-] Total Payout Batches Evaluated: {fr['payouts']['total_batches_checked']}")
     print(f"   [-] Batches with Ledger Discrepancies (Anomaly 5): {payout_disc}")
+    print(f"   [-] Multi-Seller Orders Sum Verification: {'100% MATCHED ✅' if order_disc == 0 else 'MISMATCH ❌'}")
 
     # 4. Anomaly Detection
     ad = AnomalyDetectionEngine(db).run_all_detectors()

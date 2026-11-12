@@ -1,0 +1,252 @@
+[
+  {
+    "anomaly_id": "ANO-3-0001",
+    "anomaly_type": "SUSPENDED_SELLER_ACTIVE",
+    "entity_type": "LISTING",
+    "entity_id": "LIST-SELL-000018-000001",
+    "description": "Listing LIST-SELL-000018-000001 is ACTIVE under suspended seller SELL-000018",
+    "severity": "CRITICAL",
+    "detected": 0,
+    "created_at": "2024-05-28 07:00:00"
+  },
+  {
+    "anomaly_id": "ANO-3-0002",
+    "anomaly_type": "SUSPENDED_SELLER_ACTIVE",
+    "entity_type": "LISTING",
+    "entity_id": "LIST-SELL-000025-000001",
+    "description": "Listing LIST-SELL-000025-000001 is ACTIVE under suspended seller SELL-000025",
+    "severity": "CRITICAL",
+    "detected": 0,
+    "created_at": "2024-06-23 13:00:00"
+  },
+  {
+    "anomaly_id": "ANO-3-0003",
+    "anomaly_type": "SUSPENDED_SELLER_ACTIVE",
+    "entity_type": "LISTING",
+    "entity_id": "LIST-SELL-000025-000002",
+    "description": "Listing LIST-SELL-000025-000002 is ACTIVE under suspended seller SELL-000025",
+    "severity": "CRITICAL",
+    "detected": 0,
+    "created_at": "2025-03-30 14:00:00"
+  },
+  {
+    "anomaly_id": "ANO-3-0004",
+    "anomaly_type": "SUSPENDED_SELLER_ACTIVE",
+    "entity_type": "LISTING",
+    "entity_id": "LIST-SELL-000025-000003",
+    "description": "Listing LIST-SELL-000025-000003 is ACTIVE under suspended seller SELL-000025",
+    "severity": "CRITICAL",
+    "detected": 0,
+    "created_at": "2024-09-06 23:00:00"
+  },
+  {
+    "anomaly_id": "ANO-3-0005",
+    "anomaly_type": "SUSPENDED_SELLER_ACTIVE",
+    "entity_type": "LISTING",
+    "entity_id": "LIST-SELL-000018-000002",
+    "description": "Listing LIST-SELL-000018-000002 is ACTIVE under suspended seller SELL-000018",
+    "severity": "CRITICAL",
+    "detected": 0,
+    "created_at": "2024-05-30 08:00:00"
+  },
+  {
+    "anomaly_id": "ANO-4-0001",
+    "anomaly_type": "UNCLAWBACKED_DISPUTE",
+    "entity_type": "DISPUTE",
+    "entity_id": "DSP-2026-000003",
+    "description": "Dispute DSP-2026-000003 status RESOLVED_BUYER_FAVOR was never deducted from seller balance",
+    "severity": "HIGH",
+    "detected": 0,
+    "created_at": "2025-09-04 11:34:57"
+  },
+  {
+    "anomaly_id": "ANO-4-0002",
+    "anomaly_type": "UNCLAWBACKED_DISPUTE",
+    "entity_type": "DISPUTE",
+    "entity_id": "DSP-2026-000004",
+    "description": "Dispute DSP-2026-000004 status CHARGEBACK_LOST was never deducted from seller balance",
+    "severity": "HIGH",
+    "detected": 0,
+    "created_at": "2025-04-26 22:01:16"
+  },
+  {
+    "anomaly_id": "ANO-4-0003",
+    "anomaly_type": "UNCLAWBACKED_DISPUTE",
+    "entity_type": "DISPUTE",
+    "entity_id": "DSP-2026-000005",
+    "description": "Dispute DSP-2026-000005 status RESOLVED_BUYER_FAVOR was never deducted from seller balance",
+    "severity": "HIGH",
+    "detected": 0,
+    "created_at": "2026-06-21 14:47:00"
+  },
+  {
+    "anomaly_id": "ANO-4-0004",
+    "anomaly_type": "UNCLAWBACKED_DISPUTE",
+    "entity_type": "DISPUTE",
+    "entity_id": "DSP-2026-000006",
+    "description": "Dispute DSP-2026-000006 status RESOLVED_BUYER_FAVOR was never deducted from seller balance",
+    "severity": "HIGH",
+    "detected": 0,
+    "created_at": "2026-11-04 02:11:05"
+  },
+  {
+    "anomaly_id": "ANO-4-0005",
+    "anomaly_type": "UNCLAWBACKED_DISPUTE",
+    "entity_type": "DISPUTE",
+    "entity_id": "DSP-2026-000007",
+    "description": "Dispute DSP-2026-000007 status RESOLVED_BUYER_FAVOR was never deducted from seller balance",
+    "severity": "HIGH",
+    "detected": 0,
+    "created_at": "2026-09-21 16:37:41"
+  },
+  {
+    "anomaly_id": "ANO-2-0001",
+    "anomaly_type": "DOUBLE_COMMISSION",
+    "entity_type": "SETTLEMENT",
+    "entity_id": "CML-000002",
+    "description": "Commission entry CML-000002 for line ORDLN-2026-000002-01 charged double fee (740 cents)",
+    "severity": "HIGH",
+    "detected": 0,
+    "created_at": "2025-01-03 06:32:24"
+  },
+  {
+    "anomaly_id": "ANO-2-0002",
+    "anomaly_type": "DOUBLE_COMMISSION",
+    "entity_type": "SETTLEMENT",
+    "entity_id": "CML-000003",
+    "description": "Commission entry CML-000003 for line ORDLN-2026-000003-01 charged double fee (4682 cents)",
+    "severity": "HIGH",
+    "detected": 0,
+    "created_at": "2026-06-30 07:11:32"
+  },
+  {
+    "anomaly_id": "ANO-2-0003",
+    "anomaly_type": "DOUBLE_COMMISSION",
+    "entity_type": "SETTLEMENT",
+    "entity_id": "CML-000004",
+    "description": "Commission entry CML-000004 for line ORDLN-2026-000003-02 charged double fee (1640 cents)",
+    "severity": "HIGH",
+    "detected": 0,
+    "created_at": "2026-06-30 07:11:32"
+  },
+  {
+    "anomaly_id": "ANO-2-0004",
+    "anomaly_type": "DOUBLE_COMMISSION",
+    "entity_type": "SETTLEMENT",
+    "entity_id": "CML-000005",
+    "description": "Commission entry CML-000005 for line ORDLN-2026-000004-01 charged double fee (1536 cents)",
+    "severity": "HIGH",
+    "detected": 0,
+    "created_at": "2025-12-17 07:00:19"
+  },
+  {
+    "anomaly_id": "ANO-2-0005",
+    "anomaly_type": "DOUBLE_COMMISSION",
+    "entity_type": "SETTLEMENT",
+    "entity_id": "CML-000006",
+    "description": "Commission entry CML-000006 for line ORDLN-2026-000005-01 charged double fee (420 cents)",
+    "severity": "HIGH",
+    "detected": 0,
+    "created_at": "2025-02-17 20:39:16"
+  },
+  {
+    "anomaly_id": "ANO-5-0001",
+    "anomaly_type": "PAYOUT_TOTAL_MISMATCH",
+    "entity_type": "PAYOUT",
+    "entity_id": "PAYOUT-2026-000001",
+    "description": "Payout batch PAYOUT-2026-000001 header net altered by +12500 cents ($125.00) vs lines sum",
+    "severity": "CRITICAL",
+    "detected": 0,
+    "created_at": "2026-09-12 16:31:28"
+  },
+  {
+    "anomaly_id": "ANO-5-0002",
+    "anomaly_type": "PAYOUT_TOTAL_MISMATCH",
+    "entity_type": "PAYOUT",
+    "entity_id": "PAYOUT-2026-000002",
+    "description": "Payout batch PAYOUT-2026-000002 header net altered by +12500 cents ($125.00) vs lines sum",
+    "severity": "CRITICAL",
+    "detected": 0,
+    "created_at": "2026-11-09 07:18:49"
+  },
+  {
+    "anomaly_id": "ANO-5-0003",
+    "anomaly_type": "PAYOUT_TOTAL_MISMATCH",
+    "entity_type": "PAYOUT",
+    "entity_id": "PAYOUT-2026-000003",
+    "description": "Payout batch PAYOUT-2026-000003 header net altered by +12500 cents ($125.00) vs lines sum",
+    "severity": "CRITICAL",
+    "detected": 0,
+    "created_at": "2026-10-12 02:59:55"
+  },
+  {
+    "anomaly_id": "ANO-5-0004",
+    "anomaly_type": "PAYOUT_TOTAL_MISMATCH",
+    "entity_type": "PAYOUT",
+    "entity_id": "PAYOUT-2026-000004",
+    "description": "Payout batch PAYOUT-2026-000004 header net altered by +12500 cents ($125.00) vs lines sum",
+    "severity": "CRITICAL",
+    "detected": 0,
+    "created_at": "2026-10-30 01:44:38"
+  },
+  {
+    "anomaly_id": "ANO-5-0005",
+    "anomaly_type": "PAYOUT_TOTAL_MISMATCH",
+    "entity_type": "PAYOUT",
+    "entity_id": "PAYOUT-2026-000005",
+    "description": "Payout batch PAYOUT-2026-000005 header net altered by +12500 cents ($125.00) vs lines sum",
+    "severity": "CRITICAL",
+    "detected": 0,
+    "created_at": "2026-09-01 07:35:54"
+  },
+  {
+    "anomaly_id": "ANO-1-0001",
+    "anomaly_type": "PREMATURE_PAYOUT",
+    "entity_type": "PAYOUT_LINE",
+    "entity_id": "PLN-PAYOUT-PREM-0001-01",
+    "description": "Payout line PLN-PAYOUT-PREM-0001-01 disbursed order line ORDLN-2026-001653-01 10 days before reserve maturity",
+    "severity": "CRITICAL",
+    "detected": 0,
+    "created_at": "2026-10-26 19:03:21"
+  },
+  {
+    "anomaly_id": "ANO-1-0002",
+    "anomaly_type": "PREMATURE_PAYOUT",
+    "entity_type": "PAYOUT_LINE",
+    "entity_id": "PLN-PAYOUT-PREM-0002-01",
+    "description": "Payout line PLN-PAYOUT-PREM-0002-01 disbursed order line ORDLN-2026-000891-01 10 days before reserve maturity",
+    "severity": "CRITICAL",
+    "detected": 0,
+    "created_at": "2025-07-07 22:24:59"
+  },
+  {
+    "anomaly_id": "ANO-1-0003",
+    "anomaly_type": "PREMATURE_PAYOUT",
+    "entity_type": "PAYOUT_LINE",
+    "entity_id": "PLN-PAYOUT-PREM-0003-01",
+    "description": "Payout line PLN-PAYOUT-PREM-0003-01 disbursed order line ORDLN-2026-001407-01 10 days before reserve maturity",
+    "severity": "CRITICAL",
+    "detected": 0,
+    "created_at": "2025-11-05 23:16:51"
+  },
+  {
+    "anomaly_id": "ANO-1-0004",
+    "anomaly_type": "PREMATURE_PAYOUT",
+    "entity_type": "PAYOUT_LINE",
+    "entity_id": "PLN-PAYOUT-PREM-0004-01",
+    "description": "Payout line PLN-PAYOUT-PREM-0004-01 disbursed order line ORDLN-2026-000683-02 10 days before reserve maturity",
+    "severity": "CRITICAL",
+    "detected": 0,
+    "created_at": "2025-11-12 06:58:30"
+  },
+  {
+    "anomaly_id": "ANO-1-0005",
+    "anomaly_type": "PREMATURE_PAYOUT",
+    "entity_type": "PAYOUT_LINE",
+    "entity_id": "PLN-PAYOUT-PREM-0005-01",
+    "description": "Payout line PLN-PAYOUT-PREM-0005-01 disbursed order line ORDLN-2026-000458-01 10 days before reserve maturity",
+    "severity": "CRITICAL",
+    "detected": 0,
+    "created_at": "2026-11-03 03:15:23"
+  }
+]

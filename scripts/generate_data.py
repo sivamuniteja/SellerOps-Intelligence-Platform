@@ -20,7 +20,7 @@ def main():
         help="Target dataset scale (starter: 10k orders, full: 100k orders). Default: full."
     )
     parser.add_argument("--db-path", type=str, default=None, help="Custom database output path.")
-    parser.add_argument("--seed", type=int, default=42, help="Deterministic random seed.")
+    parser.add_argument("--seed", type=int, default=20261022, help="Deterministic random seed.")
 
     args = parser.parse_args()
     run_pipeline(target_mode=args.target, db_path=args.db_path, seed=args.seed)

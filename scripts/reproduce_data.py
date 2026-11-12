@@ -26,27 +26,27 @@ def table_hash(db, table_name: str) -> str:
 def main():
     print(f"\n=======================================================")
     print(f"🔄 Deterministic Reproducibility Audit")
-    print(f"Generating two independent databases with Seed=42...")
+    print(f"Generating two independent databases with Seed=20261022...")
     print(f"=======================================================\n")
 
     db1_path = "data/scenarios/reproduce_run_1.db"
     db2_path = "data/scenarios/reproduce_run_2.db"
 
     # Run 1
-    print("[-] Executing Run 1 (Seed 42, Starter scale)...")
-    run_pipeline(target_mode="starter", db_path=db1_path, seed=42)
+    print("[-] Executing Run 1 (Seed 20261022, Starter scale)...")
+    run_pipeline(target_mode="starter", db_path=db1_path, seed=20261022)
 
     # Run 2
-    print("[-] Executing Run 2 (Seed 42, Starter scale)...")
-    run_pipeline(target_mode="starter", db_path=db2_path, seed=42)
+    print("[-] Executing Run 2 (Seed 20261022, Starter scale)...")
+    run_pipeline(target_mode="starter", db_path=db2_path, seed=20261022)
 
     db1 = get_db(db1_path)
     db2 = get_db(db2_path)
 
     tables = [
-        "sellers", "customers", "listings", "orders",
-        "fulfillments", "reviews", "disputes", "order_settlements",
-        "payout_batches", "payout_lines", "anomalies_ground_truth"
+        "sellers", "customers", "listings", "commission_rules", "orders",
+        "order_lines", "fulfillments", "customer_reviews", "disputes",
+        "commission_ledger", "reserve_ledger", "payouts", "payout_lines", "ground_truth"
     ]
 
     all_matched = True

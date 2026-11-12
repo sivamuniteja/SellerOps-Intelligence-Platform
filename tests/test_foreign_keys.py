@@ -24,7 +24,8 @@ def test_foreign_key_enforcement_prevents_orphan(db):
         with db.session() as conn:
             conn.execute(
                 """INSERT INTO orders VALUES (
-                    'ORD-999999', 'CST-NONEXISTENT', 'SLR-NONEXISTENT', 'LST-NONEXISTENT',
-                    '2026-01-01 00:00:00', 1, 50.0, 50.0, 'USD', 'CREDIT_CARD', 'PLACED'
+                    'ORD-2026-999999', 'CUST-NONEXISTENT', '2026-01-01 00:00:00',
+                    5000, 'USD', 'CREDIT_CARD', 'PLACED',
+                    '2026-01-01 00:00:00', '2026-01-01 00:00:00'
                 );"""
             )

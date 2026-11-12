@@ -34,7 +34,6 @@ class IntegrityValidator:
     def check_foreign_keys(self) -> Dict[str, Any]:
         """Audit foreign key references in SQLite."""
         with self.db.session() as conn:
-            # PRAGMA foreign_key_check returns [table, rowid, parent, fkid]
             rows = conn.execute("PRAGMA foreign_key_check;").fetchall()
             violations = [
                 {
@@ -58,11 +57,13 @@ class IntegrityValidator:
             "customers": "customer_id",
             "listings": "listing_id",
             "orders": "order_id",
+            "order_lines": "order_line_id",
             "fulfillments": "fulfillment_id",
-            "reviews": "review_id",
+            "customer_reviews": "review_id",
             "disputes": "dispute_id",
-            "order_settlements": "settlement_id",
-            "payout_batches": "payout_id",
+            "commission_ledger": "entry_id",
+            "reserve_ledger": "entry_id",
+            "payouts": "payout_id",
             "payout_lines": "line_id",
         }
 
@@ -96,11 +97,11 @@ class IntegrityValidator:
             ("sellers", "name"),
             ("sellers", "tier"),
             ("customers", "email"),
-            ("listings", "price"),
-            ("orders", "gross_amount"),
-            ("orders", "order_status"),
-            ("disputes", "disputed_amount"),
-            ("payout_batches", "net_payout_amount"),
+            ("listings", "price_cents"),
+            ("orders", "total_amount_cents"),
+            ("order_lines", "gross_amount_cents"),
+            ("disputes", "disputed_amount_cents"),
+            ("payouts", "net_payout_amount_cents"),
         ]
         violations = []
         with self.db.session() as conn:

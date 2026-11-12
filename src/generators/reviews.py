@@ -1,9 +1,8 @@
-"""Deterministic Customer Review Generator."""
+"""Deterministic Customer Review Generator for Delivered OrderLines."""
 
 import random
 from datetime import datetime, timedelta
 from typing import List, Dict, Any
-
 
 POSITIVE_COMMENTS = [
     "Item arrived faster than expected and in pristine condition!",
@@ -28,32 +27,35 @@ NEGATIVE_COMMENTS = [
 
 
 def generate_reviews(
+    order_lines: List[Dict[str, Any]],
     orders: List[Dict[str, Any]],
     fulfillments: List[Dict[str, Any]],
-    seed: int = 42,
+    seed: int = 20261022,
 ) -> List[Dict[str, Any]]:
     """
-    Generate customer reviews for delivered orders, correlated with fulfillment SLA.
+    Generate customer reviews exclusively for delivered order lines.
+    Correlates review ratings with carrier fulfillment SLA performance.
     """
     rng = random.Random(seed)
     reviews = []
 
-    # Map fulfillment SLA by order_id
-    flf_map = {f["order_id"]: f for f in fulfillments}
+    # Map fulfillment SLA by order_line_id
+    flf_map = {f["order_line_id"]: f for f in fulfillments}
+    order_map = {o["order_id"]: o for o in orders}
 
-    delivered_orders = [o for o in orders if o["order_status"] in ("DELIVERED", "RETURNED")]
+    delivered_lines = [l for l in order_lines if l["line_status"] in ("DELIVERED", "RETURNED")]
 
     rev_idx = 1
-    for order in delivered_orders:
-        # Sample ~40% of delivered orders to leave a review
-        if rng.random() > 0.40:
+    for line in delivered_lines:
+        # Sample ~35% of delivered lines to leave a review
+        if rng.random() > 0.35:
             continue
 
-        flf = flf_map.get(order["order_id"])
+        flf = flf_map.get(line["order_line_id"])
+        order = order_map[line["order_id"]]
         is_late = flf and flf.get("sla_status") == "LATE"
 
         if is_late:
-            # Skewed low rating
             roll = rng.random()
             if roll < 0.45:
                 rating = 1
@@ -68,7 +70,6 @@ def generate_reviews(
                 rating = 4
                 comment = rng.choice(POSITIVE_COMMENTS)
         else:
-            # Skewed high rating
             roll = rng.random()
             if roll < 0.70:
                 rating = 5
@@ -83,13 +84,16 @@ def generate_reviews(
                 rating = rng.choice([1, 2])
                 comment = rng.choice(NEGATIVE_COMMENTS)
 
-        delivered_at_str = flf.get("delivered_at") if flf else order["order_date"]
-        deliv_dt = datetime.strptime(delivered_at_str, "%Y-%m-%d %H:%M:%S") if delivered_at_str else datetime.strptime(order["order_date"], "%Y-%m-%d %H:%M:%S")
+        deliv_str = flf.get("delivered_at") if flf and flf.get("delivered_at") else order["order_date"]
+        deliv_dt = datetime.strptime(deliv_str, "%Y-%m-%d %H:%M:%S")
         review_dt = deliv_dt + timedelta(days=rng.randint(1, 10), hours=rng.randint(0, 23))
 
         reviews.append({
-            "review_id": f"REV-{rev_idx:06d}",
-            "order_id": order["order_id"],
+            "review_id": f"REV-2026-{rev_idx:06d}",
+            "order_line_id": line["order_line_id"],
+            "order_id": line["order_id"],
+            "seller_id": line["seller_id"],
+            "customer_id": order["customer_id"],
             "rating": rating,
             "comment": comment,
             "created_at": review_dt.strftime("%Y-%m-%d %H:%M:%S"),

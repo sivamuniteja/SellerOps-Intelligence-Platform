@@ -1,8 +1,8 @@
-"""Deterministic Seller Generator for SellerOps Intelligence Platform."""
+"""Deterministic Seller & Status Event Generator for SellerOps Intelligence Platform."""
 
 import random
 from datetime import datetime, timedelta
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Tuple
 from src.config import PlatformConfig
 
 try:
@@ -23,14 +23,11 @@ LAST_NAMES = [
     "Market", "Outlet", "Brands", "Wholesale", "Global", "Solutions", "Depot", "Hub"
 ]
 
-CITIES = ["New York", "Los Angeles", "Chicago", "Houston", "Phoenix", "Philadelphia", "Dallas", "Austin"]
-STATES = ["NY", "CA", "IL", "TX", "AZ", "PA", "TX", "TX"]
 
-
-def generate_sellers(count: int, config: PlatformConfig, seed: int = 42) -> List[Dict[str, Any]]:
+def generate_sellers(count: int, config: PlatformConfig, seed: int = 20261022) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
     """
-    Generate deterministic seller records.
-    Tiers: ENTERPRISE (10%), PREFERRED (25%), STANDARD (58%), PROBATION (4%), SUSPENDED (3%).
+    Generate deterministic seller records and immutable status audit events.
+    Returns (sellers, seller_status_events).
     """
     rng = random.Random(seed)
     fake = None
@@ -39,10 +36,12 @@ def generate_sellers(count: int, config: PlatformConfig, seed: int = 42) -> List
         fake = Faker()
 
     sellers = []
+    status_events = []
     base_date = datetime(2024, 1, 1, 0, 0, 0)
+    event_idx = 1
 
     for i in range(1, count + 1):
-        seller_id = f"SLR-{i:05d}"
+        seller_id = f"SELL-{i:06d}"
         if fake:
             company_name = f"{fake.company()} {rng.randint(10, 99)}"
         else:
@@ -75,8 +74,9 @@ def generate_sellers(count: int, config: PlatformConfig, seed: int = 42) -> List
             risk_score = round(rng.uniform(75.0, 98.0), 1)
             rating = round(rng.uniform(2.4, 3.8), 2)
 
-        onboarding_days = rng.randint(0, 700)
-        onboarding_date = base_date + timedelta(days=onboarding_days)
+        onboarding_days = rng.randint(0, 500)
+        onboarding_date = base_date + timedelta(days=onboarding_days, hours=rng.randint(8, 17))
+        onboarding_str = onboarding_date.strftime("%Y-%m-%d %H:%M:%S")
 
         sellers.append({
             "seller_id": seller_id,
@@ -85,10 +85,36 @@ def generate_sellers(count: int, config: PlatformConfig, seed: int = 42) -> List
             "status": status,
             "risk_score": risk_score,
             "rating": rating,
-            "onboarding_date": onboarding_date.strftime("%Y-%m-%d %H:%M:%S"),
+            "onboarding_date": onboarding_str,
             "bank_account_verified": 1,
             "country": "USA",
-            "created_at": onboarding_date.strftime("%Y-%m-%d %H:%M:%S"),
+            "created_at": onboarding_str,
+            "updated_at": onboarding_str,
         })
 
-    return sellers
+        # Event 1: Initial KYC & Onboarding Event
+        status_events.append({
+            "event_id": f"SSE-{event_idx:06d}",
+            "seller_id": seller_id,
+            "previous_status": "UNDER_REVIEW",
+            "new_status": "ACTIVE",
+            "reason": "Completed initial merchant KYC and banking verification",
+            "created_at": onboarding_str,
+        })
+        event_idx += 1
+
+        # Event 2: If currently PROBATION or SUSPENDED, record transition event
+        if status in ("PROBATION", "SUSPENDED"):
+            transition_dt = onboarding_date + timedelta(days=rng.randint(30, 90), hours=rng.randint(1, 10))
+            reason = "Late shipment rate exceeded threshold 4.0%" if status == "PROBATION" else "Order defect rate exceeded 1.0%; repeated customer chargebacks"
+            status_events.append({
+                "event_id": f"SSE-{event_idx:06d}",
+                "seller_id": seller_id,
+                "previous_status": "ACTIVE",
+                "new_status": status,
+                "reason": reason,
+                "created_at": transition_dt.strftime("%Y-%m-%d %H:%M:%S"),
+            })
+            event_idx += 1
+
+    return sellers, status_events
