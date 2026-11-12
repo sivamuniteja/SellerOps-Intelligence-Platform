@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-11-12T21:36:19.066104",
+  "generated_at": "2026-11-12T21:40:20.047177",
   "target_mode": "full",
   "seed": 42,
-  "execution_seconds": 6.59,
+  "execution_seconds": 7.74,
   "counts": {
     "sellers": 2000,
     "customers": 10000,
@@ -12,8 +12,8 @@
     "reviews": 35812,
     "disputes": 10000,
     "settlements": 100000,
-    "payout_batches": 1967,
-    "payout_lines": 55457,
+    "payout_batches": 1975,
+    "payout_lines": 55651,
     "ground_truth_anomalies": 115
   },
   "anomalies_breakdown": {

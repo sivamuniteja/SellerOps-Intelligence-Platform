@@ -5,6 +5,12 @@ from datetime import datetime, timedelta
 from typing import List, Dict, Any
 from src.config import PlatformConfig
 
+try:
+    from faker import Faker
+    _HAS_FAKER = True
+except ImportError:
+    _HAS_FAKER = False
+
 
 FIRST_NAMES = [
     "Apex", "Prime", "Summit", "Nexus", "Beacon", "Vanguard", "Horizon", "Pinnacle",
@@ -27,12 +33,20 @@ def generate_sellers(count: int, config: PlatformConfig, seed: int = 42) -> List
     Tiers: ENTERPRISE (10%), PREFERRED (25%), STANDARD (58%), PROBATION (4%), SUSPENDED (3%).
     """
     rng = random.Random(seed)
+    fake = None
+    if _HAS_FAKER:
+        Faker.seed(seed)
+        fake = Faker()
+
     sellers = []
     base_date = datetime(2024, 1, 1, 0, 0, 0)
 
     for i in range(1, count + 1):
         seller_id = f"SLR-{i:05d}"
-        company_name = f"{rng.choice(FIRST_NAMES)} {rng.choice(LAST_NAMES)} {rng.randint(10, 99)}"
+        if fake:
+            company_name = f"{fake.company()} {rng.randint(10, 99)}"
+        else:
+            company_name = f"{rng.choice(FIRST_NAMES)} {rng.choice(LAST_NAMES)} {rng.randint(10, 99)}"
 
         roll = rng.random()
         if roll < 0.10:
