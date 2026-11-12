@@ -3,14 +3,25 @@
 import streamlit as st
 import plotly.express as px
 import pandas as pd
-from dashboard.theme import apply_theme, get_database, render_metric_card, apply_plotly_white_layout, COLORS
+from dashboard.theme import (
+    apply_theme,
+    get_database,
+    render_metric_card,
+    render_page_header,
+    render_empty_state,
+    apply_plotly_white_layout,
+    COLORS,
+)
 
 st.set_page_config(page_title="Sellers Console - SellerOps", page_icon="👥", layout="wide")
 apply_theme()
 db = get_database()
 
-st.title("Seller Operations & Risk Management")
-st.markdown("Monitor 2,000 sellers across SLA performance tiers, risk scores, and probation statuses.")
+render_page_header(
+    title="Seller Operations & Risk Management",
+    subtitle="Monitor 2,000 sellers across SLA performance tiers, risk scores, and probation statuses.",
+    badge="2,000 Managed Sellers",
+)
 
 # Tier counts
 tier_df = db.query_df("""
@@ -39,88 +50,88 @@ with t5:
 
 st.markdown("---")
 
+# Filter Controls
+st.markdown("#### Filter Seller Directory")
+f_col1, f_col2, f_col3 = st.columns([1, 1, 2])
+with f_col1:
+    all_tiers = list(tier_counts.keys())
+    selected_tiers = st.multiselect("Seller Tier", all_tiers, default=all_tiers)
+with f_col2:
+    all_statuses = ["ACTIVE", "PROBATION", "SUSPENDED", "UNDER_REVIEW"]
+    selected_statuses = st.multiselect("Seller Status", all_statuses, default=all_statuses)
+with f_col3:
+    risk_range = st.slider("Risk Score Range (0 - 100)", 0.0, 100.0, (0.0, 100.0), step=1.0)
+
 col_hist, col_scatter = st.columns(2)
 
 with col_hist:
     st.subheader("Seller Risk Score Distribution (0 - 100)")
-    sellers_df = db.query_df("SELECT seller_id, name, tier, status, risk_score, rating FROM sellers;")
-    fig_hist = px.histogram(
-        sellers_df,
-        x="risk_score",
-        nbins=25,
-        color="tier",
-        color_discrete_map={
-            "ENTERPRISE": COLORS["primary"],
-            "PREFERRED": COLORS["success"],
-            "STANDARD": COLORS["text_secondary"],
-            "PROBATION": COLORS["warning"],
-            "SUSPENDED": COLORS["danger"],
-        },
-        labels={"risk_score": "Risk Score", "count": "Seller Count"},
-    )
-    apply_plotly_white_layout(fig_hist)
-    st.plotly_chart(fig_hist, use_container_width=True)
+    sellers_df = db.query_df("SELECT seller_id, name, tier, status, risk_score, rating, onboarding_date FROM sellers;")
+    filtered_sellers = sellers_df[
+        (sellers_df["tier"].isin(selected_tiers))
+        & (sellers_df["status"].isin(selected_statuses))
+        & (sellers_df["risk_score"] >= risk_range[0])
+        & (sellers_df["risk_score"] <= risk_range[1])
+    ]
+
+    if not filtered_sellers.empty:
+        fig_hist = px.histogram(
+            filtered_sellers,
+            x="risk_score",
+            nbins=25,
+            color="tier",
+            color_discrete_map={
+                "ENTERPRISE": COLORS["primary"],
+                "PREFERRED": COLORS["success"],
+                "STANDARD": COLORS["text_secondary"],
+                "PROBATION": COLORS["warning"],
+                "SUSPENDED": COLORS["danger"],
+            },
+            labels={"risk_score": "Risk Score", "count": "Seller Count"},
+        )
+        apply_plotly_white_layout(fig_hist)
+        st.plotly_chart(fig_hist, use_container_width=True)
+    else:
+        render_empty_state("No Sellers Match Filters", "Adjust tier or status filters above.")
 
 with col_scatter:
     st.subheader("Customer Rating vs Risk Score")
-    fig_scatter = px.scatter(
-        sellers_df.sample(min(500, len(sellers_df))),
-        x="risk_score",
-        y="rating",
-        color="tier",
-        hover_data=["seller_id", "name"],
-        color_discrete_map={
-            "ENTERPRISE": COLORS["primary"],
-            "PREFERRED": COLORS["success"],
-            "STANDARD": COLORS["text_secondary"],
-            "PROBATION": COLORS["warning"],
-            "SUSPENDED": COLORS["danger"],
-        },
-        labels={"risk_score": "Risk Score", "rating": "Seller Rating (1-5)"},
-    )
-    apply_plotly_white_layout(fig_scatter)
-    st.plotly_chart(fig_scatter, use_container_width=True)
+    if not filtered_sellers.empty:
+        sample_size = min(500, len(filtered_sellers))
+        fig_scatter = px.scatter(
+            filtered_sellers.sample(sample_size, random_state=42),
+            x="risk_score",
+            y="rating",
+            color="tier",
+            color_discrete_map={
+                "ENTERPRISE": COLORS["primary"],
+                "PREFERRED": COLORS["success"],
+                "STANDARD": COLORS["text_secondary"],
+                "PROBATION": COLORS["warning"],
+                "SUSPENDED": COLORS["danger"],
+            },
+            labels={"risk_score": "Risk Score", "rating": "Avg Customer Rating (1-5)"},
+        )
+        apply_plotly_white_layout(fig_scatter)
+        st.plotly_chart(fig_scatter, use_container_width=True)
+    else:
+        render_empty_state("No Scatter Data", "Select at least one tier to view rating correlation.")
 
 st.markdown("---")
-st.subheader("Seller Directory & Audit Explorer")
 
-# Filter controls
-f1, f2, f3 = st.columns(3)
-with f1:
-    selected_tier = st.selectbox("Filter by Tier", ["ALL"] + sorted(list(sellers_df["tier"].unique())))
-with f2:
-    selected_status = st.selectbox("Filter by Status", ["ALL"] + sorted(list(sellers_df["status"].unique())))
-with f3:
-    search_query = st.text_input("Search Seller ID or Name", "")
-
-query = """
-    SELECT
-        s.seller_id,
-        s.name,
-        s.tier,
-        s.status,
-        s.risk_score,
-        s.rating,
-        s.country,
-        s.onboarding_date,
-        COUNT(o.order_id) as total_orders,
-        COALESCE(ROUND(SUM(o.gross_amount), 2), 0.0) as gmv
-    FROM sellers s
-    LEFT JOIN orders o ON s.seller_id = o.seller_id
-    WHERE 1=1
-"""
-params = []
-if selected_tier != "ALL":
-    query += " AND s.tier = ?"
-    params.append(selected_tier)
-if selected_status != "ALL":
-    query += " AND s.status = ?"
-    params.append(selected_status)
-if search_query:
-    query += " AND (s.seller_id LIKE ? OR s.name LIKE ?)"
-    params.extend([f"%{search_query}%", f"%{search_query}%"])
-
-query += " GROUP BY s.seller_id ORDER BY s.risk_score DESC LIMIT 200;"
-
-table_df = db.query_df(query, tuple(params))
-st.dataframe(table_df, use_container_width=True)
+# Seller Table
+st.subheader("Filtered Seller Directory")
+if not filtered_sellers.empty:
+    st.dataframe(
+        filtered_sellers.sort_values(by="risk_score", ascending=False).head(100),
+        use_container_width=True,
+    )
+    csv_sellers = filtered_sellers.to_csv(index=False).encode("utf-8")
+    st.download_button(
+        label="⬇️ Download Filtered Sellers (CSV)",
+        data=csv_sellers,
+        file_name="sellers_directory.csv",
+        mime="text/csv",
+    )
+else:
+    render_empty_state()

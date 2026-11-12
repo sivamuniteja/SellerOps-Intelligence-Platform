@@ -2,7 +2,14 @@
 
 import streamlit as st
 import pandas as pd
-from dashboard.theme import apply_theme, get_database, render_metric_card
+from dashboard.theme import (
+    apply_theme,
+    get_database,
+    render_metric_card,
+    render_page_header,
+    render_empty_state,
+    COLORS,
+)
 from src.validation.integrity import IntegrityValidator
 from src.validation.lifecycle import LifecycleValidator
 
@@ -10,8 +17,11 @@ st.set_page_config(page_title="Data Quality - SellerOps", page_icon="🛡️", l
 apply_theme()
 db = get_database()
 
-st.title("Data Quality & Referential Integrity")
-st.markdown("Automated validation of relational schema constraints, foreign key cascades, and temporal lifecycle chronology.")
+render_page_header(
+    title="Data Quality & Referential Integrity",
+    subtitle="Automated validation of relational schema constraints, foreign key cascades, and temporal lifecycle chronology.",
+    badge="Schema Audit",
+)
 
 # Run live integrity checks
 iv = IntegrityValidator(db).check_all()
@@ -33,15 +43,18 @@ col_tbl, col_meta = st.columns([3, 2])
 
 with col_tbl:
     st.subheader("Relational Database Tables Inventory")
-    table_names = [
-        "sellers", "customers", "listings", "orders",
-        "fulfillments", "reviews", "disputes", "order_settlements",
-        "payout_batches", "payout_lines", "anomalies_ground_truth"
-    ]
+    with db.session() as conn:
+        cursor = conn.execute("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' ORDER BY name;")
+        tables = [r[0] for r in cursor.fetchall()]
+
     inventory = []
-    for t in table_names:
+    for t in tables:
         cnt = db.row_count(t)
-        inventory.append({"Table Name": t, "Row Count": f"{cnt:,}", "Primary Key": t[:-1] + "_id" if not t.endswith("es") else t[:-2] + "_id", "Integrity Status": "VALID ✅"})
+        inventory.append({
+            "Table Name": t,
+            "Row Count": f"{cnt:,}",
+            "Integrity Status": "VALID ✅",
+        })
 
     st.dataframe(pd.DataFrame(inventory), use_container_width=True)
 
@@ -50,30 +63,23 @@ with col_meta:
     with db.session() as conn:
         fk_status = conn.execute("PRAGMA foreign_keys;").fetchone()[0]
         journal_mode = conn.execute("PRAGMA journal_mode;").fetchone()[0]
-        sync_mode = conn.execute("PRAGMA synchronous;").fetchone()[0]
+        page_size = conn.execute("PRAGMA page_size;").fetchone()[0]
+        encoding = conn.execute("PRAGMA encoding;").fetchone()[0]
 
     st.markdown(
         f"""
-        - **`PRAGMA foreign_keys`**: `{'ENABLED (1)' if fk_status else 'DISABLED'}`
-        - **`PRAGMA journal_mode`**: `{journal_mode.upper()}`
-        - **`PRAGMA synchronous`**: `{sync_mode}`
-        - **Storage Engine**: SQLite 3 with ACID transactions
-        - **Target Database Path**: `data/sellerops.db`
-        """
+        <div class="metric-card" style="margin-top: 10px;">
+            <div style="margin-bottom: 8px;"><b>Foreign Keys Enforced:</b> <span class="badge badge-success">{'ENABLED (1)' if fk_status == 1 else 'DISABLED'}</span></div>
+            <div style="margin-bottom: 8px;"><b>Journal Mode:</b> <span class="badge badge-info">{journal_mode.upper()}</span></div>
+            <div style="margin-bottom: 8px;"><b>Database Page Size:</b> <span class="badge badge-neutral">{page_size} bytes</span></div>
+            <div style="margin-bottom: 0;"><b>Text Encoding:</b> <span class="badge badge-neutral">{encoding}</span></div>
+        </div>
+        """,
+        unsafe_allow_html=True,
     )
-    st.success("All SQLite integrity pragmas are actively enforced.")
 
-st.markdown("---")
-st.subheader("Foreign Key Cross-Reference Matrix")
-fk_matrix = pd.DataFrame([
-    {"Child Table": "listings", "Foreign Key": "seller_id", "Parent Table": "sellers", "Cascade Rule": "CASCADE"},
-    {"Child Table": "orders", "Foreign Key": "customer_id", "Parent Table": "customers", "Cascade Rule": "RESTRICT"},
-    {"Child Table": "orders", "Foreign Key": "seller_id", "Parent Table": "sellers", "Cascade Rule": "RESTRICT"},
-    {"Child Table": "orders", "Foreign Key": "listing_id", "Parent Table": "listings", "Cascade Rule": "RESTRICT"},
-    {"Child Table": "fulfillments", "Foreign Key": "order_id", "Parent Table": "orders", "Cascade Rule": "CASCADE"},
-    {"Child Table": "reviews", "Foreign Key": "order_id", "Parent Table": "orders", "Cascade Rule": "CASCADE"},
-    {"Child Table": "disputes", "Foreign Key": "order_id", "Parent Table": "orders", "Cascade Rule": "RESTRICT"},
-    {"Child Table": "order_settlements", "Foreign Key": "order_id", "Parent Table": "orders", "Cascade Rule": "RESTRICT"},
-    {"Child Table": "payout_lines", "Foreign Key": "payout_id", "Parent Table": "payout_batches", "Cascade Rule": "CASCADE"},
-])
-st.dataframe(fk_matrix, use_container_width=True)
+    st.markdown("#### Schema Version Migrations")
+    with db.session() as conn:
+        if db.table_exists("schema_migrations"):
+            mig_df = pd.read_sql_query("SELECT version, description, applied_at FROM schema_migrations ORDER BY version DESC;", conn)
+            st.dataframe(mig_df, use_container_width=True)

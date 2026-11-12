@@ -3,24 +3,42 @@
 import streamlit as st
 import pandas as pd
 import json
-from dashboard.theme import apply_theme, get_database, render_metric_card
-from src.exports.csv_export import CsvExporter
-from src.exports.json_export import JsonExporter
+from pathlib import Path
+from dashboard.theme import (
+    apply_theme,
+    get_database,
+    render_metric_card,
+    render_page_header,
+    COLORS,
+)
 
 st.set_page_config(page_title="Reports & Exports - SellerOps", page_icon="📄", layout="wide")
 apply_theme()
 db = get_database()
 
-st.title("Reports & Multi-Format Data Exports")
-st.markdown("Download enterprise operational datasets, financial audit logs, and compliance summaries in CSV, JSON, and SQL.")
+render_page_header(
+    title="Reports & Multi-Format Data Exports",
+    subtitle="Download enterprise operational datasets, financial audit logs, and compliance summaries in CSV, JSON, and SQL.",
+    badge="Exports Hub",
+)
+
+# Table names from schema
+all_tables = [
+    "sellers", "customers", "listings", "commission_rules",
+    "orders", "order_lines", "fulfillments", "customer_reviews",
+    "disputes", "commission_ledger", "reserve_ledger",
+    "refunds", "payouts", "payout_lines", "ground_truth"
+]
+
+total_rows = sum(db.row_count(t) for t in all_tables if db.table_exists(t))
 
 c1, c2, c3 = st.columns(3)
 with c1:
-    render_metric_card("Export Formats", "CSV / JSON / SQL", "Standard Formats")
+    render_metric_card("Export Formats", "CSV / JSON / SQL", "Standard Data Formats")
 with c2:
-    render_metric_card("Tables Available", "11 Tables", "Full Relational Schema")
+    render_metric_card("Tables Available", f"{len(all_tables)} Tables", "Full Relational Schema")
 with c3:
-    render_metric_card("Total Relational Rows", f"{db.row_count('orders') + db.row_count('fulfillments') + db.row_count('listings'):,}+", "Ready to Stream")
+    render_metric_card("Total Relational Rows", f"{total_rows:,}", "Ready to Stream")
 
 st.markdown("---")
 
@@ -30,11 +48,8 @@ with col_export:
     st.subheader("1. Download Table Datasets")
     table_to_export = st.selectbox(
         "Select Table to Export",
-        [
-            "sellers", "listings", "orders", "fulfillments",
-            "reviews", "disputes", "order_settlements",
-            "payout_batches", "payout_lines", "anomalies_ground_truth"
-        ]
+        all_tables,
+        index=0,
     )
 
     limit_rows = st.number_input("Maximum Rows (0 for all)", min_value=0, max_value=100000, value=1000, step=500)
@@ -42,62 +57,47 @@ with col_export:
 
     export_df = db.query_df(f"SELECT * FROM {table_to_export}{limit_clause};")
 
+    st.write(f"Previewing **{table_to_export}** ({len(export_df):,} rows):")
+    st.dataframe(export_df.head(10), use_container_width=True)
+
     csv_data = export_df.to_csv(index=False).encode("utf-8")
     json_data = export_df.to_json(orient="records", indent=2).encode("utf-8")
 
-    st.download_button(
-        label=f"⬇️ Download {table_to_export}.csv",
-        data=csv_data,
-        file_name=f"{table_to_export}.csv",
-        mime="text/csv",
-        use_container_width=True,
-    )
-
-    st.download_button(
-        label=f"⬇️ Download {table_to_export}.json",
-        data=json_data,
-        file_name=f"{table_to_export}.json",
-        mime="application/json",
-        use_container_width=True,
-    )
-
-with col_summary:
-    st.subheader("2. Operational Executive Summary Report")
-    st.markdown("Generate a consolidated operational report with high-level marketplace metrics.")
-
-    if st.button("Generate Consolidated Executive Report", use_container_width=True):
-        summary_q = """
-            SELECT
-                (SELECT COUNT(*) FROM sellers) as total_sellers,
-                (SELECT COUNT(*) FROM listings) as total_listings,
-                (SELECT COUNT(*) FROM orders) as total_orders,
-                (SELECT ROUND(SUM(gross_amount), 2) FROM orders) as total_gmv,
-                (SELECT ROUND(SUM(commission_amount), 2) FROM order_settlements) as total_commission,
-                (SELECT COUNT(*) FROM disputes) as total_disputes,
-                (SELECT COUNT(*) FROM anomalies_ground_truth) as total_anomalies;
-        """
-        exec_df = db.query_df(summary_q)
-        st.dataframe(exec_df, use_container_width=True)
-
-        exec_json = exec_df.to_json(orient="records", indent=2)
+    d_col1, d_col2 = st.columns(2)
+    with d_col1:
         st.download_button(
-            label="⬇️ Download Executive Summary (JSON)",
-            data=exec_json,
-            file_name="sellerops_executive_summary.json",
+            label=f"⬇️ Download {table_to_export}.csv",
+            data=csv_data,
+            file_name=f"{table_to_export}.csv",
+            mime="text/csv",
+        )
+    with d_col2:
+        st.download_button(
+            label=f"⬇️ Download {table_to_export}.json",
+            data=json_data,
+            file_name=f"{table_to_export}.json",
             mime="application/json",
-            use_container_width=True,
         )
 
-st.markdown("---")
-st.subheader("3. Anomaly & Audit Report Export")
-st.markdown("Export the complete ground-truth registry along with detection audit trails:")
+with col_summary:
+    st.subheader("2. Compliance & Validation Report")
+    st.markdown(
+        """
+        Download the official machine-readable validation report generated by the
+        `FullPlatformValidator` suite covering all 14 dimensions and 5 anomaly scenarios.
+        """
+    )
+    val_report_path = Path("data/validation_report.json")
+    if val_report_path.exists():
+        with open(val_report_path, "r", encoding="utf-8") as f:
+            val_json = f.read()
 
-anomalies_df = db.query_df("SELECT * FROM anomalies_ground_truth;")
-ano_csv = anomalies_df.to_csv(index=False).encode("utf-8")
-
-st.download_button(
-    label="⬇️ Download All 115 Operational Anomalies (CSV)",
-    data=ano_csv,
-    file_name="operational_anomalies_audit.csv",
-    mime="text/csv",
-)
+        st.download_button(
+            label="⬇️ Download Validation Audit Report (JSON)",
+            data=val_json.encode("utf-8"),
+            file_name="validation_report.json",
+            mime="application/json",
+        )
+        st.json(json.loads(val_json).get("metadata", {}))
+    else:
+        st.info("Run `python3 scripts/validate_data.py` to generate the validation report.")
