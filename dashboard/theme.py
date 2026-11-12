@@ -1,15 +1,50 @@
 """Enterprise White Theme and Reusable UI Components for SellerOps Dashboard."""
 
 import streamlit as st
+import streamlit.components.v1 as components
 import plotly.graph_objects as go
 import plotly.express as px
 from pathlib import Path
 from typing import Optional, Dict, Any
+import base64
 import sys
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from src.database.connection import get_db
 from src.currency import format_inr, format_inr_paise, from_paise, to_paise
+
+LOGO_PATH = Path(__file__).parent / "assets" / "yottaflex_logo.png"
+
+EXPAND_NAV_SCRIPT = """
+<script>
+(function() {
+    function autoExpandNav() {
+        try {
+            const pDoc = window.parent ? window.parent.document : document;
+            const btn = pDoc.querySelector('[data-testid="stSidebarNavViewButton"] button');
+            if (btn && btn.innerText && btn.innerText.toLowerCase().includes('more')) {
+                btn.click();
+            }
+        } catch(e) {}
+    }
+    autoExpandNav();
+    setTimeout(autoExpandNav, 50);
+    setTimeout(autoExpandNav, 150);
+    setTimeout(autoExpandNav, 300);
+    setTimeout(autoExpandNav, 600);
+    setTimeout(autoExpandNav, 1200);
+})();
+</script>
+"""
+
+
+@st.cache_data
+def get_yottaflex_logo_base64() -> str:
+    """Load and cache the uploaded YottaFlex logo as base64 string."""
+    if LOGO_PATH.exists():
+        with open(LOGO_PATH, "rb") as f:
+            return base64.b64encode(f.read()).decode("utf-8")
+    return ""
 
 
 def format_inr_rupees(amount: float, compact: bool = False) -> str:
@@ -185,14 +220,33 @@ CUSTOM_CSS = """
         background-color: #FFFFFF !important;
     }
 
-    /* Expand all navigation items without 'View more / View less' truncation */
+    /* Expand all navigation items and style the view more button */
     [data-testid="stSidebarNavItems"] {
         max-height: none !important;
         gap: 3px !important;
     }
 
     [data-testid="stSidebarNavViewButton"] {
-        display: none !important;
+        margin-top: 6px !important;
+        padding: 0 4px !important;
+    }
+
+    [data-testid="stSidebarNavViewButton"] button {
+        background-color: #EFF6FF !important;
+        border: 1px solid #BFDBFE !important;
+        border-radius: 6px !important;
+        color: #2563EB !important;
+        font-weight: 600 !important;
+        font-size: 0.80rem !important;
+        padding: 6px 12px !important;
+        width: 100% !important;
+        cursor: pointer !important;
+        transition: all 0.15s ease !important;
+    }
+
+    [data-testid="stSidebarNavViewButton"] button:hover {
+        background-color: #DBEAFE !important;
+        border-color: #93C5FD !important;
     }
 
     /* Navigation links typography and active state */
@@ -492,6 +546,7 @@ CUSTOM_CSS = """
 def apply_theme():
     """Inject pure white enterprise CSS into the active Streamlit page."""
     st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
+    components.html(EXPAND_NAV_SCRIPT, height=0, width=0)
     render_sidebar_branding()
 
 
@@ -503,15 +558,22 @@ def get_database():
 
 def render_sidebar_branding():
     """Render standardized platform branding at the top of the sidebar."""
+    logo_b64 = get_yottaflex_logo_base64()
+    if logo_b64:
+        logo_html = f'<img src="data:image/png;base64,{logo_b64}" width="52" height="52" style="border-radius: 8px; object-fit: contain; flex-shrink: 0; display: block; background-color: #FFFFFF;" alt="YottaFlex Logo">'
+    else:
+        logo_html = '<div style="background-color: #2563EB; width: 48px; height: 48px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 20px;">YF</div>'
+
     with st.sidebar:
         st.markdown(
-            """
-            <div class="sidebar-brand-card" style="padding: 6px 4px 14px 4px; border-bottom: 1px solid #E2E8F0; margin-bottom: 10px;">
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <div style="background-color: #2563EB; width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 18px; box-shadow: 0 2px 4px rgba(37,99,235,0.25); flex-shrink: 0;">⚡</div>
-                    <div style="display: flex; flex-direction: column;">
-                        <div style="font-weight: 700; font-size: 1.15rem; color: #111827; line-height: 1.15; letter-spacing: -0.01em;">SellerOps</div>
-                        <div style="font-size: 0.65rem; color: #64748B; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; line-height: 1.2; margin-top: 2px;">INTELLIGENCE PLATFORM</div>
+            f"""
+            <div class="sidebar-brand-card" style="padding: 4px 2px 14px 2px; border-bottom: 1px solid #E2E8F0; margin-bottom: 12px; background-color: #FFFFFF;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    {logo_html}
+                    <div style="display: flex; flex-direction: column; justify-content: center;">
+                        <div style="font-weight: 800; font-size: 1.15rem; color: #1E40AF; line-height: 1.15; letter-spacing: -0.01em;">YottaFlex</div>
+                        <div style="font-weight: 700; font-size: 0.96rem; color: #111827; line-height: 1.15; margin-top: 2px;">SellerOps</div>
+                        <div style="font-size: 0.60rem; color: #64748B; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; line-height: 1.2; margin-top: 2px;">INTELLIGENCE PLATFORM</div>
                     </div>
                 </div>
             </div>
@@ -605,14 +667,14 @@ def apply_plotly_white_layout(fig, title: Optional[str] = None):
             gridcolor="#F1F5F9",
             linecolor="#E2E8F0",
             tickfont=dict(color="#64748B", size=11),
-            titlefont=dict(color="#475569", size=12),
+            title=dict(font=dict(color="#475569", size=12)),
         ),
         yaxis=dict(
             showgrid=True,
             gridcolor="#F1F5F9",
             linecolor="#E2E8F0",
             tickfont=dict(color="#64748B", size=11),
-            titlefont=dict(color="#475569", size=12),
+            title=dict(font=dict(color="#475569", size=12)),
         ),
         legend=dict(
             font=dict(color="#111827", size=11),
