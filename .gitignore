@@ -47,5 +47,9 @@ htmlcov/
 .DS_Store
 Thumbs.db
 
-# Streamlit
+# Large Generated Export Data Dumps
+data/exports/csv/
+data/exports/json/
+data/exports/sql/
+
 .streamlit/secrets.toml

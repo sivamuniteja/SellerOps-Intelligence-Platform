@@ -321,7 +321,10 @@ def run_pipeline(
     print(f"\n✅ Pipeline completed successfully in {elapsed} seconds!")
 
     # 15. Generate Standalone Ground Truth Exports (ground_truth.csv and ground_truth.json)
-    data_dir = Path(__file__).parent.parent / "data"
+    if db_path is not None and Path(db_path).resolve() != Path(default_db_path).resolve():
+        data_dir = Path(db_path).parent
+    else:
+        data_dir = Path(__file__).parent.parent / "data"
     gt_df = pd.DataFrame(all_ground_truth)
     gt_df.to_csv(data_dir / "ground_truth.csv", index=False)
     with open(data_dir / "ground_truth.json", "w", encoding="utf-8") as f:
@@ -346,7 +349,10 @@ def run_pipeline(
         table_checksums[ct] = compute_table_checksum(db, ct)[:16]
 
     # 17. Manifests
-    manifest_dir = Path(__file__).parent.parent / "manifests"
+    if db_path is not None and Path(db_path).resolve() != Path(default_db_path).resolve():
+        manifest_dir = Path(db_path).parent / "manifests"
+    else:
+        manifest_dir = Path(__file__).parent.parent / "manifests"
     manifest_dir.mkdir(parents=True, exist_ok=True)
 
     summary_data = {

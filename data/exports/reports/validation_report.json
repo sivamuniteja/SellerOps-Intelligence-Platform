@@ -1,0 +1,3211 @@
+{
+  "metadata": {
+    "report_timestamp": "2026-11-12T23:30:44.910848",
+    "database_path": "data/sellerops.db",
+    "total_checks_evaluated": 14,
+    "passed_checks_count": 11,
+    "failed_checks_count": 3,
+    "core_integrity_valid": true
+  },
+  "validation_dimensions": {
+    "primary_key_uniqueness": {
+      "passed": true,
+      "violations_count": 0,
+      "details": []
+    },
+    "foreign_key_integrity": {
+      "passed": true,
+      "violations_count": 0,
+      "details": []
+    },
+    "id_formats": {
+      "passed": true,
+      "violations_count": 0,
+      "details": []
+    },
+    "required_values": {
+      "passed": true,
+      "violations_count": 0,
+      "details": []
+    },
+    "enum_validation": {
+      "passed": true,
+      "violations_count": 0,
+      "details": []
+    },
+    "date_ordering": {
+      "passed": true,
+      "violations_count": 0,
+      "details": {
+        "fulfillment_chronology": [],
+        "dispute_chronology": [],
+        "reserve_hold_chronology": []
+      }
+    },
+    "order_total_reconciliation": {
+      "passed": true,
+      "discrepancy_count": 0,
+      "details": []
+    },
+    "commission_correctness": {
+      "passed": false,
+      "discrepancy_count": 25,
+      "details": [
+        {
+          "entry_id": "CML-000001",
+          "order_line_id": "ORDLN-2026-000001-01",
+          "seller_id": "SELL-000238",
+          "gross_amount_cents": 7220,
+          "rate_basis_points": 1100,
+          "variable_fee_cents": 794,
+          "fixed_fee_cents": 30,
+          "total_commission_cents": 1648,
+          "expected_total_cents": 824,
+          "variance_cents": 824
+        },
+        {
+          "entry_id": "CML-000002",
+          "order_line_id": "ORDLN-2026-000002-01",
+          "seller_id": "SELL-001816",
+          "gross_amount_cents": 3470,
+          "rate_basis_points": 900,
+          "variable_fee_cents": 312,
+          "fixed_fee_cents": 30,
+          "total_commission_cents": 684,
+          "expected_total_cents": 342,
+          "variance_cents": 342
+        },
+        {
+          "entry_id": "CML-000003",
+          "order_line_id": "ORDLN-2026-000003-01",
+          "seller_id": "SELL-000288",
+          "gross_amount_cents": 1854,
+          "rate_basis_points": 1000,
+          "variable_fee_cents": 185,
+          "fixed_fee_cents": 30,
+          "total_commission_cents": 430,
+          "expected_total_cents": 215,
+          "variance_cents": 215
+        },
+        {
+          "entry_id": "CML-000004",
+          "order_line_id": "ORDLN-2026-000004-01",
+          "seller_id": "SELL-000299",
+          "gross_amount_cents": 4395,
+          "rate_basis_points": 1400,
+          "variable_fee_cents": 615,
+          "fixed_fee_cents": 30,
+          "total_commission_cents": 1290,
+          "expected_total_cents": 645,
+          "variance_cents": 645
+        },
+        {
+          "entry_id": "CML-000008",
+          "order_line_id": "ORDLN-2026-000008-01",
+          "seller_id": "SELL-000615",
+          "gross_amount_cents": 3909,
+          "rate_basis_points": 1250,
+          "variable_fee_cents": 488,
+          "fixed_fee_cents": 30,
+          "total_commission_cents": 1036,
+          "expected_total_cents": 518,
+          "variance_cents": 518
+        },
+        {
+          "entry_id": "CML-000009",
+          "order_line_id": "ORDLN-2026-000009-01",
+          "seller_id": "SELL-000318",
+          "gross_amount_cents": 8794,
+          "rate_basis_points": 1400,
+          "variable_fee_cents": 1231,
+          "fixed_fee_cents": 30,
+          "total_commission_cents": 2522,
+          "expected_total_cents": 1261,
+          "variance_cents": 1261
+        },
+        {
+          "entry_id": "CML-000010",
+          "order_line_id": "ORDLN-2026-000010-01",
+          "seller_id": "SELL-001600",
+          "gross_amount_cents": 9759,
+          "rate_basis_points": 800,
+          "variable_fee_cents": 780,
+          "fixed_fee_cents": 30,
+          "total_commission_cents": 1620,
+          "expected_total_cents": 810,
+          "variance_cents": 810
+        },
+        {
+          "entry_id": "CML-000012",
+          "order_line_id": "ORDLN-2026-000012-01",
+          "seller_id": "SELL-000841",
+          "gross_amount_cents": 10478,
+          "rate_basis_points": 1500,
+          "variable_fee_cents": 1571,
+          "fixed_fee_cents": 30,
+          "total_commission_cents": 3202,
+          "expected_total_cents": 1601,
+          "variance_cents": 1601
+        },
+        {
+          "entry_id": "CML-000013",
+          "order_line_id": "ORDLN-2026-000012-02",
+          "seller_id": "SELL-001663",
+          "gross_amount_cents": 18948,
+          "rate_basis_points": 1000,
+          "variable_fee_cents": 1894,
+          "fixed_fee_cents": 30,
+          "total_commission_cents": 3848,
+          "expected_total_cents": 1924,
+          "variance_cents": 1924
+        },
+        {
+          "entry_id": "CML-000014",
+          "order_line_id": "ORDLN-2026-000013-01",
+          "seller_id": "SELL-001134",
+          "gross_amount_cents": 5314,
+          "rate_basis_points": 800,
+          "variable_fee_cents": 425,
+          "fixed_fee_cents": 30,
+          "total_commission_cents": 910,
+          "expected_total_cents": 455,
+          "variance_cents": 455
+        },
+        {
+          "entry_id": "CML-000015",
+          "order_line_id": "ORDLN-2026-000014-01",
+          "seller_id": "SELL-000205",
+          "gross_amount_cents": 8891,
+          "rate_basis_points": 1200,
+          "variable_fee_cents": 1066,
+          "fixed_fee_cents": 30,
+          "total_commission_cents": 2192,
+          "expected_total_cents": 1096,
+          "variance_cents": 1096
+        },
+        {
+          "entry_id": "CML-000016",
+          "order_line_id": "ORDLN-2026-000014-02",
+          "seller_id": "SELL-001445",
+          "gross_amount_cents": 3137,
+          "rate_basis_points": 1400,
+          "variable_fee_cents": 439,
+          "fixed_fee_cents": 30,
+          "total_commission_cents": 938,
+          "expected_total_cents": 469,
+          "variance_cents": 469
+        },
+        {
+          "entry_id": "CML-000017",
+          "order_line_id": "ORDLN-2026-000015-01",
+          "seller_id": "SELL-001419",
+          "gross_amount_cents": 3360,
+          "rate_basis_points": 1400,
+          "variable_fee_cents": 470,
+          "fixed_fee_cents": 30,
+          "total_commission_cents": 1000,
+          "expected_total_cents": 500,
+          "variance_cents": 500
+        },
+        {
+          "entry_id": "CML-000018",
+          "order_line_id": "ORDLN-2026-000015-02",
+          "seller_id": "SELL-000014",
+          "gross_amount_cents": 3793,
+          "rate_basis_points": 1000,
+          "variable_fee_cents": 379,
+          "fixed_fee_cents": 30,
+          "total_commission_cents": 818,
+          "expected_total_cents": 409,
+          "variance_cents": 409
+        },
+        {
+          "entry_id": "CML-000019",
+          "order_line_id": "ORDLN-2026-000016-01",
+          "seller_id": "SELL-000211",
+          "gross_amount_cents": 27965,
+          "rate_basis_points": 800,
+          "variable_fee_cents": 2237,
+          "fixed_fee_cents": 30,
+          "total_commission_cents": 4534,
+          "expected_total_cents": 2267,
+          "variance_cents": 2267
+        },
+        {
+          "entry_id": "CML-000021",
+          "order_line_id": "ORDLN-2026-000018-01",
+          "seller_id": "SELL-001698",
+          "gross_amount_cents": 4077,
+          "rate_basis_points": 1500,
+          "variable_fee_cents": 611,
+          "fixed_fee_cents": 30,
+          "total_commission_cents": 1282,
+          "expected_total_cents": 641,
+          "variance_cents": 641
+        },
+        {
+          "entry_id": "CML-000022",
+          "order_line_id": "ORDLN-2026-000018-02",
+          "seller_id": "SELL-001267",
+          "gross_amount_cents": 3948,
+          "rate_basis_points": 1200,
+          "variable_fee_cents": 473,
+          "fixed_fee_cents": 30,
+          "total_commission_cents": 1006,
+          "expected_total_cents": 503,
+          "variance_cents": 503
+        },
+        {
+          "entry_id": "CML-000024",
+          "order_line_id": "ORDLN-2026-000020-01",
+          "seller_id": "SELL-001655",
+          "gross_amount_cents": 3449,
+          "rate_basis_points": 1000,
+          "variable_fee_cents": 344,
+          "fixed_fee_cents": 30,
+          "total_commission_cents": 748,
+          "expected_total_cents": 374,
+          "variance_cents": 374
+        },
+        {
+          "entry_id": "CML-000025",
+          "order_line_id": "ORDLN-2026-000021-01",
+          "seller_id": "SELL-000929",
+          "gross_amount_cents": 4591,
+          "rate_basis_points": 600,
+          "variable_fee_cents": 275,
+          "fixed_fee_cents": 30,
+          "total_commission_cents": 610,
+          "expected_total_cents": 305,
+          "variance_cents": 305
+        },
+        {
+          "entry_id": "CML-000026",
+          "order_line_id": "ORDLN-2026-000022-01",
+          "seller_id": "SELL-000637",
+          "gross_amount_cents": 2989,
+          "rate_basis_points": 1000,
+          "variable_fee_cents": 298,
+          "fixed_fee_cents": 30,
+          "total_commission_cents": 656,
+          "expected_total_cents": 328,
+          "variance_cents": 328
+        },
+        {
+          "entry_id": "CML-000027",
+          "order_line_id": "ORDLN-2026-000023-01",
+          "seller_id": "SELL-000362",
+          "gross_amount_cents": 23230,
+          "rate_basis_points": 600,
+          "variable_fee_cents": 1393,
+          "fixed_fee_cents": 30,
+          "total_commission_cents": 2846,
+          "expected_total_cents": 1423,
+          "variance_cents": 1423
+        },
+        {
+          "entry_id": "CML-000028",
+          "order_line_id": "ORDLN-2026-000024-01",
+          "seller_id": "SELL-001889",
+          "gross_amount_cents": 12215,
+          "rate_basis_points": 1150,
+          "variable_fee_cents": 1404,
+          "fixed_fee_cents": 30,
+          "total_commission_cents": 2868,
+          "expected_total_cents": 1434,
+          "variance_cents": 1434
+        },
+        {
+          "entry_id": "CML-000029",
+          "order_line_id": "ORDLN-2026-000025-01",
+          "seller_id": "SELL-001329",
+          "gross_amount_cents": 2708,
+          "rate_basis_points": 1000,
+          "variable_fee_cents": 270,
+          "fixed_fee_cents": 30,
+          "total_commission_cents": 600,
+          "expected_total_cents": 300,
+          "variance_cents": 300
+        },
+        {
+          "entry_id": "CML-000030",
+          "order_line_id": "ORDLN-2026-000026-01",
+          "seller_id": "SELL-001642",
+          "gross_amount_cents": 3333,
+          "rate_basis_points": 1500,
+          "variable_fee_cents": 499,
+          "fixed_fee_cents": 30,
+          "total_commission_cents": 1058,
+          "expected_total_cents": 529,
+          "variance_cents": 529
+        },
+        {
+          "entry_id": "CML-000031",
+          "order_line_id": "ORDLN-2026-000027-01",
+          "seller_id": "SELL-001580",
+          "gross_amount_cents": 6124,
+          "rate_basis_points": 1300,
+          "variable_fee_cents": 796,
+          "fixed_fee_cents": 30,
+          "total_commission_cents": 1652,
+          "expected_total_cents": 826,
+          "variance_cents": 826
+        }
+      ]
+    },
+    "reserve_reconciliation": {
+      "passed": true,
+      "discrepancy_count": 0,
+      "details": []
+    },
+    "dispute_deductions": {
+      "passed": false,
+      "discrepancy_count": 25,
+      "details": [
+        {
+          "dispute_id": "DSP-2026-000001",
+          "order_id": "ORD-2026-076769",
+          "order_line_id": "ORDLN-2026-076769-01",
+          "seller_id": "SELL-001715",
+          "disputed_amount_cents": 2581,
+          "dispute_status": "CHARGEBACK_LOST",
+          "clawback_applied": 0
+        },
+        {
+          "dispute_id": "DSP-2026-000007",
+          "order_id": "ORD-2026-005448",
+          "order_line_id": "ORDLN-2026-005448-01",
+          "seller_id": "SELL-001622",
+          "disputed_amount_cents": 8213,
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "clawback_applied": 0
+        },
+        {
+          "dispute_id": "DSP-2026-000008",
+          "order_id": "ORD-2026-093059",
+          "order_line_id": "ORDLN-2026-093059-01",
+          "seller_id": "SELL-000401",
+          "disputed_amount_cents": 17648,
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "clawback_applied": 0
+        },
+        {
+          "dispute_id": "DSP-2026-000009",
+          "order_id": "ORD-2026-027163",
+          "order_line_id": "ORDLN-2026-027163-01",
+          "seller_id": "SELL-000762",
+          "disputed_amount_cents": 2017,
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "clawback_applied": 0
+        },
+        {
+          "dispute_id": "DSP-2026-000010",
+          "order_id": "ORD-2026-025895",
+          "order_line_id": "ORDLN-2026-025895-01",
+          "seller_id": "SELL-000236",
+          "disputed_amount_cents": 8051,
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "clawback_applied": 0
+        },
+        {
+          "dispute_id": "DSP-2026-000011",
+          "order_id": "ORD-2026-026340",
+          "order_line_id": "ORDLN-2026-026340-01",
+          "seller_id": "SELL-000372",
+          "disputed_amount_cents": 1580,
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "clawback_applied": 0
+        },
+        {
+          "dispute_id": "DSP-2026-000014",
+          "order_id": "ORD-2026-093271",
+          "order_line_id": "ORDLN-2026-093271-01",
+          "seller_id": "SELL-000171",
+          "disputed_amount_cents": 2845,
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "clawback_applied": 0
+        },
+        {
+          "dispute_id": "DSP-2026-000016",
+          "order_id": "ORD-2026-014727",
+          "order_line_id": "ORDLN-2026-014727-02",
+          "seller_id": "SELL-001476",
+          "disputed_amount_cents": 6546,
+          "dispute_status": "CHARGEBACK_LOST",
+          "clawback_applied": 0
+        },
+        {
+          "dispute_id": "DSP-2026-000017",
+          "order_id": "ORD-2026-006656",
+          "order_line_id": "ORDLN-2026-006656-01",
+          "seller_id": "SELL-000970",
+          "disputed_amount_cents": 3438,
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "clawback_applied": 0
+        },
+        {
+          "dispute_id": "DSP-2026-000018",
+          "order_id": "ORD-2026-022379",
+          "order_line_id": "ORDLN-2026-022379-01",
+          "seller_id": "SELL-001927",
+          "disputed_amount_cents": 5711,
+          "dispute_status": "CHARGEBACK_LOST",
+          "clawback_applied": 0
+        },
+        {
+          "dispute_id": "DSP-2026-000020",
+          "order_id": "ORD-2026-034745",
+          "order_line_id": "ORDLN-2026-034745-01",
+          "seller_id": "SELL-001744",
+          "disputed_amount_cents": 14211,
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "clawback_applied": 0
+        },
+        {
+          "dispute_id": "DSP-2026-000021",
+          "order_id": "ORD-2026-072187",
+          "order_line_id": "ORDLN-2026-072187-01",
+          "seller_id": "SELL-000530",
+          "disputed_amount_cents": 3157,
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "clawback_applied": 0
+        },
+        {
+          "dispute_id": "DSP-2026-000022",
+          "order_id": "ORD-2026-079283",
+          "order_line_id": "ORDLN-2026-079283-01",
+          "seller_id": "SELL-000555",
+          "disputed_amount_cents": 8326,
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "clawback_applied": 0
+        },
+        {
+          "dispute_id": "DSP-2026-000025",
+          "order_id": "ORD-2026-070373",
+          "order_line_id": "ORDLN-2026-070373-01",
+          "seller_id": "SELL-000996",
+          "disputed_amount_cents": 2031,
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "clawback_applied": 0
+        },
+        {
+          "dispute_id": "DSP-2026-000026",
+          "order_id": "ORD-2026-011986",
+          "order_line_id": "ORDLN-2026-011986-01",
+          "seller_id": "SELL-000143",
+          "disputed_amount_cents": 2601,
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "clawback_applied": 0
+        },
+        {
+          "dispute_id": "DSP-2026-000027",
+          "order_id": "ORD-2026-083610",
+          "order_line_id": "ORDLN-2026-083610-01",
+          "seller_id": "SELL-001469",
+          "disputed_amount_cents": 3394,
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "clawback_applied": 0
+        },
+        {
+          "dispute_id": "DSP-2026-000028",
+          "order_id": "ORD-2026-021758",
+          "order_line_id": "ORDLN-2026-021758-01",
+          "seller_id": "SELL-001033",
+          "disputed_amount_cents": 9771,
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "clawback_applied": 0
+        },
+        {
+          "dispute_id": "DSP-2026-000029",
+          "order_id": "ORD-2026-085423",
+          "order_line_id": "ORDLN-2026-085423-01",
+          "seller_id": "SELL-000213",
+          "disputed_amount_cents": 2927,
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "clawback_applied": 0
+        },
+        {
+          "dispute_id": "DSP-2026-000030",
+          "order_id": "ORD-2026-016867",
+          "order_line_id": "ORDLN-2026-016867-01",
+          "seller_id": "SELL-001767",
+          "disputed_amount_cents": 77316,
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "clawback_applied": 0
+        },
+        {
+          "dispute_id": "DSP-2026-000031",
+          "order_id": "ORD-2026-057310",
+          "order_line_id": "ORDLN-2026-057310-02",
+          "seller_id": "SELL-001353",
+          "disputed_amount_cents": 2245,
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "clawback_applied": 0
+        },
+        {
+          "dispute_id": "DSP-2026-000033",
+          "order_id": "ORD-2026-024341",
+          "order_line_id": "ORDLN-2026-024341-01",
+          "seller_id": "SELL-000654",
+          "disputed_amount_cents": 29104,
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "clawback_applied": 0
+        },
+        {
+          "dispute_id": "DSP-2026-000034",
+          "order_id": "ORD-2026-066604",
+          "order_line_id": "ORDLN-2026-066604-03",
+          "seller_id": "SELL-000215",
+          "disputed_amount_cents": 5450,
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "clawback_applied": 0
+        },
+        {
+          "dispute_id": "DSP-2026-000038",
+          "order_id": "ORD-2026-012878",
+          "order_line_id": "ORDLN-2026-012878-01",
+          "seller_id": "SELL-000418",
+          "disputed_amount_cents": 3432,
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "clawback_applied": 0
+        },
+        {
+          "dispute_id": "DSP-2026-000039",
+          "order_id": "ORD-2026-041407",
+          "order_line_id": "ORDLN-2026-041407-01",
+          "seller_id": "SELL-000279",
+          "disputed_amount_cents": 2431,
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "clawback_applied": 0
+        },
+        {
+          "dispute_id": "DSP-2026-000040",
+          "order_id": "ORD-2026-015773",
+          "order_line_id": "ORDLN-2026-015773-01",
+          "seller_id": "SELL-001925",
+          "disputed_amount_cents": 4046,
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "clawback_applied": 0
+        }
+      ]
+    },
+    "payout_reconciliation": {
+      "passed": false,
+      "discrepancy_count": 20,
+      "details": [
+        {
+          "payout_id": "PAYOUT-2026-000001",
+          "seller_id": "SELL-000238",
+          "batch_date": "2026-10-27 22:19:38",
+          "header_net_cents": 119722,
+          "lines_net_sum_cents": 107222,
+          "variance_cents": 12500,
+          "line_count": 25
+        },
+        {
+          "payout_id": "PAYOUT-2026-000002",
+          "seller_id": "SELL-001816",
+          "batch_date": "2026-08-20 16:46:37",
+          "header_net_cents": 105328,
+          "lines_net_sum_cents": 92828,
+          "variance_cents": 12500,
+          "line_count": 25
+        },
+        {
+          "payout_id": "PAYOUT-2026-000003",
+          "seller_id": "SELL-000288",
+          "batch_date": "2026-10-26 06:41:53",
+          "header_net_cents": 92446,
+          "lines_net_sum_cents": 79946,
+          "variance_cents": 12500,
+          "line_count": 25
+        },
+        {
+          "payout_id": "PAYOUT-2026-000004",
+          "seller_id": "SELL-000299",
+          "batch_date": "2026-09-23 16:09:36",
+          "header_net_cents": 237400,
+          "lines_net_sum_cents": 224900,
+          "variance_cents": 12500,
+          "line_count": 19
+        },
+        {
+          "payout_id": "PAYOUT-2026-000005",
+          "seller_id": "SELL-000615",
+          "batch_date": "2026-09-05 05:05:58",
+          "header_net_cents": 127882,
+          "lines_net_sum_cents": 115382,
+          "variance_cents": 12500,
+          "line_count": 25
+        },
+        {
+          "payout_id": "PAYOUT-2026-000006",
+          "seller_id": "SELL-000318",
+          "batch_date": "2026-11-05 08:30:14",
+          "header_net_cents": 129876,
+          "lines_net_sum_cents": 117376,
+          "variance_cents": 12500,
+          "line_count": 25
+        },
+        {
+          "payout_id": "PAYOUT-2026-000007",
+          "seller_id": "SELL-001600",
+          "batch_date": "2026-11-03 16:17:03",
+          "header_net_cents": 213982,
+          "lines_net_sum_cents": 201482,
+          "variance_cents": 12500,
+          "line_count": 25
+        },
+        {
+          "payout_id": "PAYOUT-2026-000008",
+          "seller_id": "SELL-000841",
+          "batch_date": "2026-10-29 10:43:48",
+          "header_net_cents": 157265,
+          "lines_net_sum_cents": 144765,
+          "variance_cents": 12500,
+          "line_count": 25
+        },
+        {
+          "payout_id": "PAYOUT-2026-000009",
+          "seller_id": "SELL-001663",
+          "batch_date": "2026-10-25 16:48:16",
+          "header_net_cents": 124120,
+          "lines_net_sum_cents": 111620,
+          "variance_cents": 12500,
+          "line_count": 25
+        },
+        {
+          "payout_id": "PAYOUT-2026-000010",
+          "seller_id": "SELL-001134",
+          "batch_date": "2026-10-08 03:39:11",
+          "header_net_cents": 212335,
+          "lines_net_sum_cents": 199835,
+          "variance_cents": 12500,
+          "line_count": 25
+        },
+        {
+          "payout_id": "PAYOUT-2026-000011",
+          "seller_id": "SELL-000205",
+          "batch_date": "2026-11-04 09:54:34",
+          "header_net_cents": 157306,
+          "lines_net_sum_cents": 144806,
+          "variance_cents": 12500,
+          "line_count": 25
+        },
+        {
+          "payout_id": "PAYOUT-2026-000012",
+          "seller_id": "SELL-001445",
+          "batch_date": "2026-10-30 17:42:01",
+          "header_net_cents": 107914,
+          "lines_net_sum_cents": 95414,
+          "variance_cents": 12500,
+          "line_count": 25
+        },
+        {
+          "payout_id": "PAYOUT-2026-000013",
+          "seller_id": "SELL-001419",
+          "batch_date": "2026-10-02 23:19:12",
+          "header_net_cents": 125415,
+          "lines_net_sum_cents": 112915,
+          "variance_cents": 12500,
+          "line_count": 25
+        },
+        {
+          "payout_id": "PAYOUT-2026-000014",
+          "seller_id": "SELL-000014",
+          "batch_date": "2026-10-14 14:44:59",
+          "header_net_cents": 106588,
+          "lines_net_sum_cents": 94088,
+          "variance_cents": 12500,
+          "line_count": 25
+        },
+        {
+          "payout_id": "PAYOUT-2026-000015",
+          "seller_id": "SELL-000211",
+          "batch_date": "2026-10-27 15:34:24",
+          "header_net_cents": 198396,
+          "lines_net_sum_cents": 185896,
+          "variance_cents": 12500,
+          "line_count": 25
+        },
+        {
+          "payout_id": "PAYOUT-2026-000016",
+          "seller_id": "SELL-001698",
+          "batch_date": "2026-11-05 21:37:05",
+          "header_net_cents": 255631,
+          "lines_net_sum_cents": 243131,
+          "variance_cents": 12500,
+          "line_count": 25
+        },
+        {
+          "payout_id": "PAYOUT-2026-000017",
+          "seller_id": "SELL-001267",
+          "batch_date": "2026-10-25 17:26:12",
+          "header_net_cents": 284532,
+          "lines_net_sum_cents": 272032,
+          "variance_cents": 12500,
+          "line_count": 25
+        },
+        {
+          "payout_id": "PAYOUT-2026-000018",
+          "seller_id": "SELL-001655",
+          "batch_date": "2026-10-15 09:48:51",
+          "header_net_cents": 173903,
+          "lines_net_sum_cents": 161403,
+          "variance_cents": 12500,
+          "line_count": 25
+        },
+        {
+          "payout_id": "PAYOUT-2026-000019",
+          "seller_id": "SELL-000929",
+          "batch_date": "2026-10-05 01:28:19",
+          "header_net_cents": 232067,
+          "lines_net_sum_cents": 219567,
+          "variance_cents": 12500,
+          "line_count": 25
+        },
+        {
+          "payout_id": "PAYOUT-2026-000020",
+          "seller_id": "SELL-000637",
+          "batch_date": "2026-10-30 21:30:28",
+          "header_net_cents": 314909,
+          "lines_net_sum_cents": 302409,
+          "variance_cents": 12500,
+          "line_count": 25
+        }
+      ]
+    },
+    "duplicate_detection": {
+      "passed": true,
+      "violations_count": 0,
+      "details": []
+    },
+    "lifecycle_transitions": {
+      "passed": true,
+      "violations_count": 0,
+      "details": []
+    },
+    "reproducibility": {
+      "passed": true,
+      "table_hashes": {
+        "sellers": "b3e327c97b614e9d0e538a0bbc4bc6b9",
+        "customers": "57a6349934afbc46d6398aa33773c0f2",
+        "listings": "9a2d666f92dd2d5777f8fb26bda71abb",
+        "orders": "8162571f23fdb228ab8c80e7eefaef99",
+        "order_lines": "840f84d63a8ef4d01ced499a60d31740",
+        "fulfillments": "4fd980e278da0cc34a77415da9699b1d"
+      }
+    }
+  },
+  "anomaly_detection": {
+    "summary": {
+      "total_anomalies_detected": 115,
+      "anomaly_1_count": 25,
+      "anomaly_2_count": 25,
+      "anomaly_3_count": 20,
+      "anomaly_4_count": 25,
+      "anomaly_5_count": 20,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "false_positives": 0,
+      "false_negatives": 0
+    },
+    "benchmark": {
+      "ground_truth_total": 115,
+      "detected_total": 115,
+      "true_positives": 115,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "scenarios": {
+        "PREMATURE_PAYOUT": {
+          "ground_truth_count": 25,
+          "detected_count": 25,
+          "true_positives": 25,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0
+        },
+        "DOUBLE_COMMISSION": {
+          "ground_truth_count": 25,
+          "detected_count": 25,
+          "true_positives": 25,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0
+        },
+        "SUSPENDED_SELLER_ACTIVE": {
+          "ground_truth_count": 20,
+          "detected_count": 20,
+          "true_positives": 20,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0
+        },
+        "UNCLAWBACKED_DISPUTE": {
+          "ground_truth_count": 25,
+          "detected_count": 25,
+          "true_positives": 25,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0
+        },
+        "PAYOUT_TOTAL_MISMATCH": {
+          "ground_truth_count": 20,
+          "detected_count": 20,
+          "true_positives": 20,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1_score": 1.0
+        }
+      }
+    },
+    "detected_scenarios": {
+      "premature_payouts_count": 25,
+      "double_commissions_count": 25,
+      "suspended_seller_activity_count": 20,
+      "unclawbacked_disputes_count": 25,
+      "payout_total_mismatches_count": 20
+    },
+    "all_detected_records": [
+      {
+        "scenario_id": "SCENARIO-1",
+        "entity_id": "PLN-PAYOUT-PREM-0001-01",
+        "entity_type": "PAYOUT_LINE",
+        "issue_type": "PREMATURE_PAYOUT",
+        "ground_truth_label": "ANOMALY_1_PREMATURE_PAYOUT",
+        "expected_result": "Payout line item must only be disbursed after delivery confirmation and reserve hold maturity.",
+        "expected_corrective_action": "Claw back premature disbursement and hold settlement until reserve release scheduled date.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-PREM-0001",
+          "order_line_id": "ORDLN-2026-063151-01",
+          "line_status": "SHIPPED",
+          "batch_date": "2025-04-17 03:03:43",
+          "release_scheduled_date": "2025-04-27 03:03:43",
+          "net_amount_cents": 7871
+        },
+        "description": "Payout line PLN-PAYOUT-PREM-0001-01 for order line ORDLN-2026-063151-01 was disbursed on 2025-04-17 03:03:43 prior to hold release 2025-04-27 03:03:43 (status: SHIPPED)."
+      },
+      {
+        "scenario_id": "SCENARIO-1",
+        "entity_id": "PLN-PAYOUT-PREM-0002-01",
+        "entity_type": "PAYOUT_LINE",
+        "issue_type": "PREMATURE_PAYOUT",
+        "ground_truth_label": "ANOMALY_1_PREMATURE_PAYOUT",
+        "expected_result": "Payout line item must only be disbursed after delivery confirmation and reserve hold maturity.",
+        "expected_corrective_action": "Claw back premature disbursement and hold settlement until reserve release scheduled date.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-PREM-0002",
+          "order_line_id": "ORDLN-2026-050883-02",
+          "line_status": "DELIVERED",
+          "batch_date": "2026-11-01 10:16:01",
+          "release_scheduled_date": "2026-11-11 10:16:01",
+          "net_amount_cents": 7768
+        },
+        "description": "Payout line PLN-PAYOUT-PREM-0002-01 for order line ORDLN-2026-050883-02 was disbursed on 2026-11-01 10:16:01 prior to hold release 2026-11-11 10:16:01 (status: DELIVERED)."
+      },
+      {
+        "scenario_id": "SCENARIO-1",
+        "entity_id": "PLN-PAYOUT-PREM-0003-01",
+        "entity_type": "PAYOUT_LINE",
+        "issue_type": "PREMATURE_PAYOUT",
+        "ground_truth_label": "ANOMALY_1_PREMATURE_PAYOUT",
+        "expected_result": "Payout line item must only be disbursed after delivery confirmation and reserve hold maturity.",
+        "expected_corrective_action": "Claw back premature disbursement and hold settlement until reserve release scheduled date.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-PREM-0003",
+          "order_line_id": "ORDLN-2026-031335-01",
+          "line_status": "SHIPPED",
+          "batch_date": "2025-11-11 10:03:53",
+          "release_scheduled_date": "2025-11-21 10:03:53",
+          "net_amount_cents": 6175
+        },
+        "description": "Payout line PLN-PAYOUT-PREM-0003-01 for order line ORDLN-2026-031335-01 was disbursed on 2025-11-11 10:03:53 prior to hold release 2025-11-21 10:03:53 (status: SHIPPED)."
+      },
+      {
+        "scenario_id": "SCENARIO-1",
+        "entity_id": "PLN-PAYOUT-PREM-0004-01",
+        "entity_type": "PAYOUT_LINE",
+        "issue_type": "PREMATURE_PAYOUT",
+        "ground_truth_label": "ANOMALY_1_PREMATURE_PAYOUT",
+        "expected_result": "Payout line item must only be disbursed after delivery confirmation and reserve hold maturity.",
+        "expected_corrective_action": "Claw back premature disbursement and hold settlement until reserve release scheduled date.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-PREM-0004",
+          "order_line_id": "ORDLN-2026-008796-01",
+          "line_status": "SHIPPED",
+          "batch_date": "2026-05-18 22:10:05",
+          "release_scheduled_date": "2026-05-28 22:10:05",
+          "net_amount_cents": 4747
+        },
+        "description": "Payout line PLN-PAYOUT-PREM-0004-01 for order line ORDLN-2026-008796-01 was disbursed on 2026-05-18 22:10:05 prior to hold release 2026-05-28 22:10:05 (status: SHIPPED)."
+      },
+      {
+        "scenario_id": "SCENARIO-1",
+        "entity_id": "PLN-PAYOUT-PREM-0005-01",
+        "entity_type": "PAYOUT_LINE",
+        "issue_type": "PREMATURE_PAYOUT",
+        "ground_truth_label": "ANOMALY_1_PREMATURE_PAYOUT",
+        "expected_result": "Payout line item must only be disbursed after delivery confirmation and reserve hold maturity.",
+        "expected_corrective_action": "Claw back premature disbursement and hold settlement until reserve release scheduled date.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-PREM-0005",
+          "order_line_id": "ORDLN-2026-043243-02",
+          "line_status": "CONFIRMED",
+          "batch_date": "2025-05-05 22:52:08",
+          "release_scheduled_date": "2025-05-15 22:52:08",
+          "net_amount_cents": 7937
+        },
+        "description": "Payout line PLN-PAYOUT-PREM-0005-01 for order line ORDLN-2026-043243-02 was disbursed on 2025-05-05 22:52:08 prior to hold release 2025-05-15 22:52:08 (status: CONFIRMED)."
+      },
+      {
+        "scenario_id": "SCENARIO-1",
+        "entity_id": "PLN-PAYOUT-PREM-0006-01",
+        "entity_type": "PAYOUT_LINE",
+        "issue_type": "PREMATURE_PAYOUT",
+        "ground_truth_label": "ANOMALY_1_PREMATURE_PAYOUT",
+        "expected_result": "Payout line item must only be disbursed after delivery confirmation and reserve hold maturity.",
+        "expected_corrective_action": "Claw back premature disbursement and hold settlement until reserve release scheduled date.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-PREM-0006",
+          "order_line_id": "ORDLN-2026-041465-01",
+          "line_status": "CONFIRMED",
+          "batch_date": "2026-03-12 20:31:20",
+          "release_scheduled_date": "2026-03-22 20:31:20",
+          "net_amount_cents": 10535
+        },
+        "description": "Payout line PLN-PAYOUT-PREM-0006-01 for order line ORDLN-2026-041465-01 was disbursed on 2026-03-12 20:31:20 prior to hold release 2026-03-22 20:31:20 (status: CONFIRMED)."
+      },
+      {
+        "scenario_id": "SCENARIO-1",
+        "entity_id": "PLN-PAYOUT-PREM-0007-01",
+        "entity_type": "PAYOUT_LINE",
+        "issue_type": "PREMATURE_PAYOUT",
+        "ground_truth_label": "ANOMALY_1_PREMATURE_PAYOUT",
+        "expected_result": "Payout line item must only be disbursed after delivery confirmation and reserve hold maturity.",
+        "expected_corrective_action": "Claw back premature disbursement and hold settlement until reserve release scheduled date.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-PREM-0007",
+          "order_line_id": "ORDLN-2026-042118-01",
+          "line_status": "CANCELLED",
+          "batch_date": "2026-09-11 23:50:11",
+          "release_scheduled_date": "2026-09-21 23:50:11",
+          "net_amount_cents": 8613
+        },
+        "description": "Payout line PLN-PAYOUT-PREM-0007-01 for order line ORDLN-2026-042118-01 was disbursed on 2026-09-11 23:50:11 prior to hold release 2026-09-21 23:50:11 (status: CANCELLED)."
+      },
+      {
+        "scenario_id": "SCENARIO-1",
+        "entity_id": "PLN-PAYOUT-PREM-0008-01",
+        "entity_type": "PAYOUT_LINE",
+        "issue_type": "PREMATURE_PAYOUT",
+        "ground_truth_label": "ANOMALY_1_PREMATURE_PAYOUT",
+        "expected_result": "Payout line item must only be disbursed after delivery confirmation and reserve hold maturity.",
+        "expected_corrective_action": "Claw back premature disbursement and hold settlement until reserve release scheduled date.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-PREM-0008",
+          "order_line_id": "ORDLN-2026-000746-01",
+          "line_status": "CANCELLED",
+          "batch_date": "2025-02-13 20:15:59",
+          "release_scheduled_date": "2025-02-23 20:15:59",
+          "net_amount_cents": 4578
+        },
+        "description": "Payout line PLN-PAYOUT-PREM-0008-01 for order line ORDLN-2026-000746-01 was disbursed on 2025-02-13 20:15:59 prior to hold release 2025-02-23 20:15:59 (status: CANCELLED)."
+      },
+      {
+        "scenario_id": "SCENARIO-1",
+        "entity_id": "PLN-PAYOUT-PREM-0009-01",
+        "entity_type": "PAYOUT_LINE",
+        "issue_type": "PREMATURE_PAYOUT",
+        "ground_truth_label": "ANOMALY_1_PREMATURE_PAYOUT",
+        "expected_result": "Payout line item must only be disbursed after delivery confirmation and reserve hold maturity.",
+        "expected_corrective_action": "Claw back premature disbursement and hold settlement until reserve release scheduled date.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-PREM-0009",
+          "order_line_id": "ORDLN-2026-098601-01",
+          "line_status": "CANCELLED",
+          "batch_date": "2025-06-15 23:32:19",
+          "release_scheduled_date": "2025-06-25 23:32:19",
+          "net_amount_cents": 8397
+        },
+        "description": "Payout line PLN-PAYOUT-PREM-0009-01 for order line ORDLN-2026-098601-01 was disbursed on 2025-06-15 23:32:19 prior to hold release 2025-06-25 23:32:19 (status: CANCELLED)."
+      },
+      {
+        "scenario_id": "SCENARIO-1",
+        "entity_id": "PLN-PAYOUT-PREM-0010-01",
+        "entity_type": "PAYOUT_LINE",
+        "issue_type": "PREMATURE_PAYOUT",
+        "ground_truth_label": "ANOMALY_1_PREMATURE_PAYOUT",
+        "expected_result": "Payout line item must only be disbursed after delivery confirmation and reserve hold maturity.",
+        "expected_corrective_action": "Claw back premature disbursement and hold settlement until reserve release scheduled date.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-PREM-0010",
+          "order_line_id": "ORDLN-2026-023934-01",
+          "line_status": "RETURNED",
+          "batch_date": "2025-04-19 02:35:32",
+          "release_scheduled_date": "2025-04-29 02:35:32",
+          "net_amount_cents": 6414
+        },
+        "description": "Payout line PLN-PAYOUT-PREM-0010-01 for order line ORDLN-2026-023934-01 was disbursed on 2025-04-19 02:35:32 prior to hold release 2025-04-29 02:35:32 (status: RETURNED)."
+      },
+      {
+        "scenario_id": "SCENARIO-1",
+        "entity_id": "PLN-PAYOUT-PREM-0011-01",
+        "entity_type": "PAYOUT_LINE",
+        "issue_type": "PREMATURE_PAYOUT",
+        "ground_truth_label": "ANOMALY_1_PREMATURE_PAYOUT",
+        "expected_result": "Payout line item must only be disbursed after delivery confirmation and reserve hold maturity.",
+        "expected_corrective_action": "Claw back premature disbursement and hold settlement until reserve release scheduled date.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-PREM-0011",
+          "order_line_id": "ORDLN-2026-010668-01",
+          "line_status": "RETURNED",
+          "batch_date": "2025-02-03 12:10:34",
+          "release_scheduled_date": "2025-02-13 12:10:34",
+          "net_amount_cents": 9223
+        },
+        "description": "Payout line PLN-PAYOUT-PREM-0011-01 for order line ORDLN-2026-010668-01 was disbursed on 2025-02-03 12:10:34 prior to hold release 2025-02-13 12:10:34 (status: RETURNED)."
+      },
+      {
+        "scenario_id": "SCENARIO-1",
+        "entity_id": "PLN-PAYOUT-PREM-0012-01",
+        "entity_type": "PAYOUT_LINE",
+        "issue_type": "PREMATURE_PAYOUT",
+        "ground_truth_label": "ANOMALY_1_PREMATURE_PAYOUT",
+        "expected_result": "Payout line item must only be disbursed after delivery confirmation and reserve hold maturity.",
+        "expected_corrective_action": "Claw back premature disbursement and hold settlement until reserve release scheduled date.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-PREM-0012",
+          "order_line_id": "ORDLN-2026-035883-01",
+          "line_status": "RETURNED",
+          "batch_date": "2026-05-31 16:13:55",
+          "release_scheduled_date": "2026-06-10 16:13:55",
+          "net_amount_cents": 9486
+        },
+        "description": "Payout line PLN-PAYOUT-PREM-0012-01 for order line ORDLN-2026-035883-01 was disbursed on 2026-05-31 16:13:55 prior to hold release 2026-06-10 16:13:55 (status: RETURNED)."
+      },
+      {
+        "scenario_id": "SCENARIO-1",
+        "entity_id": "PLN-PAYOUT-PREM-0013-01",
+        "entity_type": "PAYOUT_LINE",
+        "issue_type": "PREMATURE_PAYOUT",
+        "ground_truth_label": "ANOMALY_1_PREMATURE_PAYOUT",
+        "expected_result": "Payout line item must only be disbursed after delivery confirmation and reserve hold maturity.",
+        "expected_corrective_action": "Claw back premature disbursement and hold settlement until reserve release scheduled date.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-PREM-0013",
+          "order_line_id": "ORDLN-2026-034871-01",
+          "line_status": "CONFIRMED",
+          "batch_date": "2025-12-25 06:02:02",
+          "release_scheduled_date": "2026-01-04 06:02:02",
+          "net_amount_cents": 10441
+        },
+        "description": "Payout line PLN-PAYOUT-PREM-0013-01 for order line ORDLN-2026-034871-01 was disbursed on 2025-12-25 06:02:02 prior to hold release 2026-01-04 06:02:02 (status: CONFIRMED)."
+      },
+      {
+        "scenario_id": "SCENARIO-1",
+        "entity_id": "PLN-PAYOUT-PREM-0014-01",
+        "entity_type": "PAYOUT_LINE",
+        "issue_type": "PREMATURE_PAYOUT",
+        "ground_truth_label": "ANOMALY_1_PREMATURE_PAYOUT",
+        "expected_result": "Payout line item must only be disbursed after delivery confirmation and reserve hold maturity.",
+        "expected_corrective_action": "Claw back premature disbursement and hold settlement until reserve release scheduled date.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-PREM-0014",
+          "order_line_id": "ORDLN-2026-055475-01",
+          "line_status": "SHIPPED",
+          "batch_date": "2026-05-06 18:04:10",
+          "release_scheduled_date": "2026-05-16 18:04:10",
+          "net_amount_cents": 8860
+        },
+        "description": "Payout line PLN-PAYOUT-PREM-0014-01 for order line ORDLN-2026-055475-01 was disbursed on 2026-05-06 18:04:10 prior to hold release 2026-05-16 18:04:10 (status: SHIPPED)."
+      },
+      {
+        "scenario_id": "SCENARIO-1",
+        "entity_id": "PLN-PAYOUT-PREM-0015-01",
+        "entity_type": "PAYOUT_LINE",
+        "issue_type": "PREMATURE_PAYOUT",
+        "ground_truth_label": "ANOMALY_1_PREMATURE_PAYOUT",
+        "expected_result": "Payout line item must only be disbursed after delivery confirmation and reserve hold maturity.",
+        "expected_corrective_action": "Claw back premature disbursement and hold settlement until reserve release scheduled date.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-PREM-0015",
+          "order_line_id": "ORDLN-2026-019772-01",
+          "line_status": "DELIVERED",
+          "batch_date": "2026-11-09 13:05:53",
+          "release_scheduled_date": "2026-11-19 13:05:53",
+          "net_amount_cents": 4035
+        },
+        "description": "Payout line PLN-PAYOUT-PREM-0015-01 for order line ORDLN-2026-019772-01 was disbursed on 2026-11-09 13:05:53 prior to hold release 2026-11-19 13:05:53 (status: DELIVERED)."
+      },
+      {
+        "scenario_id": "SCENARIO-1",
+        "entity_id": "PLN-PAYOUT-PREM-0016-01",
+        "entity_type": "PAYOUT_LINE",
+        "issue_type": "PREMATURE_PAYOUT",
+        "ground_truth_label": "ANOMALY_1_PREMATURE_PAYOUT",
+        "expected_result": "Payout line item must only be disbursed after delivery confirmation and reserve hold maturity.",
+        "expected_corrective_action": "Claw back premature disbursement and hold settlement until reserve release scheduled date.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-PREM-0016",
+          "order_line_id": "ORDLN-2026-034871-02",
+          "line_status": "CONFIRMED",
+          "batch_date": "2025-12-25 06:02:02",
+          "release_scheduled_date": "2026-01-04 06:02:02",
+          "net_amount_cents": 4225
+        },
+        "description": "Payout line PLN-PAYOUT-PREM-0016-01 for order line ORDLN-2026-034871-02 was disbursed on 2025-12-25 06:02:02 prior to hold release 2026-01-04 06:02:02 (status: CONFIRMED)."
+      },
+      {
+        "scenario_id": "SCENARIO-1",
+        "entity_id": "PLN-PAYOUT-PREM-0017-01",
+        "entity_type": "PAYOUT_LINE",
+        "issue_type": "PREMATURE_PAYOUT",
+        "ground_truth_label": "ANOMALY_1_PREMATURE_PAYOUT",
+        "expected_result": "Payout line item must only be disbursed after delivery confirmation and reserve hold maturity.",
+        "expected_corrective_action": "Claw back premature disbursement and hold settlement until reserve release scheduled date.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-PREM-0017",
+          "order_line_id": "ORDLN-2026-027445-02",
+          "line_status": "RETURNED",
+          "batch_date": "2025-11-13 16:31:09",
+          "release_scheduled_date": "2025-11-23 16:31:09",
+          "net_amount_cents": 6291
+        },
+        "description": "Payout line PLN-PAYOUT-PREM-0017-01 for order line ORDLN-2026-027445-02 was disbursed on 2025-11-13 16:31:09 prior to hold release 2025-11-23 16:31:09 (status: RETURNED)."
+      },
+      {
+        "scenario_id": "SCENARIO-1",
+        "entity_id": "PLN-PAYOUT-PREM-0018-01",
+        "entity_type": "PAYOUT_LINE",
+        "issue_type": "PREMATURE_PAYOUT",
+        "ground_truth_label": "ANOMALY_1_PREMATURE_PAYOUT",
+        "expected_result": "Payout line item must only be disbursed after delivery confirmation and reserve hold maturity.",
+        "expected_corrective_action": "Claw back premature disbursement and hold settlement until reserve release scheduled date.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-PREM-0018",
+          "order_line_id": "ORDLN-2026-091471-01",
+          "line_status": "RETURNED",
+          "batch_date": "2026-09-08 22:19:49",
+          "release_scheduled_date": "2026-09-18 22:19:49",
+          "net_amount_cents": 4818
+        },
+        "description": "Payout line PLN-PAYOUT-PREM-0018-01 for order line ORDLN-2026-091471-01 was disbursed on 2026-09-08 22:19:49 prior to hold release 2026-09-18 22:19:49 (status: RETURNED)."
+      },
+      {
+        "scenario_id": "SCENARIO-1",
+        "entity_id": "PLN-PAYOUT-PREM-0019-01",
+        "entity_type": "PAYOUT_LINE",
+        "issue_type": "PREMATURE_PAYOUT",
+        "ground_truth_label": "ANOMALY_1_PREMATURE_PAYOUT",
+        "expected_result": "Payout line item must only be disbursed after delivery confirmation and reserve hold maturity.",
+        "expected_corrective_action": "Claw back premature disbursement and hold settlement until reserve release scheduled date.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-PREM-0019",
+          "order_line_id": "ORDLN-2026-021193-01",
+          "line_status": "RETURNED",
+          "batch_date": "2026-09-13 11:01:32",
+          "release_scheduled_date": "2026-09-23 11:01:32",
+          "net_amount_cents": 23195
+        },
+        "description": "Payout line PLN-PAYOUT-PREM-0019-01 for order line ORDLN-2026-021193-01 was disbursed on 2026-09-13 11:01:32 prior to hold release 2026-09-23 11:01:32 (status: RETURNED)."
+      },
+      {
+        "scenario_id": "SCENARIO-1",
+        "entity_id": "PLN-PAYOUT-PREM-0020-01",
+        "entity_type": "PAYOUT_LINE",
+        "issue_type": "PREMATURE_PAYOUT",
+        "ground_truth_label": "ANOMALY_1_PREMATURE_PAYOUT",
+        "expected_result": "Payout line item must only be disbursed after delivery confirmation and reserve hold maturity.",
+        "expected_corrective_action": "Claw back premature disbursement and hold settlement until reserve release scheduled date.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-PREM-0020",
+          "order_line_id": "ORDLN-2026-038891-01",
+          "line_status": "SHIPPED",
+          "batch_date": "2025-12-06 23:31:29",
+          "release_scheduled_date": "2025-12-16 23:31:29",
+          "net_amount_cents": 5870
+        },
+        "description": "Payout line PLN-PAYOUT-PREM-0020-01 for order line ORDLN-2026-038891-01 was disbursed on 2025-12-06 23:31:29 prior to hold release 2025-12-16 23:31:29 (status: SHIPPED)."
+      },
+      {
+        "scenario_id": "SCENARIO-1",
+        "entity_id": "PLN-PAYOUT-PREM-0021-01",
+        "entity_type": "PAYOUT_LINE",
+        "issue_type": "PREMATURE_PAYOUT",
+        "ground_truth_label": "ANOMALY_1_PREMATURE_PAYOUT",
+        "expected_result": "Payout line item must only be disbursed after delivery confirmation and reserve hold maturity.",
+        "expected_corrective_action": "Claw back premature disbursement and hold settlement until reserve release scheduled date.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-PREM-0021",
+          "order_line_id": "ORDLN-2026-080661-01",
+          "line_status": "SHIPPED",
+          "batch_date": "2025-11-28 16:54:46",
+          "release_scheduled_date": "2025-12-08 16:54:46",
+          "net_amount_cents": 4933
+        },
+        "description": "Payout line PLN-PAYOUT-PREM-0021-01 for order line ORDLN-2026-080661-01 was disbursed on 2025-11-28 16:54:46 prior to hold release 2025-12-08 16:54:46 (status: SHIPPED)."
+      },
+      {
+        "scenario_id": "SCENARIO-1",
+        "entity_id": "PLN-PAYOUT-PREM-0022-01",
+        "entity_type": "PAYOUT_LINE",
+        "issue_type": "PREMATURE_PAYOUT",
+        "ground_truth_label": "ANOMALY_1_PREMATURE_PAYOUT",
+        "expected_result": "Payout line item must only be disbursed after delivery confirmation and reserve hold maturity.",
+        "expected_corrective_action": "Claw back premature disbursement and hold settlement until reserve release scheduled date.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-PREM-0022",
+          "order_line_id": "ORDLN-2026-001153-01",
+          "line_status": "SHIPPED",
+          "batch_date": "2026-02-14 07:14:53",
+          "release_scheduled_date": "2026-02-24 07:14:53",
+          "net_amount_cents": 10265
+        },
+        "description": "Payout line PLN-PAYOUT-PREM-0022-01 for order line ORDLN-2026-001153-01 was disbursed on 2026-02-14 07:14:53 prior to hold release 2026-02-24 07:14:53 (status: SHIPPED)."
+      },
+      {
+        "scenario_id": "SCENARIO-1",
+        "entity_id": "PLN-PAYOUT-PREM-0023-01",
+        "entity_type": "PAYOUT_LINE",
+        "issue_type": "PREMATURE_PAYOUT",
+        "ground_truth_label": "ANOMALY_1_PREMATURE_PAYOUT",
+        "expected_result": "Payout line item must only be disbursed after delivery confirmation and reserve hold maturity.",
+        "expected_corrective_action": "Claw back premature disbursement and hold settlement until reserve release scheduled date.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-PREM-0023",
+          "order_line_id": "ORDLN-2026-021023-01",
+          "line_status": "SHIPPED",
+          "batch_date": "2026-10-30 11:02:09",
+          "release_scheduled_date": "2026-11-09 11:02:09",
+          "net_amount_cents": 6402
+        },
+        "description": "Payout line PLN-PAYOUT-PREM-0023-01 for order line ORDLN-2026-021023-01 was disbursed on 2026-10-30 11:02:09 prior to hold release 2026-11-09 11:02:09 (status: SHIPPED)."
+      },
+      {
+        "scenario_id": "SCENARIO-1",
+        "entity_id": "PLN-PAYOUT-PREM-0024-01",
+        "entity_type": "PAYOUT_LINE",
+        "issue_type": "PREMATURE_PAYOUT",
+        "ground_truth_label": "ANOMALY_1_PREMATURE_PAYOUT",
+        "expected_result": "Payout line item must only be disbursed after delivery confirmation and reserve hold maturity.",
+        "expected_corrective_action": "Claw back premature disbursement and hold settlement until reserve release scheduled date.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-PREM-0024",
+          "order_line_id": "ORDLN-2026-065922-01",
+          "line_status": "RETURNED",
+          "batch_date": "2026-01-29 07:39:33",
+          "release_scheduled_date": "2026-02-08 07:39:33",
+          "net_amount_cents": 4533
+        },
+        "description": "Payout line PLN-PAYOUT-PREM-0024-01 for order line ORDLN-2026-065922-01 was disbursed on 2026-01-29 07:39:33 prior to hold release 2026-02-08 07:39:33 (status: RETURNED)."
+      },
+      {
+        "scenario_id": "SCENARIO-1",
+        "entity_id": "PLN-PAYOUT-PREM-0025-01",
+        "entity_type": "PAYOUT_LINE",
+        "issue_type": "PREMATURE_PAYOUT",
+        "ground_truth_label": "ANOMALY_1_PREMATURE_PAYOUT",
+        "expected_result": "Payout line item must only be disbursed after delivery confirmation and reserve hold maturity.",
+        "expected_corrective_action": "Claw back premature disbursement and hold settlement until reserve release scheduled date.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-PREM-0025",
+          "order_line_id": "ORDLN-2026-025575-01",
+          "line_status": "RETURNED",
+          "batch_date": "2025-04-01 00:26:02",
+          "release_scheduled_date": "2025-04-11 00:26:02",
+          "net_amount_cents": 6131
+        },
+        "description": "Payout line PLN-PAYOUT-PREM-0025-01 for order line ORDLN-2026-025575-01 was disbursed on 2025-04-01 00:26:02 prior to hold release 2025-04-11 00:26:02 (status: RETURNED)."
+      },
+      {
+        "scenario_id": "SCENARIO-2",
+        "entity_id": "CML-000001",
+        "entity_type": "COMMISSION_LEDGER",
+        "issue_type": "DOUBLE_COMMISSION",
+        "ground_truth_label": "ANOMALY_2_DOUBLE_COMMISSION",
+        "expected_result": "Single platform commission fee applied per order line according to category and tier rate schedule.",
+        "expected_corrective_action": "Void duplicate commission charge and issue financial ledger credit adjustment to seller balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "order_line_id": "ORDLN-2026-000001-01",
+          "seller_id": "SELL-000238",
+          "gross_amount_cents": 7220,
+          "actual_commission_cents": 1648,
+          "expected_commission_cents": 824,
+          "variance_cents": 824
+        },
+        "description": "Commission entry CML-000001 for order line ORDLN-2026-000001-01 charged double fee (1648 cents vs expected 824 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-2",
+        "entity_id": "CML-000002",
+        "entity_type": "COMMISSION_LEDGER",
+        "issue_type": "DOUBLE_COMMISSION",
+        "ground_truth_label": "ANOMALY_2_DOUBLE_COMMISSION",
+        "expected_result": "Single platform commission fee applied per order line according to category and tier rate schedule.",
+        "expected_corrective_action": "Void duplicate commission charge and issue financial ledger credit adjustment to seller balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "order_line_id": "ORDLN-2026-000002-01",
+          "seller_id": "SELL-001816",
+          "gross_amount_cents": 3470,
+          "actual_commission_cents": 684,
+          "expected_commission_cents": 342,
+          "variance_cents": 342
+        },
+        "description": "Commission entry CML-000002 for order line ORDLN-2026-000002-01 charged double fee (684 cents vs expected 342 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-2",
+        "entity_id": "CML-000003",
+        "entity_type": "COMMISSION_LEDGER",
+        "issue_type": "DOUBLE_COMMISSION",
+        "ground_truth_label": "ANOMALY_2_DOUBLE_COMMISSION",
+        "expected_result": "Single platform commission fee applied per order line according to category and tier rate schedule.",
+        "expected_corrective_action": "Void duplicate commission charge and issue financial ledger credit adjustment to seller balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "order_line_id": "ORDLN-2026-000003-01",
+          "seller_id": "SELL-000288",
+          "gross_amount_cents": 1854,
+          "actual_commission_cents": 430,
+          "expected_commission_cents": 215,
+          "variance_cents": 215
+        },
+        "description": "Commission entry CML-000003 for order line ORDLN-2026-000003-01 charged double fee (430 cents vs expected 215 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-2",
+        "entity_id": "CML-000004",
+        "entity_type": "COMMISSION_LEDGER",
+        "issue_type": "DOUBLE_COMMISSION",
+        "ground_truth_label": "ANOMALY_2_DOUBLE_COMMISSION",
+        "expected_result": "Single platform commission fee applied per order line according to category and tier rate schedule.",
+        "expected_corrective_action": "Void duplicate commission charge and issue financial ledger credit adjustment to seller balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "order_line_id": "ORDLN-2026-000004-01",
+          "seller_id": "SELL-000299",
+          "gross_amount_cents": 4395,
+          "actual_commission_cents": 1290,
+          "expected_commission_cents": 645,
+          "variance_cents": 645
+        },
+        "description": "Commission entry CML-000004 for order line ORDLN-2026-000004-01 charged double fee (1290 cents vs expected 645 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-2",
+        "entity_id": "CML-000008",
+        "entity_type": "COMMISSION_LEDGER",
+        "issue_type": "DOUBLE_COMMISSION",
+        "ground_truth_label": "ANOMALY_2_DOUBLE_COMMISSION",
+        "expected_result": "Single platform commission fee applied per order line according to category and tier rate schedule.",
+        "expected_corrective_action": "Void duplicate commission charge and issue financial ledger credit adjustment to seller balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "order_line_id": "ORDLN-2026-000008-01",
+          "seller_id": "SELL-000615",
+          "gross_amount_cents": 3909,
+          "actual_commission_cents": 1036,
+          "expected_commission_cents": 518,
+          "variance_cents": 518
+        },
+        "description": "Commission entry CML-000008 for order line ORDLN-2026-000008-01 charged double fee (1036 cents vs expected 518 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-2",
+        "entity_id": "CML-000009",
+        "entity_type": "COMMISSION_LEDGER",
+        "issue_type": "DOUBLE_COMMISSION",
+        "ground_truth_label": "ANOMALY_2_DOUBLE_COMMISSION",
+        "expected_result": "Single platform commission fee applied per order line according to category and tier rate schedule.",
+        "expected_corrective_action": "Void duplicate commission charge and issue financial ledger credit adjustment to seller balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "order_line_id": "ORDLN-2026-000009-01",
+          "seller_id": "SELL-000318",
+          "gross_amount_cents": 8794,
+          "actual_commission_cents": 2522,
+          "expected_commission_cents": 1261,
+          "variance_cents": 1261
+        },
+        "description": "Commission entry CML-000009 for order line ORDLN-2026-000009-01 charged double fee (2522 cents vs expected 1261 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-2",
+        "entity_id": "CML-000010",
+        "entity_type": "COMMISSION_LEDGER",
+        "issue_type": "DOUBLE_COMMISSION",
+        "ground_truth_label": "ANOMALY_2_DOUBLE_COMMISSION",
+        "expected_result": "Single platform commission fee applied per order line according to category and tier rate schedule.",
+        "expected_corrective_action": "Void duplicate commission charge and issue financial ledger credit adjustment to seller balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "order_line_id": "ORDLN-2026-000010-01",
+          "seller_id": "SELL-001600",
+          "gross_amount_cents": 9759,
+          "actual_commission_cents": 1620,
+          "expected_commission_cents": 810,
+          "variance_cents": 810
+        },
+        "description": "Commission entry CML-000010 for order line ORDLN-2026-000010-01 charged double fee (1620 cents vs expected 810 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-2",
+        "entity_id": "CML-000012",
+        "entity_type": "COMMISSION_LEDGER",
+        "issue_type": "DOUBLE_COMMISSION",
+        "ground_truth_label": "ANOMALY_2_DOUBLE_COMMISSION",
+        "expected_result": "Single platform commission fee applied per order line according to category and tier rate schedule.",
+        "expected_corrective_action": "Void duplicate commission charge and issue financial ledger credit adjustment to seller balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "order_line_id": "ORDLN-2026-000012-01",
+          "seller_id": "SELL-000841",
+          "gross_amount_cents": 10478,
+          "actual_commission_cents": 3202,
+          "expected_commission_cents": 1601,
+          "variance_cents": 1601
+        },
+        "description": "Commission entry CML-000012 for order line ORDLN-2026-000012-01 charged double fee (3202 cents vs expected 1601 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-2",
+        "entity_id": "CML-000013",
+        "entity_type": "COMMISSION_LEDGER",
+        "issue_type": "DOUBLE_COMMISSION",
+        "ground_truth_label": "ANOMALY_2_DOUBLE_COMMISSION",
+        "expected_result": "Single platform commission fee applied per order line according to category and tier rate schedule.",
+        "expected_corrective_action": "Void duplicate commission charge and issue financial ledger credit adjustment to seller balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "order_line_id": "ORDLN-2026-000012-02",
+          "seller_id": "SELL-001663",
+          "gross_amount_cents": 18948,
+          "actual_commission_cents": 3848,
+          "expected_commission_cents": 1924,
+          "variance_cents": 1924
+        },
+        "description": "Commission entry CML-000013 for order line ORDLN-2026-000012-02 charged double fee (3848 cents vs expected 1924 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-2",
+        "entity_id": "CML-000014",
+        "entity_type": "COMMISSION_LEDGER",
+        "issue_type": "DOUBLE_COMMISSION",
+        "ground_truth_label": "ANOMALY_2_DOUBLE_COMMISSION",
+        "expected_result": "Single platform commission fee applied per order line according to category and tier rate schedule.",
+        "expected_corrective_action": "Void duplicate commission charge and issue financial ledger credit adjustment to seller balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "order_line_id": "ORDLN-2026-000013-01",
+          "seller_id": "SELL-001134",
+          "gross_amount_cents": 5314,
+          "actual_commission_cents": 910,
+          "expected_commission_cents": 455,
+          "variance_cents": 455
+        },
+        "description": "Commission entry CML-000014 for order line ORDLN-2026-000013-01 charged double fee (910 cents vs expected 455 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-2",
+        "entity_id": "CML-000015",
+        "entity_type": "COMMISSION_LEDGER",
+        "issue_type": "DOUBLE_COMMISSION",
+        "ground_truth_label": "ANOMALY_2_DOUBLE_COMMISSION",
+        "expected_result": "Single platform commission fee applied per order line according to category and tier rate schedule.",
+        "expected_corrective_action": "Void duplicate commission charge and issue financial ledger credit adjustment to seller balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "order_line_id": "ORDLN-2026-000014-01",
+          "seller_id": "SELL-000205",
+          "gross_amount_cents": 8891,
+          "actual_commission_cents": 2192,
+          "expected_commission_cents": 1096,
+          "variance_cents": 1096
+        },
+        "description": "Commission entry CML-000015 for order line ORDLN-2026-000014-01 charged double fee (2192 cents vs expected 1096 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-2",
+        "entity_id": "CML-000016",
+        "entity_type": "COMMISSION_LEDGER",
+        "issue_type": "DOUBLE_COMMISSION",
+        "ground_truth_label": "ANOMALY_2_DOUBLE_COMMISSION",
+        "expected_result": "Single platform commission fee applied per order line according to category and tier rate schedule.",
+        "expected_corrective_action": "Void duplicate commission charge and issue financial ledger credit adjustment to seller balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "order_line_id": "ORDLN-2026-000014-02",
+          "seller_id": "SELL-001445",
+          "gross_amount_cents": 3137,
+          "actual_commission_cents": 938,
+          "expected_commission_cents": 469,
+          "variance_cents": 469
+        },
+        "description": "Commission entry CML-000016 for order line ORDLN-2026-000014-02 charged double fee (938 cents vs expected 469 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-2",
+        "entity_id": "CML-000017",
+        "entity_type": "COMMISSION_LEDGER",
+        "issue_type": "DOUBLE_COMMISSION",
+        "ground_truth_label": "ANOMALY_2_DOUBLE_COMMISSION",
+        "expected_result": "Single platform commission fee applied per order line according to category and tier rate schedule.",
+        "expected_corrective_action": "Void duplicate commission charge and issue financial ledger credit adjustment to seller balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "order_line_id": "ORDLN-2026-000015-01",
+          "seller_id": "SELL-001419",
+          "gross_amount_cents": 3360,
+          "actual_commission_cents": 1000,
+          "expected_commission_cents": 500,
+          "variance_cents": 500
+        },
+        "description": "Commission entry CML-000017 for order line ORDLN-2026-000015-01 charged double fee (1000 cents vs expected 500 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-2",
+        "entity_id": "CML-000018",
+        "entity_type": "COMMISSION_LEDGER",
+        "issue_type": "DOUBLE_COMMISSION",
+        "ground_truth_label": "ANOMALY_2_DOUBLE_COMMISSION",
+        "expected_result": "Single platform commission fee applied per order line according to category and tier rate schedule.",
+        "expected_corrective_action": "Void duplicate commission charge and issue financial ledger credit adjustment to seller balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "order_line_id": "ORDLN-2026-000015-02",
+          "seller_id": "SELL-000014",
+          "gross_amount_cents": 3793,
+          "actual_commission_cents": 818,
+          "expected_commission_cents": 409,
+          "variance_cents": 409
+        },
+        "description": "Commission entry CML-000018 for order line ORDLN-2026-000015-02 charged double fee (818 cents vs expected 409 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-2",
+        "entity_id": "CML-000019",
+        "entity_type": "COMMISSION_LEDGER",
+        "issue_type": "DOUBLE_COMMISSION",
+        "ground_truth_label": "ANOMALY_2_DOUBLE_COMMISSION",
+        "expected_result": "Single platform commission fee applied per order line according to category and tier rate schedule.",
+        "expected_corrective_action": "Void duplicate commission charge and issue financial ledger credit adjustment to seller balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "order_line_id": "ORDLN-2026-000016-01",
+          "seller_id": "SELL-000211",
+          "gross_amount_cents": 27965,
+          "actual_commission_cents": 4534,
+          "expected_commission_cents": 2267,
+          "variance_cents": 2267
+        },
+        "description": "Commission entry CML-000019 for order line ORDLN-2026-000016-01 charged double fee (4534 cents vs expected 2267 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-2",
+        "entity_id": "CML-000021",
+        "entity_type": "COMMISSION_LEDGER",
+        "issue_type": "DOUBLE_COMMISSION",
+        "ground_truth_label": "ANOMALY_2_DOUBLE_COMMISSION",
+        "expected_result": "Single platform commission fee applied per order line according to category and tier rate schedule.",
+        "expected_corrective_action": "Void duplicate commission charge and issue financial ledger credit adjustment to seller balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "order_line_id": "ORDLN-2026-000018-01",
+          "seller_id": "SELL-001698",
+          "gross_amount_cents": 4077,
+          "actual_commission_cents": 1282,
+          "expected_commission_cents": 641,
+          "variance_cents": 641
+        },
+        "description": "Commission entry CML-000021 for order line ORDLN-2026-000018-01 charged double fee (1282 cents vs expected 641 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-2",
+        "entity_id": "CML-000022",
+        "entity_type": "COMMISSION_LEDGER",
+        "issue_type": "DOUBLE_COMMISSION",
+        "ground_truth_label": "ANOMALY_2_DOUBLE_COMMISSION",
+        "expected_result": "Single platform commission fee applied per order line according to category and tier rate schedule.",
+        "expected_corrective_action": "Void duplicate commission charge and issue financial ledger credit adjustment to seller balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "order_line_id": "ORDLN-2026-000018-02",
+          "seller_id": "SELL-001267",
+          "gross_amount_cents": 3948,
+          "actual_commission_cents": 1006,
+          "expected_commission_cents": 503,
+          "variance_cents": 503
+        },
+        "description": "Commission entry CML-000022 for order line ORDLN-2026-000018-02 charged double fee (1006 cents vs expected 503 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-2",
+        "entity_id": "CML-000024",
+        "entity_type": "COMMISSION_LEDGER",
+        "issue_type": "DOUBLE_COMMISSION",
+        "ground_truth_label": "ANOMALY_2_DOUBLE_COMMISSION",
+        "expected_result": "Single platform commission fee applied per order line according to category and tier rate schedule.",
+        "expected_corrective_action": "Void duplicate commission charge and issue financial ledger credit adjustment to seller balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "order_line_id": "ORDLN-2026-000020-01",
+          "seller_id": "SELL-001655",
+          "gross_amount_cents": 3449,
+          "actual_commission_cents": 748,
+          "expected_commission_cents": 374,
+          "variance_cents": 374
+        },
+        "description": "Commission entry CML-000024 for order line ORDLN-2026-000020-01 charged double fee (748 cents vs expected 374 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-2",
+        "entity_id": "CML-000025",
+        "entity_type": "COMMISSION_LEDGER",
+        "issue_type": "DOUBLE_COMMISSION",
+        "ground_truth_label": "ANOMALY_2_DOUBLE_COMMISSION",
+        "expected_result": "Single platform commission fee applied per order line according to category and tier rate schedule.",
+        "expected_corrective_action": "Void duplicate commission charge and issue financial ledger credit adjustment to seller balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "order_line_id": "ORDLN-2026-000021-01",
+          "seller_id": "SELL-000929",
+          "gross_amount_cents": 4591,
+          "actual_commission_cents": 610,
+          "expected_commission_cents": 305,
+          "variance_cents": 305
+        },
+        "description": "Commission entry CML-000025 for order line ORDLN-2026-000021-01 charged double fee (610 cents vs expected 305 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-2",
+        "entity_id": "CML-000026",
+        "entity_type": "COMMISSION_LEDGER",
+        "issue_type": "DOUBLE_COMMISSION",
+        "ground_truth_label": "ANOMALY_2_DOUBLE_COMMISSION",
+        "expected_result": "Single platform commission fee applied per order line according to category and tier rate schedule.",
+        "expected_corrective_action": "Void duplicate commission charge and issue financial ledger credit adjustment to seller balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "order_line_id": "ORDLN-2026-000022-01",
+          "seller_id": "SELL-000637",
+          "gross_amount_cents": 2989,
+          "actual_commission_cents": 656,
+          "expected_commission_cents": 328,
+          "variance_cents": 328
+        },
+        "description": "Commission entry CML-000026 for order line ORDLN-2026-000022-01 charged double fee (656 cents vs expected 328 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-2",
+        "entity_id": "CML-000027",
+        "entity_type": "COMMISSION_LEDGER",
+        "issue_type": "DOUBLE_COMMISSION",
+        "ground_truth_label": "ANOMALY_2_DOUBLE_COMMISSION",
+        "expected_result": "Single platform commission fee applied per order line according to category and tier rate schedule.",
+        "expected_corrective_action": "Void duplicate commission charge and issue financial ledger credit adjustment to seller balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "order_line_id": "ORDLN-2026-000023-01",
+          "seller_id": "SELL-000362",
+          "gross_amount_cents": 23230,
+          "actual_commission_cents": 2846,
+          "expected_commission_cents": 1423,
+          "variance_cents": 1423
+        },
+        "description": "Commission entry CML-000027 for order line ORDLN-2026-000023-01 charged double fee (2846 cents vs expected 1423 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-2",
+        "entity_id": "CML-000028",
+        "entity_type": "COMMISSION_LEDGER",
+        "issue_type": "DOUBLE_COMMISSION",
+        "ground_truth_label": "ANOMALY_2_DOUBLE_COMMISSION",
+        "expected_result": "Single platform commission fee applied per order line according to category and tier rate schedule.",
+        "expected_corrective_action": "Void duplicate commission charge and issue financial ledger credit adjustment to seller balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "order_line_id": "ORDLN-2026-000024-01",
+          "seller_id": "SELL-001889",
+          "gross_amount_cents": 12215,
+          "actual_commission_cents": 2868,
+          "expected_commission_cents": 1434,
+          "variance_cents": 1434
+        },
+        "description": "Commission entry CML-000028 for order line ORDLN-2026-000024-01 charged double fee (2868 cents vs expected 1434 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-2",
+        "entity_id": "CML-000029",
+        "entity_type": "COMMISSION_LEDGER",
+        "issue_type": "DOUBLE_COMMISSION",
+        "ground_truth_label": "ANOMALY_2_DOUBLE_COMMISSION",
+        "expected_result": "Single platform commission fee applied per order line according to category and tier rate schedule.",
+        "expected_corrective_action": "Void duplicate commission charge and issue financial ledger credit adjustment to seller balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "order_line_id": "ORDLN-2026-000025-01",
+          "seller_id": "SELL-001329",
+          "gross_amount_cents": 2708,
+          "actual_commission_cents": 600,
+          "expected_commission_cents": 300,
+          "variance_cents": 300
+        },
+        "description": "Commission entry CML-000029 for order line ORDLN-2026-000025-01 charged double fee (600 cents vs expected 300 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-2",
+        "entity_id": "CML-000030",
+        "entity_type": "COMMISSION_LEDGER",
+        "issue_type": "DOUBLE_COMMISSION",
+        "ground_truth_label": "ANOMALY_2_DOUBLE_COMMISSION",
+        "expected_result": "Single platform commission fee applied per order line according to category and tier rate schedule.",
+        "expected_corrective_action": "Void duplicate commission charge and issue financial ledger credit adjustment to seller balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "order_line_id": "ORDLN-2026-000026-01",
+          "seller_id": "SELL-001642",
+          "gross_amount_cents": 3333,
+          "actual_commission_cents": 1058,
+          "expected_commission_cents": 529,
+          "variance_cents": 529
+        },
+        "description": "Commission entry CML-000030 for order line ORDLN-2026-000026-01 charged double fee (1058 cents vs expected 529 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-2",
+        "entity_id": "CML-000031",
+        "entity_type": "COMMISSION_LEDGER",
+        "issue_type": "DOUBLE_COMMISSION",
+        "ground_truth_label": "ANOMALY_2_DOUBLE_COMMISSION",
+        "expected_result": "Single platform commission fee applied per order line according to category and tier rate schedule.",
+        "expected_corrective_action": "Void duplicate commission charge and issue financial ledger credit adjustment to seller balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "order_line_id": "ORDLN-2026-000027-01",
+          "seller_id": "SELL-001580",
+          "gross_amount_cents": 6124,
+          "actual_commission_cents": 1652,
+          "expected_commission_cents": 826,
+          "variance_cents": 826
+        },
+        "description": "Commission entry CML-000031 for order line ORDLN-2026-000027-01 charged double fee (1652 cents vs expected 826 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-3",
+        "entity_id": "LIST-SELL-000025-000001",
+        "entity_type": "LISTING",
+        "issue_type": "SUSPENDED_SELLER_ACTIVE",
+        "ground_truth_label": "ANOMALY_3_SUSPENDED_SELLER_ACTIVE",
+        "expected_result": "Suspended sellers must have all catalog listings deactivated and cannot maintain active storefront inventory.",
+        "expected_corrective_action": "Immediately transition listing status to SUSPENDED and quarantine catalog items from marketplace search.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "seller_id": "SELL-000025",
+          "seller_name": "Mcdonald-Richard 41",
+          "seller_status": "SUSPENDED",
+          "listing_id": "LIST-SELL-000025-000001",
+          "listing_title": "Polarized Classic Sunglasses UV400 - Series 788",
+          "listing_status": "ACTIVE"
+        },
+        "description": "Listing LIST-SELL-000025-000001 ('Polarized Classic Sunglasses UV400 - Series 788') remains ACTIVE while seller SELL-000025 is SUSPENDED."
+      },
+      {
+        "scenario_id": "SCENARIO-3",
+        "entity_id": "LIST-SELL-000085-000001",
+        "entity_type": "LISTING",
+        "issue_type": "SUSPENDED_SELLER_ACTIVE",
+        "ground_truth_label": "ANOMALY_3_SUSPENDED_SELLER_ACTIVE",
+        "expected_result": "Suspended sellers must have all catalog listings deactivated and cannot maintain active storefront inventory.",
+        "expected_corrective_action": "Immediately transition listing status to SUSPENDED and quarantine catalog items from marketplace search.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "seller_id": "SELL-000085",
+          "seller_name": "Wolf LLC 77",
+          "seller_status": "SUSPENDED",
+          "listing_id": "LIST-SELL-000085-000001",
+          "listing_title": "Programmable Digital Air Fryer 5.8Qt - Series 363",
+          "listing_status": "ACTIVE"
+        },
+        "description": "Listing LIST-SELL-000085-000001 ('Programmable Digital Air Fryer 5.8Qt - Series 363') remains ACTIVE while seller SELL-000085 is SUSPENDED."
+      },
+      {
+        "scenario_id": "SCENARIO-3",
+        "entity_id": "LIST-SELL-000129-000001",
+        "entity_type": "LISTING",
+        "issue_type": "SUSPENDED_SELLER_ACTIVE",
+        "ground_truth_label": "ANOMALY_3_SUSPENDED_SELLER_ACTIVE",
+        "expected_result": "Suspended sellers must have all catalog listings deactivated and cannot maintain active storefront inventory.",
+        "expected_corrective_action": "Immediately transition listing status to SUSPENDED and quarantine catalog items from marketplace search.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "seller_id": "SELL-000129",
+          "seller_name": "Burton LLC 89",
+          "seller_status": "SUSPENDED",
+          "listing_id": "LIST-SELL-000129-000001",
+          "listing_title": "Classic Premium Cotton Crewneck Tee - Series 543",
+          "listing_status": "ACTIVE"
+        },
+        "description": "Listing LIST-SELL-000129-000001 ('Classic Premium Cotton Crewneck Tee - Series 543') remains ACTIVE while seller SELL-000129 is SUSPENDED."
+      },
+      {
+        "scenario_id": "SCENARIO-3",
+        "entity_id": "LIST-SELL-000239-000001",
+        "entity_type": "LISTING",
+        "issue_type": "SUSPENDED_SELLER_ACTIVE",
+        "ground_truth_label": "ANOMALY_3_SUSPENDED_SELLER_ACTIVE",
+        "expected_result": "Suspended sellers must have all catalog listings deactivated and cannot maintain active storefront inventory.",
+        "expected_corrective_action": "Immediately transition listing status to SUSPENDED and quarantine catalog items from marketplace search.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "seller_id": "SELL-000239",
+          "seller_name": "Wolfe Ltd 94",
+          "seller_status": "SUSPENDED",
+          "listing_id": "LIST-SELL-000239-000001",
+          "listing_title": "Magnetic Dashboard Phone Car Mount - Series 832",
+          "listing_status": "ACTIVE"
+        },
+        "description": "Listing LIST-SELL-000239-000001 ('Magnetic Dashboard Phone Car Mount - Series 832') remains ACTIVE while seller SELL-000239 is SUSPENDED."
+      },
+      {
+        "scenario_id": "SCENARIO-3",
+        "entity_id": "LIST-SELL-000457-000001",
+        "entity_type": "LISTING",
+        "issue_type": "SUSPENDED_SELLER_ACTIVE",
+        "ground_truth_label": "ANOMALY_3_SUSPENDED_SELLER_ACTIVE",
+        "expected_result": "Suspended sellers must have all catalog listings deactivated and cannot maintain active storefront inventory.",
+        "expected_corrective_action": "Immediately transition listing status to SUSPENDED and quarantine catalog items from marketplace search.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "seller_id": "SELL-000457",
+          "seller_name": "Jordan LLC 96",
+          "seller_status": "SUSPENDED",
+          "listing_id": "LIST-SELL-000457-000001",
+          "listing_title": "Slim-Fit Stretch Denim Jeans - Series 901",
+          "listing_status": "ACTIVE"
+        },
+        "description": "Listing LIST-SELL-000457-000001 ('Slim-Fit Stretch Denim Jeans - Series 901') remains ACTIVE while seller SELL-000457 is SUSPENDED."
+      },
+      {
+        "scenario_id": "SCENARIO-3",
+        "entity_id": "LIST-SELL-000592-000001",
+        "entity_type": "LISTING",
+        "issue_type": "SUSPENDED_SELLER_ACTIVE",
+        "ground_truth_label": "ANOMALY_3_SUSPENDED_SELLER_ACTIVE",
+        "expected_result": "Suspended sellers must have all catalog listings deactivated and cannot maintain active storefront inventory.",
+        "expected_corrective_action": "Immediately transition listing status to SUSPENDED and quarantine catalog items from marketplace search.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "seller_id": "SELL-000592",
+          "seller_name": "Nelson, Martinez and Melendez 93",
+          "seller_status": "SUSPENDED",
+          "listing_id": "LIST-SELL-000592-000001",
+          "listing_title": "Hardcover Collector Edition Best-Seller - Series 315",
+          "listing_status": "ACTIVE"
+        },
+        "description": "Listing LIST-SELL-000592-000001 ('Hardcover Collector Edition Best-Seller - Series 315') remains ACTIVE while seller SELL-000592 is SUSPENDED."
+      },
+      {
+        "scenario_id": "SCENARIO-3",
+        "entity_id": "LIST-SELL-000670-000001",
+        "entity_type": "LISTING",
+        "issue_type": "SUSPENDED_SELLER_ACTIVE",
+        "ground_truth_label": "ANOMALY_3_SUSPENDED_SELLER_ACTIVE",
+        "expected_result": "Suspended sellers must have all catalog listings deactivated and cannot maintain active storefront inventory.",
+        "expected_corrective_action": "Immediately transition listing status to SUSPENDED and quarantine catalog items from marketplace search.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "seller_id": "SELL-000670",
+          "seller_name": "Daniels Group 40",
+          "seller_status": "SUSPENDED",
+          "listing_id": "LIST-SELL-000670-000001",
+          "listing_title": "Slim-Fit Stretch Denim Jeans - Series 147",
+          "listing_status": "ACTIVE"
+        },
+        "description": "Listing LIST-SELL-000670-000001 ('Slim-Fit Stretch Denim Jeans - Series 147') remains ACTIVE while seller SELL-000670 is SUSPENDED."
+      },
+      {
+        "scenario_id": "SCENARIO-3",
+        "entity_id": "LIST-SELL-000836-000001",
+        "entity_type": "LISTING",
+        "issue_type": "SUSPENDED_SELLER_ACTIVE",
+        "ground_truth_label": "ANOMALY_3_SUSPENDED_SELLER_ACTIVE",
+        "expected_result": "Suspended sellers must have all catalog listings deactivated and cannot maintain active storefront inventory.",
+        "expected_corrective_action": "Immediately transition listing status to SUSPENDED and quarantine catalog items from marketplace search.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "seller_id": "SELL-000836",
+          "seller_name": "Davis and Sons 93",
+          "seller_status": "SUSPENDED",
+          "listing_id": "LIST-SELL-000836-000001",
+          "listing_title": "Hardcover Collector Edition Best-Seller - Series 721",
+          "listing_status": "ACTIVE"
+        },
+        "description": "Listing LIST-SELL-000836-000001 ('Hardcover Collector Edition Best-Seller - Series 721') remains ACTIVE while seller SELL-000836 is SUSPENDED."
+      },
+      {
+        "scenario_id": "SCENARIO-3",
+        "entity_id": "LIST-SELL-000913-000001",
+        "entity_type": "LISTING",
+        "issue_type": "SUSPENDED_SELLER_ACTIVE",
+        "ground_truth_label": "ANOMALY_3_SUSPENDED_SELLER_ACTIVE",
+        "expected_result": "Suspended sellers must have all catalog listings deactivated and cannot maintain active storefront inventory.",
+        "expected_corrective_action": "Immediately transition listing status to SUSPENDED and quarantine catalog items from marketplace search.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "seller_id": "SELL-000913",
+          "seller_name": "Frazier LLC 21",
+          "seller_status": "SUSPENDED",
+          "listing_id": "LIST-SELL-000913-000001",
+          "listing_title": "Fast Wireless Charging Dock 3-in-1 - Series 755",
+          "listing_status": "ACTIVE"
+        },
+        "description": "Listing LIST-SELL-000913-000001 ('Fast Wireless Charging Dock 3-in-1 - Series 755') remains ACTIVE while seller SELL-000913 is SUSPENDED."
+      },
+      {
+        "scenario_id": "SCENARIO-3",
+        "entity_id": "LIST-SELL-000944-000001",
+        "entity_type": "LISTING",
+        "issue_type": "SUSPENDED_SELLER_ACTIVE",
+        "ground_truth_label": "ANOMALY_3_SUSPENDED_SELLER_ACTIVE",
+        "expected_result": "Suspended sellers must have all catalog listings deactivated and cannot maintain active storefront inventory.",
+        "expected_corrective_action": "Immediately transition listing status to SUSPENDED and quarantine catalog items from marketplace search.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "seller_id": "SELL-000944",
+          "seller_name": "Lewis, Lawson and Mitchell 13",
+          "seller_status": "SUSPENDED",
+          "listing_id": "LIST-SELL-000944-000001",
+          "listing_title": "Modern Software Architecture Handbook - Series 242",
+          "listing_status": "ACTIVE"
+        },
+        "description": "Listing LIST-SELL-000944-000001 ('Modern Software Architecture Handbook - Series 242') remains ACTIVE while seller SELL-000944 is SUSPENDED."
+      },
+      {
+        "scenario_id": "SCENARIO-3",
+        "entity_id": "LIST-SELL-001023-000001",
+        "entity_type": "LISTING",
+        "issue_type": "SUSPENDED_SELLER_ACTIVE",
+        "ground_truth_label": "ANOMALY_3_SUSPENDED_SELLER_ACTIVE",
+        "expected_result": "Suspended sellers must have all catalog listings deactivated and cannot maintain active storefront inventory.",
+        "expected_corrective_action": "Immediately transition listing status to SUSPENDED and quarantine catalog items from marketplace search.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "seller_id": "SELL-001023",
+          "seller_name": "Lara-Barrett 69",
+          "seller_status": "SUSPENDED",
+          "listing_id": "LIST-SELL-001023-000001",
+          "listing_title": "Hardcover Collector Edition Best-Seller - Series 494",
+          "listing_status": "ACTIVE"
+        },
+        "description": "Listing LIST-SELL-001023-000001 ('Hardcover Collector Edition Best-Seller - Series 494') remains ACTIVE while seller SELL-001023 is SUSPENDED."
+      },
+      {
+        "scenario_id": "SCENARIO-3",
+        "entity_id": "LIST-SELL-001042-000001",
+        "entity_type": "LISTING",
+        "issue_type": "SUSPENDED_SELLER_ACTIVE",
+        "ground_truth_label": "ANOMALY_3_SUSPENDED_SELLER_ACTIVE",
+        "expected_result": "Suspended sellers must have all catalog listings deactivated and cannot maintain active storefront inventory.",
+        "expected_corrective_action": "Immediately transition listing status to SUSPENDED and quarantine catalog items from marketplace search.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "seller_id": "SELL-001042",
+          "seller_name": "Sanchez and Sons 53",
+          "seller_status": "SUSPENDED",
+          "listing_id": "LIST-SELL-001042-000001",
+          "listing_title": "Ionic Hair Dryer with Diffuser - Series 154",
+          "listing_status": "ACTIVE"
+        },
+        "description": "Listing LIST-SELL-001042-000001 ('Ionic Hair Dryer with Diffuser - Series 154') remains ACTIVE while seller SELL-001042 is SUSPENDED."
+      },
+      {
+        "scenario_id": "SCENARIO-3",
+        "entity_id": "LIST-SELL-001104-000001",
+        "entity_type": "LISTING",
+        "issue_type": "SUSPENDED_SELLER_ACTIVE",
+        "ground_truth_label": "ANOMALY_3_SUSPENDED_SELLER_ACTIVE",
+        "expected_result": "Suspended sellers must have all catalog listings deactivated and cannot maintain active storefront inventory.",
+        "expected_corrective_action": "Immediately transition listing status to SUSPENDED and quarantine catalog items from marketplace search.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "seller_id": "SELL-001104",
+          "seller_name": "Mosley-Howard 49",
+          "seller_status": "SUSPENDED",
+          "listing_id": "LIST-SELL-001104-000001",
+          "listing_title": "Polarized Classic Sunglasses UV400 - Series 862",
+          "listing_status": "ACTIVE"
+        },
+        "description": "Listing LIST-SELL-001104-000001 ('Polarized Classic Sunglasses UV400 - Series 862') remains ACTIVE while seller SELL-001104 is SUSPENDED."
+      },
+      {
+        "scenario_id": "SCENARIO-3",
+        "entity_id": "LIST-SELL-001359-000001",
+        "entity_type": "LISTING",
+        "issue_type": "SUSPENDED_SELLER_ACTIVE",
+        "ground_truth_label": "ANOMALY_3_SUSPENDED_SELLER_ACTIVE",
+        "expected_result": "Suspended sellers must have all catalog listings deactivated and cannot maintain active storefront inventory.",
+        "expected_corrective_action": "Immediately transition listing status to SUSPENDED and quarantine catalog items from marketplace search.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "seller_id": "SELL-001359",
+          "seller_name": "Graves and Sons 68",
+          "seller_status": "SUSPENDED",
+          "listing_id": "LIST-SELL-001359-000001",
+          "listing_title": "Hydrating Vitamin C Facial Serum 50ml - Series 107",
+          "listing_status": "ACTIVE"
+        },
+        "description": "Listing LIST-SELL-001359-000001 ('Hydrating Vitamin C Facial Serum 50ml - Series 107') remains ACTIVE while seller SELL-001359 is SUSPENDED."
+      },
+      {
+        "scenario_id": "SCENARIO-3",
+        "entity_id": "LIST-SELL-001572-000001",
+        "entity_type": "LISTING",
+        "issue_type": "SUSPENDED_SELLER_ACTIVE",
+        "ground_truth_label": "ANOMALY_3_SUSPENDED_SELLER_ACTIVE",
+        "expected_result": "Suspended sellers must have all catalog listings deactivated and cannot maintain active storefront inventory.",
+        "expected_corrective_action": "Immediately transition listing status to SUSPENDED and quarantine catalog items from marketplace search.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "seller_id": "SELL-001572",
+          "seller_name": "Nguyen, Evans and Craig 79",
+          "seller_status": "SUSPENDED",
+          "listing_id": "LIST-SELL-001572-000001",
+          "listing_title": "Breathable Athletic Running Shoes - Series 727",
+          "listing_status": "ACTIVE"
+        },
+        "description": "Listing LIST-SELL-001572-000001 ('Breathable Athletic Running Shoes - Series 727') remains ACTIVE while seller SELL-001572 is SUSPENDED."
+      },
+      {
+        "scenario_id": "SCENARIO-3",
+        "entity_id": "LIST-SELL-001586-000001",
+        "entity_type": "LISTING",
+        "issue_type": "SUSPENDED_SELLER_ACTIVE",
+        "ground_truth_label": "ANOMALY_3_SUSPENDED_SELLER_ACTIVE",
+        "expected_result": "Suspended sellers must have all catalog listings deactivated and cannot maintain active storefront inventory.",
+        "expected_corrective_action": "Immediately transition listing status to SUSPENDED and quarantine catalog items from marketplace search.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "seller_id": "SELL-001586",
+          "seller_name": "Sanchez and Sons 73",
+          "seller_status": "SUSPENDED",
+          "listing_id": "LIST-SELL-001586-000001",
+          "listing_title": "Adjustable Quick-Select Dumbbell Set 50lbs - Series 624",
+          "listing_status": "ACTIVE"
+        },
+        "description": "Listing LIST-SELL-001586-000001 ('Adjustable Quick-Select Dumbbell Set 50lbs - Series 624') remains ACTIVE while seller SELL-001586 is SUSPENDED."
+      },
+      {
+        "scenario_id": "SCENARIO-3",
+        "entity_id": "LIST-SELL-001597-000001",
+        "entity_type": "LISTING",
+        "issue_type": "SUSPENDED_SELLER_ACTIVE",
+        "ground_truth_label": "ANOMALY_3_SUSPENDED_SELLER_ACTIVE",
+        "expected_result": "Suspended sellers must have all catalog listings deactivated and cannot maintain active storefront inventory.",
+        "expected_corrective_action": "Immediately transition listing status to SUSPENDED and quarantine catalog items from marketplace search.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "seller_id": "SELL-001597",
+          "seller_name": "Rodriguez-Mccormick 43",
+          "seller_status": "SUSPENDED",
+          "listing_id": "LIST-SELL-001597-000001",
+          "listing_title": "Fast Wireless Charging Dock 3-in-1 - Series 499",
+          "listing_status": "ACTIVE"
+        },
+        "description": "Listing LIST-SELL-001597-000001 ('Fast Wireless Charging Dock 3-in-1 - Series 499') remains ACTIVE while seller SELL-001597 is SUSPENDED."
+      },
+      {
+        "scenario_id": "SCENARIO-3",
+        "entity_id": "LIST-SELL-001631-000001",
+        "entity_type": "LISTING",
+        "issue_type": "SUSPENDED_SELLER_ACTIVE",
+        "ground_truth_label": "ANOMALY_3_SUSPENDED_SELLER_ACTIVE",
+        "expected_result": "Suspended sellers must have all catalog listings deactivated and cannot maintain active storefront inventory.",
+        "expected_corrective_action": "Immediately transition listing status to SUSPENDED and quarantine catalog items from marketplace search.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "seller_id": "SELL-001631",
+          "seller_name": "Barnes PLC 73",
+          "seller_status": "SUSPENDED",
+          "listing_id": "LIST-SELL-001631-000001",
+          "listing_title": "Fast Wireless Charging Dock 3-in-1 - Series 626",
+          "listing_status": "ACTIVE"
+        },
+        "description": "Listing LIST-SELL-001631-000001 ('Fast Wireless Charging Dock 3-in-1 - Series 626') remains ACTIVE while seller SELL-001631 is SUSPENDED."
+      },
+      {
+        "scenario_id": "SCENARIO-3",
+        "entity_id": "LIST-SELL-001676-000001",
+        "entity_type": "LISTING",
+        "issue_type": "SUSPENDED_SELLER_ACTIVE",
+        "ground_truth_label": "ANOMALY_3_SUSPENDED_SELLER_ACTIVE",
+        "expected_result": "Suspended sellers must have all catalog listings deactivated and cannot maintain active storefront inventory.",
+        "expected_corrective_action": "Immediately transition listing status to SUSPENDED and quarantine catalog items from marketplace search.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "seller_id": "SELL-001676",
+          "seller_name": "Fields, Hines and Moore 76",
+          "seller_status": "SUSPENDED",
+          "listing_id": "LIST-SELL-001676-000001",
+          "listing_title": "Cold Brew Iced Coffee Maker 1L - Series 163",
+          "listing_status": "ACTIVE"
+        },
+        "description": "Listing LIST-SELL-001676-000001 ('Cold Brew Iced Coffee Maker 1L - Series 163') remains ACTIVE while seller SELL-001676 is SUSPENDED."
+      },
+      {
+        "scenario_id": "SCENARIO-3",
+        "entity_id": "LIST-SELL-001739-000001",
+        "entity_type": "LISTING",
+        "issue_type": "SUSPENDED_SELLER_ACTIVE",
+        "ground_truth_label": "ANOMALY_3_SUSPENDED_SELLER_ACTIVE",
+        "expected_result": "Suspended sellers must have all catalog listings deactivated and cannot maintain active storefront inventory.",
+        "expected_corrective_action": "Immediately transition listing status to SUSPENDED and quarantine catalog items from marketplace search.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "seller_id": "SELL-001739",
+          "seller_name": "King PLC 67",
+          "seller_status": "SUSPENDED",
+          "listing_id": "LIST-SELL-001739-000001",
+          "listing_title": "World History Illustrated Almanac - Series 389",
+          "listing_status": "ACTIVE"
+        },
+        "description": "Listing LIST-SELL-001739-000001 ('World History Illustrated Almanac - Series 389') remains ACTIVE while seller SELL-001739 is SUSPENDED."
+      },
+      {
+        "scenario_id": "SCENARIO-4",
+        "entity_id": "DSP-2026-000001",
+        "entity_type": "DISPUTE",
+        "issue_type": "UNCLAWBACKED_DISPUTE",
+        "ground_truth_label": "ANOMALY_4_UNCLAWBACKED_DISPUTE",
+        "expected_result": "Finalized lost disputes must be deducted as financial clawbacks from seller settlement balances.",
+        "expected_corrective_action": "Execute retroactive dispute clawback deduction against seller reserve or pending payout balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "dispute_id": "DSP-2026-000001",
+          "order_id": "ORD-2026-076769",
+          "order_line_id": "ORDLN-2026-076769-01",
+          "seller_id": "SELL-001715",
+          "dispute_status": "CHARGEBACK_LOST",
+          "disputed_amount_cents": 2581,
+          "clawback_applied": 0
+        },
+        "description": "Dispute DSP-2026-000001 resolved as CHARGEBACK_LOST for 2581 cents was never clawed back (clawback_applied = 0)."
+      },
+      {
+        "scenario_id": "SCENARIO-4",
+        "entity_id": "DSP-2026-000007",
+        "entity_type": "DISPUTE",
+        "issue_type": "UNCLAWBACKED_DISPUTE",
+        "ground_truth_label": "ANOMALY_4_UNCLAWBACKED_DISPUTE",
+        "expected_result": "Finalized lost disputes must be deducted as financial clawbacks from seller settlement balances.",
+        "expected_corrective_action": "Execute retroactive dispute clawback deduction against seller reserve or pending payout balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "dispute_id": "DSP-2026-000007",
+          "order_id": "ORD-2026-005448",
+          "order_line_id": "ORDLN-2026-005448-01",
+          "seller_id": "SELL-001622",
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "disputed_amount_cents": 8213,
+          "clawback_applied": 0
+        },
+        "description": "Dispute DSP-2026-000007 resolved as RESOLVED_BUYER_FAVOR for 8213 cents was never clawed back (clawback_applied = 0)."
+      },
+      {
+        "scenario_id": "SCENARIO-4",
+        "entity_id": "DSP-2026-000008",
+        "entity_type": "DISPUTE",
+        "issue_type": "UNCLAWBACKED_DISPUTE",
+        "ground_truth_label": "ANOMALY_4_UNCLAWBACKED_DISPUTE",
+        "expected_result": "Finalized lost disputes must be deducted as financial clawbacks from seller settlement balances.",
+        "expected_corrective_action": "Execute retroactive dispute clawback deduction against seller reserve or pending payout balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "dispute_id": "DSP-2026-000008",
+          "order_id": "ORD-2026-093059",
+          "order_line_id": "ORDLN-2026-093059-01",
+          "seller_id": "SELL-000401",
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "disputed_amount_cents": 17648,
+          "clawback_applied": 0
+        },
+        "description": "Dispute DSP-2026-000008 resolved as RESOLVED_BUYER_FAVOR for 17648 cents was never clawed back (clawback_applied = 0)."
+      },
+      {
+        "scenario_id": "SCENARIO-4",
+        "entity_id": "DSP-2026-000009",
+        "entity_type": "DISPUTE",
+        "issue_type": "UNCLAWBACKED_DISPUTE",
+        "ground_truth_label": "ANOMALY_4_UNCLAWBACKED_DISPUTE",
+        "expected_result": "Finalized lost disputes must be deducted as financial clawbacks from seller settlement balances.",
+        "expected_corrective_action": "Execute retroactive dispute clawback deduction against seller reserve or pending payout balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "dispute_id": "DSP-2026-000009",
+          "order_id": "ORD-2026-027163",
+          "order_line_id": "ORDLN-2026-027163-01",
+          "seller_id": "SELL-000762",
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "disputed_amount_cents": 2017,
+          "clawback_applied": 0
+        },
+        "description": "Dispute DSP-2026-000009 resolved as RESOLVED_BUYER_FAVOR for 2017 cents was never clawed back (clawback_applied = 0)."
+      },
+      {
+        "scenario_id": "SCENARIO-4",
+        "entity_id": "DSP-2026-000010",
+        "entity_type": "DISPUTE",
+        "issue_type": "UNCLAWBACKED_DISPUTE",
+        "ground_truth_label": "ANOMALY_4_UNCLAWBACKED_DISPUTE",
+        "expected_result": "Finalized lost disputes must be deducted as financial clawbacks from seller settlement balances.",
+        "expected_corrective_action": "Execute retroactive dispute clawback deduction against seller reserve or pending payout balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "dispute_id": "DSP-2026-000010",
+          "order_id": "ORD-2026-025895",
+          "order_line_id": "ORDLN-2026-025895-01",
+          "seller_id": "SELL-000236",
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "disputed_amount_cents": 8051,
+          "clawback_applied": 0
+        },
+        "description": "Dispute DSP-2026-000010 resolved as RESOLVED_BUYER_FAVOR for 8051 cents was never clawed back (clawback_applied = 0)."
+      },
+      {
+        "scenario_id": "SCENARIO-4",
+        "entity_id": "DSP-2026-000011",
+        "entity_type": "DISPUTE",
+        "issue_type": "UNCLAWBACKED_DISPUTE",
+        "ground_truth_label": "ANOMALY_4_UNCLAWBACKED_DISPUTE",
+        "expected_result": "Finalized lost disputes must be deducted as financial clawbacks from seller settlement balances.",
+        "expected_corrective_action": "Execute retroactive dispute clawback deduction against seller reserve or pending payout balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "dispute_id": "DSP-2026-000011",
+          "order_id": "ORD-2026-026340",
+          "order_line_id": "ORDLN-2026-026340-01",
+          "seller_id": "SELL-000372",
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "disputed_amount_cents": 1580,
+          "clawback_applied": 0
+        },
+        "description": "Dispute DSP-2026-000011 resolved as RESOLVED_BUYER_FAVOR for 1580 cents was never clawed back (clawback_applied = 0)."
+      },
+      {
+        "scenario_id": "SCENARIO-4",
+        "entity_id": "DSP-2026-000014",
+        "entity_type": "DISPUTE",
+        "issue_type": "UNCLAWBACKED_DISPUTE",
+        "ground_truth_label": "ANOMALY_4_UNCLAWBACKED_DISPUTE",
+        "expected_result": "Finalized lost disputes must be deducted as financial clawbacks from seller settlement balances.",
+        "expected_corrective_action": "Execute retroactive dispute clawback deduction against seller reserve or pending payout balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "dispute_id": "DSP-2026-000014",
+          "order_id": "ORD-2026-093271",
+          "order_line_id": "ORDLN-2026-093271-01",
+          "seller_id": "SELL-000171",
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "disputed_amount_cents": 2845,
+          "clawback_applied": 0
+        },
+        "description": "Dispute DSP-2026-000014 resolved as RESOLVED_BUYER_FAVOR for 2845 cents was never clawed back (clawback_applied = 0)."
+      },
+      {
+        "scenario_id": "SCENARIO-4",
+        "entity_id": "DSP-2026-000016",
+        "entity_type": "DISPUTE",
+        "issue_type": "UNCLAWBACKED_DISPUTE",
+        "ground_truth_label": "ANOMALY_4_UNCLAWBACKED_DISPUTE",
+        "expected_result": "Finalized lost disputes must be deducted as financial clawbacks from seller settlement balances.",
+        "expected_corrective_action": "Execute retroactive dispute clawback deduction against seller reserve or pending payout balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "dispute_id": "DSP-2026-000016",
+          "order_id": "ORD-2026-014727",
+          "order_line_id": "ORDLN-2026-014727-02",
+          "seller_id": "SELL-001476",
+          "dispute_status": "CHARGEBACK_LOST",
+          "disputed_amount_cents": 6546,
+          "clawback_applied": 0
+        },
+        "description": "Dispute DSP-2026-000016 resolved as CHARGEBACK_LOST for 6546 cents was never clawed back (clawback_applied = 0)."
+      },
+      {
+        "scenario_id": "SCENARIO-4",
+        "entity_id": "DSP-2026-000017",
+        "entity_type": "DISPUTE",
+        "issue_type": "UNCLAWBACKED_DISPUTE",
+        "ground_truth_label": "ANOMALY_4_UNCLAWBACKED_DISPUTE",
+        "expected_result": "Finalized lost disputes must be deducted as financial clawbacks from seller settlement balances.",
+        "expected_corrective_action": "Execute retroactive dispute clawback deduction against seller reserve or pending payout balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "dispute_id": "DSP-2026-000017",
+          "order_id": "ORD-2026-006656",
+          "order_line_id": "ORDLN-2026-006656-01",
+          "seller_id": "SELL-000970",
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "disputed_amount_cents": 3438,
+          "clawback_applied": 0
+        },
+        "description": "Dispute DSP-2026-000017 resolved as RESOLVED_BUYER_FAVOR for 3438 cents was never clawed back (clawback_applied = 0)."
+      },
+      {
+        "scenario_id": "SCENARIO-4",
+        "entity_id": "DSP-2026-000018",
+        "entity_type": "DISPUTE",
+        "issue_type": "UNCLAWBACKED_DISPUTE",
+        "ground_truth_label": "ANOMALY_4_UNCLAWBACKED_DISPUTE",
+        "expected_result": "Finalized lost disputes must be deducted as financial clawbacks from seller settlement balances.",
+        "expected_corrective_action": "Execute retroactive dispute clawback deduction against seller reserve or pending payout balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "dispute_id": "DSP-2026-000018",
+          "order_id": "ORD-2026-022379",
+          "order_line_id": "ORDLN-2026-022379-01",
+          "seller_id": "SELL-001927",
+          "dispute_status": "CHARGEBACK_LOST",
+          "disputed_amount_cents": 5711,
+          "clawback_applied": 0
+        },
+        "description": "Dispute DSP-2026-000018 resolved as CHARGEBACK_LOST for 5711 cents was never clawed back (clawback_applied = 0)."
+      },
+      {
+        "scenario_id": "SCENARIO-4",
+        "entity_id": "DSP-2026-000020",
+        "entity_type": "DISPUTE",
+        "issue_type": "UNCLAWBACKED_DISPUTE",
+        "ground_truth_label": "ANOMALY_4_UNCLAWBACKED_DISPUTE",
+        "expected_result": "Finalized lost disputes must be deducted as financial clawbacks from seller settlement balances.",
+        "expected_corrective_action": "Execute retroactive dispute clawback deduction against seller reserve or pending payout balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "dispute_id": "DSP-2026-000020",
+          "order_id": "ORD-2026-034745",
+          "order_line_id": "ORDLN-2026-034745-01",
+          "seller_id": "SELL-001744",
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "disputed_amount_cents": 14211,
+          "clawback_applied": 0
+        },
+        "description": "Dispute DSP-2026-000020 resolved as RESOLVED_BUYER_FAVOR for 14211 cents was never clawed back (clawback_applied = 0)."
+      },
+      {
+        "scenario_id": "SCENARIO-4",
+        "entity_id": "DSP-2026-000021",
+        "entity_type": "DISPUTE",
+        "issue_type": "UNCLAWBACKED_DISPUTE",
+        "ground_truth_label": "ANOMALY_4_UNCLAWBACKED_DISPUTE",
+        "expected_result": "Finalized lost disputes must be deducted as financial clawbacks from seller settlement balances.",
+        "expected_corrective_action": "Execute retroactive dispute clawback deduction against seller reserve or pending payout balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "dispute_id": "DSP-2026-000021",
+          "order_id": "ORD-2026-072187",
+          "order_line_id": "ORDLN-2026-072187-01",
+          "seller_id": "SELL-000530",
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "disputed_amount_cents": 3157,
+          "clawback_applied": 0
+        },
+        "description": "Dispute DSP-2026-000021 resolved as RESOLVED_BUYER_FAVOR for 3157 cents was never clawed back (clawback_applied = 0)."
+      },
+      {
+        "scenario_id": "SCENARIO-4",
+        "entity_id": "DSP-2026-000022",
+        "entity_type": "DISPUTE",
+        "issue_type": "UNCLAWBACKED_DISPUTE",
+        "ground_truth_label": "ANOMALY_4_UNCLAWBACKED_DISPUTE",
+        "expected_result": "Finalized lost disputes must be deducted as financial clawbacks from seller settlement balances.",
+        "expected_corrective_action": "Execute retroactive dispute clawback deduction against seller reserve or pending payout balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "dispute_id": "DSP-2026-000022",
+          "order_id": "ORD-2026-079283",
+          "order_line_id": "ORDLN-2026-079283-01",
+          "seller_id": "SELL-000555",
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "disputed_amount_cents": 8326,
+          "clawback_applied": 0
+        },
+        "description": "Dispute DSP-2026-000022 resolved as RESOLVED_BUYER_FAVOR for 8326 cents was never clawed back (clawback_applied = 0)."
+      },
+      {
+        "scenario_id": "SCENARIO-4",
+        "entity_id": "DSP-2026-000025",
+        "entity_type": "DISPUTE",
+        "issue_type": "UNCLAWBACKED_DISPUTE",
+        "ground_truth_label": "ANOMALY_4_UNCLAWBACKED_DISPUTE",
+        "expected_result": "Finalized lost disputes must be deducted as financial clawbacks from seller settlement balances.",
+        "expected_corrective_action": "Execute retroactive dispute clawback deduction against seller reserve or pending payout balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "dispute_id": "DSP-2026-000025",
+          "order_id": "ORD-2026-070373",
+          "order_line_id": "ORDLN-2026-070373-01",
+          "seller_id": "SELL-000996",
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "disputed_amount_cents": 2031,
+          "clawback_applied": 0
+        },
+        "description": "Dispute DSP-2026-000025 resolved as RESOLVED_BUYER_FAVOR for 2031 cents was never clawed back (clawback_applied = 0)."
+      },
+      {
+        "scenario_id": "SCENARIO-4",
+        "entity_id": "DSP-2026-000026",
+        "entity_type": "DISPUTE",
+        "issue_type": "UNCLAWBACKED_DISPUTE",
+        "ground_truth_label": "ANOMALY_4_UNCLAWBACKED_DISPUTE",
+        "expected_result": "Finalized lost disputes must be deducted as financial clawbacks from seller settlement balances.",
+        "expected_corrective_action": "Execute retroactive dispute clawback deduction against seller reserve or pending payout balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "dispute_id": "DSP-2026-000026",
+          "order_id": "ORD-2026-011986",
+          "order_line_id": "ORDLN-2026-011986-01",
+          "seller_id": "SELL-000143",
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "disputed_amount_cents": 2601,
+          "clawback_applied": 0
+        },
+        "description": "Dispute DSP-2026-000026 resolved as RESOLVED_BUYER_FAVOR for 2601 cents was never clawed back (clawback_applied = 0)."
+      },
+      {
+        "scenario_id": "SCENARIO-4",
+        "entity_id": "DSP-2026-000027",
+        "entity_type": "DISPUTE",
+        "issue_type": "UNCLAWBACKED_DISPUTE",
+        "ground_truth_label": "ANOMALY_4_UNCLAWBACKED_DISPUTE",
+        "expected_result": "Finalized lost disputes must be deducted as financial clawbacks from seller settlement balances.",
+        "expected_corrective_action": "Execute retroactive dispute clawback deduction against seller reserve or pending payout balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "dispute_id": "DSP-2026-000027",
+          "order_id": "ORD-2026-083610",
+          "order_line_id": "ORDLN-2026-083610-01",
+          "seller_id": "SELL-001469",
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "disputed_amount_cents": 3394,
+          "clawback_applied": 0
+        },
+        "description": "Dispute DSP-2026-000027 resolved as RESOLVED_BUYER_FAVOR for 3394 cents was never clawed back (clawback_applied = 0)."
+      },
+      {
+        "scenario_id": "SCENARIO-4",
+        "entity_id": "DSP-2026-000028",
+        "entity_type": "DISPUTE",
+        "issue_type": "UNCLAWBACKED_DISPUTE",
+        "ground_truth_label": "ANOMALY_4_UNCLAWBACKED_DISPUTE",
+        "expected_result": "Finalized lost disputes must be deducted as financial clawbacks from seller settlement balances.",
+        "expected_corrective_action": "Execute retroactive dispute clawback deduction against seller reserve or pending payout balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "dispute_id": "DSP-2026-000028",
+          "order_id": "ORD-2026-021758",
+          "order_line_id": "ORDLN-2026-021758-01",
+          "seller_id": "SELL-001033",
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "disputed_amount_cents": 9771,
+          "clawback_applied": 0
+        },
+        "description": "Dispute DSP-2026-000028 resolved as RESOLVED_BUYER_FAVOR for 9771 cents was never clawed back (clawback_applied = 0)."
+      },
+      {
+        "scenario_id": "SCENARIO-4",
+        "entity_id": "DSP-2026-000029",
+        "entity_type": "DISPUTE",
+        "issue_type": "UNCLAWBACKED_DISPUTE",
+        "ground_truth_label": "ANOMALY_4_UNCLAWBACKED_DISPUTE",
+        "expected_result": "Finalized lost disputes must be deducted as financial clawbacks from seller settlement balances.",
+        "expected_corrective_action": "Execute retroactive dispute clawback deduction against seller reserve or pending payout balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "dispute_id": "DSP-2026-000029",
+          "order_id": "ORD-2026-085423",
+          "order_line_id": "ORDLN-2026-085423-01",
+          "seller_id": "SELL-000213",
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "disputed_amount_cents": 2927,
+          "clawback_applied": 0
+        },
+        "description": "Dispute DSP-2026-000029 resolved as RESOLVED_BUYER_FAVOR for 2927 cents was never clawed back (clawback_applied = 0)."
+      },
+      {
+        "scenario_id": "SCENARIO-4",
+        "entity_id": "DSP-2026-000030",
+        "entity_type": "DISPUTE",
+        "issue_type": "UNCLAWBACKED_DISPUTE",
+        "ground_truth_label": "ANOMALY_4_UNCLAWBACKED_DISPUTE",
+        "expected_result": "Finalized lost disputes must be deducted as financial clawbacks from seller settlement balances.",
+        "expected_corrective_action": "Execute retroactive dispute clawback deduction against seller reserve or pending payout balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "dispute_id": "DSP-2026-000030",
+          "order_id": "ORD-2026-016867",
+          "order_line_id": "ORDLN-2026-016867-01",
+          "seller_id": "SELL-001767",
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "disputed_amount_cents": 77316,
+          "clawback_applied": 0
+        },
+        "description": "Dispute DSP-2026-000030 resolved as RESOLVED_BUYER_FAVOR for 77316 cents was never clawed back (clawback_applied = 0)."
+      },
+      {
+        "scenario_id": "SCENARIO-4",
+        "entity_id": "DSP-2026-000031",
+        "entity_type": "DISPUTE",
+        "issue_type": "UNCLAWBACKED_DISPUTE",
+        "ground_truth_label": "ANOMALY_4_UNCLAWBACKED_DISPUTE",
+        "expected_result": "Finalized lost disputes must be deducted as financial clawbacks from seller settlement balances.",
+        "expected_corrective_action": "Execute retroactive dispute clawback deduction against seller reserve or pending payout balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "dispute_id": "DSP-2026-000031",
+          "order_id": "ORD-2026-057310",
+          "order_line_id": "ORDLN-2026-057310-02",
+          "seller_id": "SELL-001353",
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "disputed_amount_cents": 2245,
+          "clawback_applied": 0
+        },
+        "description": "Dispute DSP-2026-000031 resolved as RESOLVED_BUYER_FAVOR for 2245 cents was never clawed back (clawback_applied = 0)."
+      },
+      {
+        "scenario_id": "SCENARIO-4",
+        "entity_id": "DSP-2026-000033",
+        "entity_type": "DISPUTE",
+        "issue_type": "UNCLAWBACKED_DISPUTE",
+        "ground_truth_label": "ANOMALY_4_UNCLAWBACKED_DISPUTE",
+        "expected_result": "Finalized lost disputes must be deducted as financial clawbacks from seller settlement balances.",
+        "expected_corrective_action": "Execute retroactive dispute clawback deduction against seller reserve or pending payout balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "dispute_id": "DSP-2026-000033",
+          "order_id": "ORD-2026-024341",
+          "order_line_id": "ORDLN-2026-024341-01",
+          "seller_id": "SELL-000654",
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "disputed_amount_cents": 29104,
+          "clawback_applied": 0
+        },
+        "description": "Dispute DSP-2026-000033 resolved as RESOLVED_BUYER_FAVOR for 29104 cents was never clawed back (clawback_applied = 0)."
+      },
+      {
+        "scenario_id": "SCENARIO-4",
+        "entity_id": "DSP-2026-000034",
+        "entity_type": "DISPUTE",
+        "issue_type": "UNCLAWBACKED_DISPUTE",
+        "ground_truth_label": "ANOMALY_4_UNCLAWBACKED_DISPUTE",
+        "expected_result": "Finalized lost disputes must be deducted as financial clawbacks from seller settlement balances.",
+        "expected_corrective_action": "Execute retroactive dispute clawback deduction against seller reserve or pending payout balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "dispute_id": "DSP-2026-000034",
+          "order_id": "ORD-2026-066604",
+          "order_line_id": "ORDLN-2026-066604-03",
+          "seller_id": "SELL-000215",
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "disputed_amount_cents": 5450,
+          "clawback_applied": 0
+        },
+        "description": "Dispute DSP-2026-000034 resolved as RESOLVED_BUYER_FAVOR for 5450 cents was never clawed back (clawback_applied = 0)."
+      },
+      {
+        "scenario_id": "SCENARIO-4",
+        "entity_id": "DSP-2026-000038",
+        "entity_type": "DISPUTE",
+        "issue_type": "UNCLAWBACKED_DISPUTE",
+        "ground_truth_label": "ANOMALY_4_UNCLAWBACKED_DISPUTE",
+        "expected_result": "Finalized lost disputes must be deducted as financial clawbacks from seller settlement balances.",
+        "expected_corrective_action": "Execute retroactive dispute clawback deduction against seller reserve or pending payout balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "dispute_id": "DSP-2026-000038",
+          "order_id": "ORD-2026-012878",
+          "order_line_id": "ORDLN-2026-012878-01",
+          "seller_id": "SELL-000418",
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "disputed_amount_cents": 3432,
+          "clawback_applied": 0
+        },
+        "description": "Dispute DSP-2026-000038 resolved as RESOLVED_BUYER_FAVOR for 3432 cents was never clawed back (clawback_applied = 0)."
+      },
+      {
+        "scenario_id": "SCENARIO-4",
+        "entity_id": "DSP-2026-000039",
+        "entity_type": "DISPUTE",
+        "issue_type": "UNCLAWBACKED_DISPUTE",
+        "ground_truth_label": "ANOMALY_4_UNCLAWBACKED_DISPUTE",
+        "expected_result": "Finalized lost disputes must be deducted as financial clawbacks from seller settlement balances.",
+        "expected_corrective_action": "Execute retroactive dispute clawback deduction against seller reserve or pending payout balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "dispute_id": "DSP-2026-000039",
+          "order_id": "ORD-2026-041407",
+          "order_line_id": "ORDLN-2026-041407-01",
+          "seller_id": "SELL-000279",
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "disputed_amount_cents": 2431,
+          "clawback_applied": 0
+        },
+        "description": "Dispute DSP-2026-000039 resolved as RESOLVED_BUYER_FAVOR for 2431 cents was never clawed back (clawback_applied = 0)."
+      },
+      {
+        "scenario_id": "SCENARIO-4",
+        "entity_id": "DSP-2026-000040",
+        "entity_type": "DISPUTE",
+        "issue_type": "UNCLAWBACKED_DISPUTE",
+        "ground_truth_label": "ANOMALY_4_UNCLAWBACKED_DISPUTE",
+        "expected_result": "Finalized lost disputes must be deducted as financial clawbacks from seller settlement balances.",
+        "expected_corrective_action": "Execute retroactive dispute clawback deduction against seller reserve or pending payout balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "dispute_id": "DSP-2026-000040",
+          "order_id": "ORD-2026-015773",
+          "order_line_id": "ORDLN-2026-015773-01",
+          "seller_id": "SELL-001925",
+          "dispute_status": "RESOLVED_BUYER_FAVOR",
+          "disputed_amount_cents": 4046,
+          "clawback_applied": 0
+        },
+        "description": "Dispute DSP-2026-000040 resolved as RESOLVED_BUYER_FAVOR for 4046 cents was never clawed back (clawback_applied = 0)."
+      },
+      {
+        "scenario_id": "SCENARIO-5",
+        "entity_id": "PAYOUT-2026-000001",
+        "entity_type": "PAYOUT_BATCH",
+        "issue_type": "PAYOUT_TOTAL_MISMATCH",
+        "ground_truth_label": "ANOMALY_5_PAYOUT_TOTAL_MISMATCH",
+        "expected_result": "Payout batch header net amount must exactly equal arithmetic sum of child line item net amounts.",
+        "expected_corrective_action": "Recalculate batch header total from line items and flag disbursement batch for audit review.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-2026-000001",
+          "seller_id": "SELL-000238",
+          "header_net_cents": 119722,
+          "lines_net_sum_cents": 107222,
+          "variance_cents": 12500,
+          "line_count": 25
+        },
+        "description": "Payout batch PAYOUT-2026-000001 header amount (119722 cents) does not match lines sum (107222 cents, variance: 12500 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-5",
+        "entity_id": "PAYOUT-2026-000002",
+        "entity_type": "PAYOUT_BATCH",
+        "issue_type": "PAYOUT_TOTAL_MISMATCH",
+        "ground_truth_label": "ANOMALY_5_PAYOUT_TOTAL_MISMATCH",
+        "expected_result": "Payout batch header net amount must exactly equal arithmetic sum of child line item net amounts.",
+        "expected_corrective_action": "Recalculate batch header total from line items and flag disbursement batch for audit review.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-2026-000002",
+          "seller_id": "SELL-001816",
+          "header_net_cents": 105328,
+          "lines_net_sum_cents": 92828,
+          "variance_cents": 12500,
+          "line_count": 25
+        },
+        "description": "Payout batch PAYOUT-2026-000002 header amount (105328 cents) does not match lines sum (92828 cents, variance: 12500 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-5",
+        "entity_id": "PAYOUT-2026-000003",
+        "entity_type": "PAYOUT_BATCH",
+        "issue_type": "PAYOUT_TOTAL_MISMATCH",
+        "ground_truth_label": "ANOMALY_5_PAYOUT_TOTAL_MISMATCH",
+        "expected_result": "Payout batch header net amount must exactly equal arithmetic sum of child line item net amounts.",
+        "expected_corrective_action": "Recalculate batch header total from line items and flag disbursement batch for audit review.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-2026-000003",
+          "seller_id": "SELL-000288",
+          "header_net_cents": 92446,
+          "lines_net_sum_cents": 79946,
+          "variance_cents": 12500,
+          "line_count": 25
+        },
+        "description": "Payout batch PAYOUT-2026-000003 header amount (92446 cents) does not match lines sum (79946 cents, variance: 12500 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-5",
+        "entity_id": "PAYOUT-2026-000004",
+        "entity_type": "PAYOUT_BATCH",
+        "issue_type": "PAYOUT_TOTAL_MISMATCH",
+        "ground_truth_label": "ANOMALY_5_PAYOUT_TOTAL_MISMATCH",
+        "expected_result": "Payout batch header net amount must exactly equal arithmetic sum of child line item net amounts.",
+        "expected_corrective_action": "Recalculate batch header total from line items and flag disbursement batch for audit review.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-2026-000004",
+          "seller_id": "SELL-000299",
+          "header_net_cents": 237400,
+          "lines_net_sum_cents": 224900,
+          "variance_cents": 12500,
+          "line_count": 19
+        },
+        "description": "Payout batch PAYOUT-2026-000004 header amount (237400 cents) does not match lines sum (224900 cents, variance: 12500 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-5",
+        "entity_id": "PAYOUT-2026-000005",
+        "entity_type": "PAYOUT_BATCH",
+        "issue_type": "PAYOUT_TOTAL_MISMATCH",
+        "ground_truth_label": "ANOMALY_5_PAYOUT_TOTAL_MISMATCH",
+        "expected_result": "Payout batch header net amount must exactly equal arithmetic sum of child line item net amounts.",
+        "expected_corrective_action": "Recalculate batch header total from line items and flag disbursement batch for audit review.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-2026-000005",
+          "seller_id": "SELL-000615",
+          "header_net_cents": 127882,
+          "lines_net_sum_cents": 115382,
+          "variance_cents": 12500,
+          "line_count": 25
+        },
+        "description": "Payout batch PAYOUT-2026-000005 header amount (127882 cents) does not match lines sum (115382 cents, variance: 12500 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-5",
+        "entity_id": "PAYOUT-2026-000006",
+        "entity_type": "PAYOUT_BATCH",
+        "issue_type": "PAYOUT_TOTAL_MISMATCH",
+        "ground_truth_label": "ANOMALY_5_PAYOUT_TOTAL_MISMATCH",
+        "expected_result": "Payout batch header net amount must exactly equal arithmetic sum of child line item net amounts.",
+        "expected_corrective_action": "Recalculate batch header total from line items and flag disbursement batch for audit review.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-2026-000006",
+          "seller_id": "SELL-000318",
+          "header_net_cents": 129876,
+          "lines_net_sum_cents": 117376,
+          "variance_cents": 12500,
+          "line_count": 25
+        },
+        "description": "Payout batch PAYOUT-2026-000006 header amount (129876 cents) does not match lines sum (117376 cents, variance: 12500 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-5",
+        "entity_id": "PAYOUT-2026-000007",
+        "entity_type": "PAYOUT_BATCH",
+        "issue_type": "PAYOUT_TOTAL_MISMATCH",
+        "ground_truth_label": "ANOMALY_5_PAYOUT_TOTAL_MISMATCH",
+        "expected_result": "Payout batch header net amount must exactly equal arithmetic sum of child line item net amounts.",
+        "expected_corrective_action": "Recalculate batch header total from line items and flag disbursement batch for audit review.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-2026-000007",
+          "seller_id": "SELL-001600",
+          "header_net_cents": 213982,
+          "lines_net_sum_cents": 201482,
+          "variance_cents": 12500,
+          "line_count": 25
+        },
+        "description": "Payout batch PAYOUT-2026-000007 header amount (213982 cents) does not match lines sum (201482 cents, variance: 12500 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-5",
+        "entity_id": "PAYOUT-2026-000008",
+        "entity_type": "PAYOUT_BATCH",
+        "issue_type": "PAYOUT_TOTAL_MISMATCH",
+        "ground_truth_label": "ANOMALY_5_PAYOUT_TOTAL_MISMATCH",
+        "expected_result": "Payout batch header net amount must exactly equal arithmetic sum of child line item net amounts.",
+        "expected_corrective_action": "Recalculate batch header total from line items and flag disbursement batch for audit review.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-2026-000008",
+          "seller_id": "SELL-000841",
+          "header_net_cents": 157265,
+          "lines_net_sum_cents": 144765,
+          "variance_cents": 12500,
+          "line_count": 25
+        },
+        "description": "Payout batch PAYOUT-2026-000008 header amount (157265 cents) does not match lines sum (144765 cents, variance: 12500 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-5",
+        "entity_id": "PAYOUT-2026-000009",
+        "entity_type": "PAYOUT_BATCH",
+        "issue_type": "PAYOUT_TOTAL_MISMATCH",
+        "ground_truth_label": "ANOMALY_5_PAYOUT_TOTAL_MISMATCH",
+        "expected_result": "Payout batch header net amount must exactly equal arithmetic sum of child line item net amounts.",
+        "expected_corrective_action": "Recalculate batch header total from line items and flag disbursement batch for audit review.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-2026-000009",
+          "seller_id": "SELL-001663",
+          "header_net_cents": 124120,
+          "lines_net_sum_cents": 111620,
+          "variance_cents": 12500,
+          "line_count": 25
+        },
+        "description": "Payout batch PAYOUT-2026-000009 header amount (124120 cents) does not match lines sum (111620 cents, variance: 12500 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-5",
+        "entity_id": "PAYOUT-2026-000010",
+        "entity_type": "PAYOUT_BATCH",
+        "issue_type": "PAYOUT_TOTAL_MISMATCH",
+        "ground_truth_label": "ANOMALY_5_PAYOUT_TOTAL_MISMATCH",
+        "expected_result": "Payout batch header net amount must exactly equal arithmetic sum of child line item net amounts.",
+        "expected_corrective_action": "Recalculate batch header total from line items and flag disbursement batch for audit review.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-2026-000010",
+          "seller_id": "SELL-001134",
+          "header_net_cents": 212335,
+          "lines_net_sum_cents": 199835,
+          "variance_cents": 12500,
+          "line_count": 25
+        },
+        "description": "Payout batch PAYOUT-2026-000010 header amount (212335 cents) does not match lines sum (199835 cents, variance: 12500 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-5",
+        "entity_id": "PAYOUT-2026-000011",
+        "entity_type": "PAYOUT_BATCH",
+        "issue_type": "PAYOUT_TOTAL_MISMATCH",
+        "ground_truth_label": "ANOMALY_5_PAYOUT_TOTAL_MISMATCH",
+        "expected_result": "Payout batch header net amount must exactly equal arithmetic sum of child line item net amounts.",
+        "expected_corrective_action": "Recalculate batch header total from line items and flag disbursement batch for audit review.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-2026-000011",
+          "seller_id": "SELL-000205",
+          "header_net_cents": 157306,
+          "lines_net_sum_cents": 144806,
+          "variance_cents": 12500,
+          "line_count": 25
+        },
+        "description": "Payout batch PAYOUT-2026-000011 header amount (157306 cents) does not match lines sum (144806 cents, variance: 12500 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-5",
+        "entity_id": "PAYOUT-2026-000012",
+        "entity_type": "PAYOUT_BATCH",
+        "issue_type": "PAYOUT_TOTAL_MISMATCH",
+        "ground_truth_label": "ANOMALY_5_PAYOUT_TOTAL_MISMATCH",
+        "expected_result": "Payout batch header net amount must exactly equal arithmetic sum of child line item net amounts.",
+        "expected_corrective_action": "Recalculate batch header total from line items and flag disbursement batch for audit review.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-2026-000012",
+          "seller_id": "SELL-001445",
+          "header_net_cents": 107914,
+          "lines_net_sum_cents": 95414,
+          "variance_cents": 12500,
+          "line_count": 25
+        },
+        "description": "Payout batch PAYOUT-2026-000012 header amount (107914 cents) does not match lines sum (95414 cents, variance: 12500 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-5",
+        "entity_id": "PAYOUT-2026-000013",
+        "entity_type": "PAYOUT_BATCH",
+        "issue_type": "PAYOUT_TOTAL_MISMATCH",
+        "ground_truth_label": "ANOMALY_5_PAYOUT_TOTAL_MISMATCH",
+        "expected_result": "Payout batch header net amount must exactly equal arithmetic sum of child line item net amounts.",
+        "expected_corrective_action": "Recalculate batch header total from line items and flag disbursement batch for audit review.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-2026-000013",
+          "seller_id": "SELL-001419",
+          "header_net_cents": 125415,
+          "lines_net_sum_cents": 112915,
+          "variance_cents": 12500,
+          "line_count": 25
+        },
+        "description": "Payout batch PAYOUT-2026-000013 header amount (125415 cents) does not match lines sum (112915 cents, variance: 12500 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-5",
+        "entity_id": "PAYOUT-2026-000014",
+        "entity_type": "PAYOUT_BATCH",
+        "issue_type": "PAYOUT_TOTAL_MISMATCH",
+        "ground_truth_label": "ANOMALY_5_PAYOUT_TOTAL_MISMATCH",
+        "expected_result": "Payout batch header net amount must exactly equal arithmetic sum of child line item net amounts.",
+        "expected_corrective_action": "Recalculate batch header total from line items and flag disbursement batch for audit review.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-2026-000014",
+          "seller_id": "SELL-000014",
+          "header_net_cents": 106588,
+          "lines_net_sum_cents": 94088,
+          "variance_cents": 12500,
+          "line_count": 25
+        },
+        "description": "Payout batch PAYOUT-2026-000014 header amount (106588 cents) does not match lines sum (94088 cents, variance: 12500 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-5",
+        "entity_id": "PAYOUT-2026-000015",
+        "entity_type": "PAYOUT_BATCH",
+        "issue_type": "PAYOUT_TOTAL_MISMATCH",
+        "ground_truth_label": "ANOMALY_5_PAYOUT_TOTAL_MISMATCH",
+        "expected_result": "Payout batch header net amount must exactly equal arithmetic sum of child line item net amounts.",
+        "expected_corrective_action": "Recalculate batch header total from line items and flag disbursement batch for audit review.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-2026-000015",
+          "seller_id": "SELL-000211",
+          "header_net_cents": 198396,
+          "lines_net_sum_cents": 185896,
+          "variance_cents": 12500,
+          "line_count": 25
+        },
+        "description": "Payout batch PAYOUT-2026-000015 header amount (198396 cents) does not match lines sum (185896 cents, variance: 12500 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-5",
+        "entity_id": "PAYOUT-2026-000016",
+        "entity_type": "PAYOUT_BATCH",
+        "issue_type": "PAYOUT_TOTAL_MISMATCH",
+        "ground_truth_label": "ANOMALY_5_PAYOUT_TOTAL_MISMATCH",
+        "expected_result": "Payout batch header net amount must exactly equal arithmetic sum of child line item net amounts.",
+        "expected_corrective_action": "Recalculate batch header total from line items and flag disbursement batch for audit review.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-2026-000016",
+          "seller_id": "SELL-001698",
+          "header_net_cents": 255631,
+          "lines_net_sum_cents": 243131,
+          "variance_cents": 12500,
+          "line_count": 25
+        },
+        "description": "Payout batch PAYOUT-2026-000016 header amount (255631 cents) does not match lines sum (243131 cents, variance: 12500 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-5",
+        "entity_id": "PAYOUT-2026-000017",
+        "entity_type": "PAYOUT_BATCH",
+        "issue_type": "PAYOUT_TOTAL_MISMATCH",
+        "ground_truth_label": "ANOMALY_5_PAYOUT_TOTAL_MISMATCH",
+        "expected_result": "Payout batch header net amount must exactly equal arithmetic sum of child line item net amounts.",
+        "expected_corrective_action": "Recalculate batch header total from line items and flag disbursement batch for audit review.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-2026-000017",
+          "seller_id": "SELL-001267",
+          "header_net_cents": 284532,
+          "lines_net_sum_cents": 272032,
+          "variance_cents": 12500,
+          "line_count": 25
+        },
+        "description": "Payout batch PAYOUT-2026-000017 header amount (284532 cents) does not match lines sum (272032 cents, variance: 12500 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-5",
+        "entity_id": "PAYOUT-2026-000018",
+        "entity_type": "PAYOUT_BATCH",
+        "issue_type": "PAYOUT_TOTAL_MISMATCH",
+        "ground_truth_label": "ANOMALY_5_PAYOUT_TOTAL_MISMATCH",
+        "expected_result": "Payout batch header net amount must exactly equal arithmetic sum of child line item net amounts.",
+        "expected_corrective_action": "Recalculate batch header total from line items and flag disbursement batch for audit review.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-2026-000018",
+          "seller_id": "SELL-001655",
+          "header_net_cents": 173903,
+          "lines_net_sum_cents": 161403,
+          "variance_cents": 12500,
+          "line_count": 25
+        },
+        "description": "Payout batch PAYOUT-2026-000018 header amount (173903 cents) does not match lines sum (161403 cents, variance: 12500 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-5",
+        "entity_id": "PAYOUT-2026-000019",
+        "entity_type": "PAYOUT_BATCH",
+        "issue_type": "PAYOUT_TOTAL_MISMATCH",
+        "ground_truth_label": "ANOMALY_5_PAYOUT_TOTAL_MISMATCH",
+        "expected_result": "Payout batch header net amount must exactly equal arithmetic sum of child line item net amounts.",
+        "expected_corrective_action": "Recalculate batch header total from line items and flag disbursement batch for audit review.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-2026-000019",
+          "seller_id": "SELL-000929",
+          "header_net_cents": 232067,
+          "lines_net_sum_cents": 219567,
+          "variance_cents": 12500,
+          "line_count": 25
+        },
+        "description": "Payout batch PAYOUT-2026-000019 header amount (232067 cents) does not match lines sum (219567 cents, variance: 12500 cents)."
+      },
+      {
+        "scenario_id": "SCENARIO-5",
+        "entity_id": "PAYOUT-2026-000020",
+        "entity_type": "PAYOUT_BATCH",
+        "issue_type": "PAYOUT_TOTAL_MISMATCH",
+        "ground_truth_label": "ANOMALY_5_PAYOUT_TOTAL_MISMATCH",
+        "expected_result": "Payout batch header net amount must exactly equal arithmetic sum of child line item net amounts.",
+        "expected_corrective_action": "Recalculate batch header total from line items and flag disbursement batch for audit review.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "payout_id": "PAYOUT-2026-000020",
+          "seller_id": "SELL-000637",
+          "header_net_cents": 314909,
+          "lines_net_sum_cents": 302409,
+          "variance_cents": 12500,
+          "line_count": 25
+        },
+        "description": "Payout batch PAYOUT-2026-000020 header amount (314909 cents) does not match lines sum (302409 cents, variance: 12500 cents)."
+      }
+    ]
+  }
+}

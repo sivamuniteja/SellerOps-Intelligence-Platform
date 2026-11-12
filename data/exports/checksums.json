@@ -1,0 +1,187 @@
+{
+  "generated_at": "2026-11-12T23:30:46.581753",
+  "algorithm": "SHA-256",
+  "total_files": 45,
+  "files": {
+    "ground_truth/ground_truth.csv": {
+      "sha256": "abe8556507920de16aa9e89bb38756e53ed4548607ad028a9b7f385b60005669",
+      "size_bytes": 20954
+    },
+    "ground_truth/ground_truth.json": {
+      "sha256": "8f1e03a4fa60ad15df3ccc334abecdee226b83ac721e887c145584830d2fb105",
+      "size_bytes": 36625
+    },
+    "ground_truth/ground_truth.sql": {
+      "sha256": "936017494f2b48d535bc99d6359c3b13c9026171aea48a1e29e079115f0c0fa3",
+      "size_bytes": 24175
+    },
+    "json/commission_ledger.json": {
+      "sha256": "89ae9f6cd6f7c4cc01d0c398b7128844a344d018829a5b8f508a0e4edaaad823",
+      "size_bytes": 37082021
+    },
+    "json/commission_rules.json": {
+      "sha256": "c7ddf258d3a3d3c5c39caf621bf747757caaca7e4ef2552b5c884ae56847b78c",
+      "size_bytes": 9696
+    },
+    "json/customer_reviews.json": {
+      "sha256": "6332bba389e2706c55f2452be75852923cd834bd7139c2a29a8fc553274bb54e",
+      "size_bytes": 11086436
+    },
+    "json/customers.json": {
+      "sha256": "d0227654be141819dd0afe8c56e2ee813895678d5a3653d89a76b97816390bc0",
+      "size_bytes": 1980390
+    },
+    "json/dispute_events.json": {
+      "sha256": "21b7cd437dabf27e95805c8a7902e4b460c1e4fb496af085cb4fe5577b914720",
+      "size_bytes": 4366655
+    },
+    "json/disputes.json": {
+      "sha256": "6a38765c78d10838f2954bfe23738e0e0f8e40cbf4ab016c023c4437467b04f7",
+      "size_bytes": 4109031
+    },
+    "json/fulfillment_events.json": {
+      "sha256": "3e1f2b5ad9cb7b7c2977f31b6a6e34404c1f44955e2a8f1507351282cd556477",
+      "size_bytes": 95195718
+    },
+    "json/fulfillments.json": {
+      "sha256": "8e47fe69ec9a01604ee610bbe8f4f6a51434466d81631a97aced02f3251c860a",
+      "size_bytes": 55810224
+    },
+    "json/listings.json": {
+      "sha256": "7dec202d48828b8b2984288f395648710e5655488d92d61be1387ce4141f896a",
+      "size_bytes": 6109961
+    },
+    "json/order_lines.json": {
+      "sha256": "8a3de6934d0d6ecff622db792bc4b7e37fe929efeb7168847dce6e379ed80ac7",
+      "size_bytes": 37167262
+    },
+    "json/orders.json": {
+      "sha256": "69e2918b7a56d19a97f9db19313d71dc7f0fcc2206a8ff3dc2116f4284f19815",
+      "size_bytes": 28358628
+    },
+    "json/payout_events.json": {
+      "sha256": "294cd713978ac6f83bc10dcc804a7c13e39be3c3570a1a125cb6dc357c57254c",
+      "size_bytes": 972879
+    },
+    "json/payout_lines.json": {
+      "sha256": "8ee0a8c2c8da61e6d788104c953f61cf438c7d4c4acc238f66815e82b5f635fe",
+      "size_bytes": 14955444
+    },
+    "json/payouts.json": {
+      "sha256": "cf3b02dd3d6de5f15da01af51762dd298f7ff3a3b16ccaf7b93284900556b610",
+      "size_bytes": 774560
+    },
+    "json/refunds.json": {
+      "sha256": "2ba33ca0557f1bb5b7ba88d67f9d0093c7185a36ec51fe2b7bd9372d3e001d6d",
+      "size_bytes": 5
+    },
+    "json/reserve_ledger.json": {
+      "sha256": "d4d6d6370b5571865ed8d714294875afad9cfe1ea869369d560070cdd40cc333",
+      "size_bytes": 40297118
+    },
+    "json/schema_migrations.json": {
+      "sha256": "c9ed43be91f9f6ce5b7a59ad805e15064b362a67c6af4ff54f80904c4fea9823",
+      "size_bytes": 104
+    },
+    "json/seller_status_events.json": {
+      "sha256": "faacd8dd47db2d0c91248001a7a7f3087b64b8266fe33cd5a837656c08cd979b",
+      "size_bytes": 475809
+    },
+    "json/sellers.json": {
+      "sha256": "2b056363ac2410bfa0ffc659ac5c79da0ded0fef78cc36a3f2728a09f1911cda",
+      "size_bytes": 604061
+    },
+    "csv/commission_ledger.csv": {
+      "sha256": "eb166c40c387abe1793fd6cd3bcfa56e953e172bc7f81bce547e3afb2f3ed6e9",
+      "size_bytes": 12076340
+    },
+    "csv/commission_rules.csv": {
+      "sha256": "23ad7c400e051e7c12f3fdbc146f803b5e8abe2f50d0069ce002d8461a906bc3",
+      "size_bytes": 3656
+    },
+    "csv/customer_reviews.csv": {
+      "sha256": "09804d6c74a86628e1da9ba17c53365e887c69f50032ec943a332ba3b8bc608a",
+      "size_bytes": 6142847
+    },
+    "csv/customers.csv": {
+      "sha256": "ff0d62de200a27dd8af2bafbeeee83857669a2ac8a9ccb628cb14f3739b59c67",
+      "size_bytes": 1000441
+    },
+    "csv/dispute_events.csv": {
+      "sha256": "43b1c4faf61b47adc671c4709312b3970ffc84f10b87d09205b5cc4ac6c6f1e1",
+      "size_bytes": 2278103
+    },
+    "csv/disputes.csv": {
+      "sha256": "7d7b631941eda71ecec6ba3814c69ffd297e55ee21309c73b2ab770253f5c8f9",
+      "size_bytes": 1825162
+    },
+    "csv/fulfillment_events.csv": {
+      "sha256": "0c20df89cd66b66943b672c43c105c532c8232acbb8a51b1932d0b1298244b21",
+      "size_bytes": 53638567
+    },
+    "csv/fulfillments.csv": {
+      "sha256": "76cb7270c28db3a08fbce0efd7ba275751ddb6428561734a2f8ffbc3bc4b45e2",
+      "size_bytes": 23980382
+    },
+    "csv/listings.csv": {
+      "sha256": "177105f71576bd8aa7b4d267fb8a5d9e4fb46f69193a53763e062c6d5ab9b1fe",
+      "size_bytes": 3190052
+    },
+    "csv/order_lines.csv": {
+      "sha256": "1f249f2f8fbf76c0befce7350587ac8d92efdb5e3a43a7d0dacef6393d6bd4ea",
+      "size_bytes": 14787372
+    },
+    "csv/orders.csv": {
+      "sha256": "f326805a5f8e2b7bdf2528617057a726b6895593234a1a1140ebe73986baf9ca",
+      "size_bytes": 11858736
+    },
+    "csv/payout_events.csv": {
+      "sha256": "f59f23ae0dd3bf153f8d72b3fb2030702d100148dc7cb7a23ecc962b04684a1b",
+      "size_bytes": 484582
+    },
+    "csv/payout_lines.csv": {
+      "sha256": "06ed40c4a5edc01a1125619448262d84a65fa7e5f6ae889423caf8ab02e912d1",
+      "size_bytes": 5190486
+    },
+    "csv/payouts.csv": {
+      "sha256": "44be98bcc2e0d274ba23b66c21517bbc8b21b378ca691ab5f37213533a50d28e",
+      "size_bytes": 227097
+    },
+    "csv/refunds.csv": {
+      "sha256": "bd51fd6db766674c64e8e72ee9c4b876033cd14667753dea9d3f596a8a0192d3",
+      "size_bytes": 100
+    },
+    "csv/reserve_ledger.csv": {
+      "sha256": "f67633f658317d5d770a5092e5d3bcdce584926e6ec0e5b97a5ef75120ef1215",
+      "size_bytes": 15250599
+    },
+    "csv/schema_migrations.csv": {
+      "sha256": "a8aed7db55ac3d62f6412bd5402b809cf1dad870a96f2fd31cacb2e17aaf3cba",
+      "size_bytes": 83
+    },
+    "csv/seller_status_events.csv": {
+      "sha256": "050a4424919d97f500af637903f7024828ab17c2728f62e175e652b99f822c15",
+      "size_bytes": 255657
+    },
+    "csv/sellers.csv": {
+      "sha256": "0ebaba566420d076bda882fd856b461faa2a34b07c3446f464ab524da2aa14d9",
+      "size_bytes": 253470
+    },
+    "reports/anomaly_detection_results.csv": {
+      "sha256": "e9bcd3720f10bc9324fa2f7b6bb3eb95970fdf39d1c96860f09ff7e86ee1428a",
+      "size_bytes": 75548
+    },
+    "reports/anomaly_detection_results.json": {
+      "sha256": "495ff761afe3ad3b8d0e753b944c3d7b4a38fd635dd9a8223c4806d639e6c02b",
+      "size_bytes": 239762
+    },
+    "reports/validation_report.json": {
+      "sha256": "e4baf9e4b6198bc92bb25b45f69976934d6fd746749577bf8582363c77a075f7",
+      "size_bytes": 149629
+    },
+    "sql/seed_data.sql": {
+      "sha256": "9293857f62a82a65e3daf4a15f54250f40a3e8aed0c5d5bd6cab3ade69d7637d",
+      "size_bytes": 181863877
+    }
+  }
+}
