@@ -10,6 +10,7 @@ from dashboard.theme import (
     render_page_header,
     render_empty_state,
     apply_plotly_white_layout,
+    format_inr_rupees,
     COLORS,
 )
 
@@ -56,7 +57,7 @@ c1, c2, c3, c4, c5 = st.columns(5)
 with c1:
     render_metric_card("Total Orders", f"{o_tot:,}", "Pipeline Total")
 with c2:
-    render_metric_card("Total GMV", f"${o_gmv:,.2f}", f"AOV: ${o_aov:.2f}")
+    render_metric_card("Total GMV", format_inr_rupees(o_gmv), f"AOV: {format_inr_rupees(o_aov)}")
 with c3:
     render_metric_card("Multi-Seller Orders", f"{o_ms:,}", f"{ms_pct}% Split Basket Rate")
 with c4:
@@ -76,7 +77,7 @@ with f2:
     pay_methods = db.query_df("SELECT DISTINCT payment_method FROM orders;")["payment_method"].tolist()
     selected_payment = st.multiselect("Payment Method", pay_methods, default=pay_methods)
 with f3:
-    amount_range = st.slider("Order Amount Range ($)", 0.0, 3000.0, (0.0, 3000.0), step=25.0)
+    amount_range = st.slider("Order Amount Range (₹)", 0.0, 3000.0, (0.0, 3000.0), step=25.0)
 with f4:
     search_query = st.text_input("🔍 Search Order ID or Customer ID", placeholder="e.g. ORD-2026-000001 or CUST-005778")
 
@@ -124,7 +125,7 @@ if search_query.strip():
 col_pay, col_status = st.columns(2)
 
 with col_pay:
-    st.subheader("Payment Method Volume Share ($)")
+    st.subheader("Payment Method Volume Share (₹)")
     pay_df = db.query_df("""
         SELECT payment_method, COUNT(*) as orders_count, ROUND(SUM(total_amount_cents) / 100.0, 2) as volume
         FROM orders
@@ -204,7 +205,7 @@ st.subheader("🔍 Order Deep-Dive & Multi-Seller Line Inspection")
 
 if not orders_df.empty:
     order_options = [
-        f"{r['order_id']} — ${r['order_total_dollars']:.2f} ({r['order_status']}, {r['seller_count']} Sellers, {r['order_date'][:10]})"
+        f"{r['order_id']} — {format_inr_rupees(r['order_total_dollars'])} ({r['order_status']}, {r['seller_count']} Sellers, {r['order_date'][:10]})"
         for r in orders_df.head(50).to_dict(orient="records")
     ]
     selected_order_str = st.selectbox("Select Order for Detailed Adjudication", order_options)
@@ -234,7 +235,7 @@ if not orders_df.empty:
     with c_o3:
         render_metric_card(
             "Total Amount", 
-            f"${order_info['total_dollars']:.2f}", 
+            format_inr_rupees(order_info['total_dollars']), 
             f"Payment: {order_info['payment_method']}"
         )
     with c_o4:
@@ -279,9 +280,9 @@ if not orders_df.empty:
             lines_sum = lines_df["line_gross_dollars"].sum()
             variance = abs(lines_sum - order_info["total_dollars"])
             if variance < 0.01:
-                st.success(f"✅ Exact Mathematical Consistency: Sum of order lines (${lines_sum:.2f}) matches order header total (${order_info['total_dollars']:.2f}).")
+                st.success(f"✅ Exact Mathematical Consistency: Sum of order lines ({format_inr_rupees(lines_sum)}) matches order header total ({format_inr_rupees(order_info['total_dollars'])}).")
             else:
-                st.error(f"🚨 Arithmetic Mismatch: Order lines sum (${lines_sum:.2f}) differs from header (${order_info['total_dollars']:.2f}) by ${variance:.2f}!")
+                st.error(f"🚨 Arithmetic Mismatch: Order lines sum ({format_inr_rupees(lines_sum)}) differs from header ({format_inr_rupees(order_info['total_dollars'])}) by {format_inr_rupees(variance)}!")
         else:
             render_empty_state("No Lines Found", "No child order lines recorded.")
 

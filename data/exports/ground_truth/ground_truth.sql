@@ -1,6 +1,6 @@
 -- =====================================================================
 -- SellerOps Platform - Isolated Ground Truth Anomalies Seed Script
--- Generated At: 2026-11-12T23:30:44.909213
+-- Generated At: 2026-11-12T23:58:58.860268
 -- =====================================================================
 
 BEGIN TRANSACTION;

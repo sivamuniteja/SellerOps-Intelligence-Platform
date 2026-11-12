@@ -78,7 +78,7 @@ base_sellers = db.query_df("""
         s.onboarding_date,
         COALESCE(l.listing_count, 0) as listing_count,
         COALESCE(o.order_count, 0) as order_count,
-        ROUND(COALESCE(c.total_commission_cents, 0) / 100.0, 2) as total_commission_dollars,
+        ROUND(COALESCE(c.total_commission_cents, 0) / 100.0, 2) as total_commission_inr,
         ROUND(COALESCE(f.on_time_pct, 100.0), 1) as fulfillment_pct,
         ROUND(COALESCE(d.dispute_count, 0) * 100.0 / NULLIF(COALESCE(o.order_count, 0), 0), 2) as dispute_rate_pct,
         COALESCE(p.payout_status_summary, 'NO_PAYOUTS') as payout_status
@@ -181,7 +181,7 @@ if not filtered_sellers.empty:
         "fulfillment_pct",
         "dispute_rate_pct",
         "rating",
-        "total_commission_dollars",
+        "total_commission_inr",
         "payout_status",
     ]
     st.dataframe(
@@ -255,7 +255,7 @@ if not filtered_sellers.empty:
                 listing_id, 
                 title, 
                 category, 
-                ROUND(price_cents / 100.0, 2) as price_dollars, 
+                ROUND(price_cents / 100.0, 2) as price_inr, 
                 inventory_count, 
                 status, 
                 created_at
@@ -277,8 +277,8 @@ if not filtered_sellers.empty:
                 o.order_date,
                 ol.listing_id,
                 ol.quantity,
-                ROUND(ol.unit_price_cents / 100.0, 2) as unit_price_dollars,
-                ROUND(ol.gross_amount_cents / 100.0, 2) as gross_dollars,
+                ROUND(ol.unit_price_cents / 100.0, 2) as unit_price_inr,
+                ROUND(ol.gross_amount_cents / 100.0, 2) as gross_inr,
                 ol.line_status
             FROM order_lines ol
             JOIN orders o ON ol.order_id = o.order_id
@@ -298,11 +298,11 @@ if not filtered_sellers.empty:
                 payout_id,
                 batch_date,
                 total_lines_count,
-                ROUND(gross_sales_cents / 100.0, 2) as gross_dollars,
-                ROUND(total_commission_cents / 100.0, 2) as commission_dollars,
-                ROUND(total_reserve_held_cents / 100.0, 2) as reserve_dollars,
-                ROUND(total_disputes_deducted_cents / 100.0, 2) as disputes_dollars,
-                ROUND(net_payout_amount_cents / 100.0, 2) as net_payout_dollars,
+                ROUND(gross_sales_cents / 100.0, 2) as gross_inr,
+                ROUND(total_commission_cents / 100.0, 2) as commission_inr,
+                ROUND(total_reserve_held_cents / 100.0, 2) as reserve_inr,
+                ROUND(total_disputes_deducted_cents / 100.0, 2) as disputes_inr,
+                ROUND(net_payout_amount_cents / 100.0, 2) as net_payout_inr,
                 payout_status,
                 reconciliation_status
             FROM payouts

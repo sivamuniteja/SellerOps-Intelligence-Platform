@@ -9,6 +9,13 @@ import sys
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from src.database.connection import get_db
+from src.currency import format_inr, format_inr_paise, from_paise, to_paise
+
+
+def format_inr_rupees(amount: float, compact: bool = False) -> str:
+    """Format an amount given in whole rupees (or float) to Indian Rupee notation (₹)."""
+    return format_inr(amount, compact=compact)
+
 
 # Mandatory Enterprise Color Palette
 COLORS = {

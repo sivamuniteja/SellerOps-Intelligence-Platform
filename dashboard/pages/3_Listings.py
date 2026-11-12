@@ -10,6 +10,7 @@ from dashboard.theme import (
     render_page_header,
     render_empty_state,
     apply_plotly_white_layout,
+    format_inr_rupees,
     COLORS,
 )
 
@@ -52,7 +53,7 @@ with c1:
 with c2:
     render_metric_card("Active Listings", f"{act_l:,}", "Purchasable SKUs")
 with c3:
-    render_metric_card("Average Price", f"${avg_p:.2f}", "Across 8 Categories")
+    render_metric_card("Average Price", format_inr_rupees(avg_p), "Across 8 Categories")
 with c4:
     render_metric_card("Out of Stock", f"{oos_l:,}", "Zero Inventory", delta_color="warning" if oos_l > 0 else "neutral")
 with c5:
@@ -70,7 +71,7 @@ with f_col2:
     all_statuses = ["ACTIVE", "OUT_OF_STOCK", "SUSPENDED", "ARCHIVED"]
     selected_statuses = st.multiselect("Listing Status", all_statuses, default=all_statuses)
 with f_col3:
-    price_range = st.slider("Price Range ($)", 0.0, 2000.0, (0.0, 2000.0), step=10.0)
+    price_range = st.slider("Price Range (₹)", 0.0, 1000.0, (0.0, 1000.0), step=10.0)
 with f_col4:
     search_query = st.text_input("🔍 Search Title, SKU, or Seller ID", placeholder="e.g. LIST- or SELL-000001")
 
@@ -120,7 +121,7 @@ if search_query.strip():
 col_box, col_cat_dist = st.columns([3, 2])
 
 with col_box:
-    st.subheader("Price Range Distribution by Category ($)")
+    st.subheader("Price Range Distribution by Category (₹)")
     if not listings_df.empty:
         fig_box = px.box(
             listings_df.head(1000),
@@ -128,7 +129,7 @@ with col_box:
             y="price_dollars",
             color="category",
             color_discrete_sequence=px.colors.qualitative.Plotly,
-            labels={"price_dollars": "Item Price ($)", "category": "Product Category"},
+            labels={"price_dollars": "Item Price (₹)", "category": "Product Category"},
         )
         apply_plotly_white_layout(fig_box)
         st.plotly_chart(fig_box, use_container_width=True)
@@ -223,7 +224,7 @@ st.subheader("🔍 Listing Deep-Dive & Sales Velocity")
 
 if not listings_df.empty:
     listing_options = [
-        f"{r['listing_id']} — {r['product_name'][:40]} (${r['price_dollars']:.2f}, {r['listing_status']})"
+        f"{r['listing_id']} — {r['product_name'][:40]} ({format_inr_rupees(r['price_dollars'])}, {r['listing_status']})"
         for r in listings_df.head(50).to_dict(orient="records")
     ]
     selected_listing_str = st.selectbox("Select Listing for Deep-Dive Audit", listing_options)
@@ -253,7 +254,7 @@ if not listings_df.empty:
     with c_i1:
         render_metric_card("Product SKU", item_row["listing_id"], item_row["category"])
     with c_i2:
-        render_metric_card("Price & Stock", f"${item_row['price_dollars']:.2f}", f"Units in Stock: {item_row['stock']}")
+        render_metric_card("Price & Stock", format_inr_rupees(item_row['price_dollars']), f"Units in Stock: {item_row['stock']}")
     with c_i3:
         render_metric_card(
             "Listing Status", 

@@ -1,7 +1,10 @@
 {
-  "generated_at": "2026-11-12T23:30:46.727815",
+  "generated_at": "2026-11-12T23:59:00.656319",
   "target_mode": "full",
   "seed": 20261022,
+  "currency_code": "INR",
+  "currency_symbol": "\u20b9",
+  "minor_unit": "paise",
   "counts": {
     "schema_migrations": 1,
     "sellers": 2000,
@@ -31,7 +34,7 @@
     "customers": "c3a1a9b1ec268c5c",
     "listings": "10f8340f22e343c9",
     "commission_rules": "bee58fb52a155002",
-    "orders": "fe11ca63e02a64a1",
+    "orders": "e7820958b137275d",
     "order_lines": "19b511284b7ac76d",
     "fulfillments": "125cfaf59d507668",
     "fulfillment_events": "d911fabb113ff129",

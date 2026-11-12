@@ -80,7 +80,7 @@ with col_export:
     elif report_type == "Orders: Pipeline & Multi-Seller Volume":
         query = f"""
             SELECT 
-                order_id, customer_id, order_date, ROUND(total_amount_cents / 100.0, 2) as total_dollars,
+                order_id, customer_id, order_date, ROUND(total_amount_cents / 100.0, 2) as total_inr,
                 payment_method, order_status
             FROM orders
             {limit_clause};
@@ -99,7 +99,7 @@ with col_export:
         query = f"""
             SELECT 
                 dispute_id, order_id, seller_id, customer_id, dispute_date, dispute_reason,
-                ROUND(disputed_amount_cents / 100.0, 2) as disputed_dollars, status, resolution_date, clawback_applied
+                ROUND(disputed_amount_cents / 100.0, 2) as disputed_inr, status, resolution_date, clawback_applied
             FROM disputes
             {limit_clause};
         """
@@ -108,11 +108,11 @@ with col_export:
         query = f"""
             SELECT 
                 entry_id, order_line_id, seller_id, rule_id,
-                ROUND(gross_amount_cents / 100.0, 2) as gross_dollars,
+                ROUND(gross_amount_cents / 100.0, 2) as gross_inr,
                 ROUND(rate_basis_points / 100.0, 2) as rate_percent,
-                ROUND(variable_fee_cents / 100.0, 2) as variable_fee_dollars,
-                ROUND(fixed_fee_cents / 100.0, 2) as fixed_fee_dollars,
-                ROUND(total_commission_cents / 100.0, 2) as total_commission_dollars
+                ROUND(variable_fee_cents / 100.0, 2) as variable_fee_inr,
+                ROUND(fixed_fee_cents / 100.0, 2) as fixed_fee_inr,
+                ROUND(total_commission_cents / 100.0, 2) as total_commission_inr
             FROM commission_ledger
             {limit_clause};
         """
@@ -121,11 +121,11 @@ with col_export:
         query = f"""
             SELECT 
                 payout_id, seller_id, batch_date, total_lines_count,
-                ROUND(gross_sales_cents / 100.0, 2) as gross_dollars,
-                ROUND(total_commission_cents / 100.0, 2) as commission_dollars,
-                ROUND(total_reserve_held_cents / 100.0, 2) as reserve_dollars,
-                ROUND(total_disputes_deducted_cents / 100.0, 2) as disputes_dollars,
-                ROUND(net_payout_amount_cents / 100.0, 2) as net_payout_dollars,
+                ROUND(gross_sales_cents / 100.0, 2) as gross_inr,
+                ROUND(total_commission_cents / 100.0, 2) as commission_inr,
+                ROUND(total_reserve_held_cents / 100.0, 2) as reserve_inr,
+                ROUND(total_disputes_deducted_cents / 100.0, 2) as disputes_inr,
+                ROUND(net_payout_amount_cents / 100.0, 2) as net_payout_inr,
                 payout_status, reconciliation_status
             FROM payouts
             {limit_clause};

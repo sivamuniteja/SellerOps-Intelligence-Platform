@@ -10,6 +10,7 @@ from dashboard.theme import (
     render_page_header,
     render_empty_state,
     apply_plotly_white_layout,
+    format_inr_rupees,
     COLORS,
 )
 from src.validation.anomaly_detection import AnomalyDetectionEngine
@@ -45,13 +46,13 @@ double_comm_count = len(ano2_detected)
 
 c1, c2, c3, c4, c5 = st.columns(5)
 with c1:
-    render_metric_card("Commission Revenue", f"${tot_comm:,.2f}", "Total Net Platform Fees")
+    render_metric_card("Commission Revenue", format_inr_rupees(tot_comm), "Total Net Platform Fees")
 with c2:
     render_metric_card("Effective Take Rate", f"{take_rate:.2f}%", "Blended Platform Rate")
 with c3:
     render_metric_card("Average Category Rate", f"{avg_rate:.2f}%", "Base Category Schedule")
 with c4:
-    render_metric_card("Fixed Handling Fee", "$0.30", "Per Settled Order Line")
+    render_metric_card("Fixed Handling Fee", "₹0.30", "Per Settled Order Line (30 Paise)")
 with c5:
     render_metric_card("Duplicate Charges", f"{double_comm_count}", "Anomaly 2 Breaches", delta_color="danger" if double_comm_count > 0 else "success")
 
@@ -116,7 +117,7 @@ if search_query.strip():
 col_cat_chart, col_fees_chart = st.columns(2)
 
 with col_cat_chart:
-    st.subheader("Commission Revenue by Category ($)")
+    st.subheader("Commission Revenue by Category (₹)")
     cat_comm = db.query_df("""
         SELECT
             cr.category,
@@ -133,7 +134,7 @@ with col_cat_chart:
         y="category",
         orientation="h",
         color_discrete_sequence=[COLORS["primary"]],
-        labels={"commission_revenue": "Commission Revenue ($)", "category": "Product Category"},
+        labels={"commission_revenue": "Commission Revenue (₹)", "category": "Product Category"},
     )
     apply_plotly_white_layout(fig_cat)
     st.plotly_chart(fig_cat, use_container_width=True)
@@ -148,7 +149,7 @@ with col_fees_chart:
     """)
     split_data = pd.DataFrame([
         {"Fee Component": "Variable Take Rate", "Amount": fee_split["variable_fees"].iloc[0]},
-        {"Fee Component": "Fixed Handling Fees ($0.30)", "Amount": fee_split["fixed_fees"].iloc[0]},
+        {"Fee Component": "Fixed Handling Fees (₹0.30)", "Amount": fee_split["fixed_fees"].iloc[0]},
     ])
     fig_split = px.pie(
         split_data,
@@ -251,7 +252,7 @@ st.subheader("🔍 Commission Entry Deep-Dive & Formula Verification")
 
 if not ledger_df.empty:
     entry_options = [
-        f"{r['entry_id']} — ${r['total_commission_dollars']:.2f} (Gross: ${r['gross_dollars']:.2f}, Line: {r['order_line_id']})"
+        f"{r['entry_id']} — {format_inr_rupees(r['total_commission_dollars'])} (Gross: {format_inr_rupees(r['gross_dollars'])}, Line: {r['order_line_id']})"
         for r in ledger_df.head(50).to_dict(orient="records")
     ]
     selected_entry_str = st.selectbox("Select Ledger Entry for Fee Formula Audit", entry_options)
@@ -285,20 +286,20 @@ if not ledger_df.empty:
     with c_e2:
         render_metric_card("Order Line ID", entry_rec["order_line_id"], f"Seller: {entry_rec['seller_name']}")
     with c_e3:
-        render_metric_card("Gross Sales Amount", f"${entry_rec['gross_dollars']:.2f}", f"Category: {entry_rec['category']}")
+        render_metric_card("Gross Sales Amount", format_inr_rupees(entry_rec['gross_dollars']), f"Category: {entry_rec['category']}")
     with c_e4:
-        render_metric_card("Platform Take", f"${entry_rec['total_commission_dollars']:.2f}", f"Tier: {entry_rec['seller_tier']}")
+        render_metric_card("Platform Take", format_inr_rupees(entry_rec['total_commission_dollars']), f"Tier: {entry_rec['seller_tier']}")
 
     st.markdown(
         f"""
         <div class="metric-card" style="margin-top: 15px;">
             <h5 style="margin-top: 0; color: #111827;">Deterministic Formula Audit:</h5>
             <p style="margin-bottom: 6px; font-family: monospace; font-size: 0.95rem;">
-                <b>Variable Take:</b> Gross (${entry_rec['gross_dollars']:.2f}) × Rate ({entry_rec['rate_percent']:.2f}%) = <b>${entry_rec['variable_fee_dollars']:.2f}</b><br>
-                <b>Fixed Handling Fee:</b> <b>${entry_rec['fixed_fee_dollars']:.2f}</b><br>
-                <b>Base Sum:</b> ${entry_rec['variable_fee_dollars']:.2f} + ${entry_rec['fixed_fee_dollars']:.2f} = <b>${(entry_rec['variable_fee_dollars'] + entry_rec['fixed_fee_dollars']):.2f}</b><br>
-                <b>Category Minimum Guarantee:</b> ${entry_rec['min_commission_dollars']:.2f}<br>
-                <b>Final Charged Commission:</b> <span style="color: #2563EB; font-weight: bold;">${entry_rec['total_commission_dollars']:.2f}</span>
+                <b>Variable Take:</b> Gross ({format_inr_rupees(entry_rec['gross_dollars'])}) × Rate ({entry_rec['rate_percent']:.2f}%) = <b>{format_inr_rupees(entry_rec['variable_fee_dollars'])}</b><br>
+                <b>Fixed Handling Fee:</b> <b>{format_inr_rupees(entry_rec['fixed_fee_dollars'])}</b><br>
+                <b>Base Sum:</b> {format_inr_rupees(entry_rec['variable_fee_dollars'])} + {format_inr_rupees(entry_rec['fixed_fee_dollars'])} = <b>{format_inr_rupees(entry_rec['variable_fee_dollars'] + entry_rec['fixed_fee_dollars'])}</b><br>
+                <b>Category Minimum Guarantee:</b> {format_inr_rupees(entry_rec['min_commission_dollars'])}<br>
+                <b>Final Charged Commission:</b> <span style="color: #2563EB; font-weight: bold;">{format_inr_rupees(entry_rec['total_commission_dollars'])}</span>
             </p>
         </div>
         """,

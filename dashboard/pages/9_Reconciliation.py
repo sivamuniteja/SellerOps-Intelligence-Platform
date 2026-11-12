@@ -10,6 +10,8 @@ from dashboard.theme import (
     render_page_header,
     render_empty_state,
     apply_plotly_white_layout,
+    format_inr_rupees,
+    format_inr_paise,
     COLORS,
 )
 from src.validation.reconciliation import FinancialReconciliation
@@ -45,7 +47,7 @@ with c2:
 with c3:
     render_metric_card("Discrepant Batches", f"{disc_b}", "Anomaly 5 Inconsistencies", delta_color="danger" if disc_b > 0 else "success")
 with c4:
-    render_metric_card("Total Net Variance", f"${total_variance_dollars:,.2f}", "Header vs Lines Drift", delta_color="danger" if total_variance_dollars > 0 else "success")
+    render_metric_card("Total Net Variance", format_inr_rupees(total_variance_dollars), "Header vs Lines Drift", delta_color="danger" if total_variance_dollars > 0 else "success")
 with c5:
     render_metric_card("Multi-Seller Orders", "100.0% Matched", "Order Total = Line Sums", delta_color="success")
 
@@ -75,7 +77,7 @@ with col_left:
     st.plotly_chart(fig_pie, use_container_width=True)
 
 with col_right:
-    st.subheader("Batch Variance Breakdown ($)")
+    st.subheader("Batch Variance Breakdown (₹)")
     if disc_records:
         var_df = pd.DataFrame(disc_records)
         var_df["variance_dollars"] = var_df["variance_cents"] / 100.0
@@ -84,7 +86,7 @@ with col_right:
             x="payout_id",
             y="variance_dollars",
             color_discrete_sequence=[COLORS["danger"]],
-            labels={"payout_id": "Discrepant Payout ID", "variance_dollars": "Variance ($)"},
+            labels={"payout_id": "Discrepant Payout ID", "variance_dollars": "Variance (₹)"},
         )
         apply_plotly_white_layout(fig_var)
         st.plotly_chart(fig_var, use_container_width=True)
@@ -136,7 +138,7 @@ st.subheader("🔍 Discrepant Batch Forensic Drill-Down")
 
 if disc_records:
     disc_options = [
-        f"{r['payout_id']} — Delta: ${r['variance_cents'] / 100.0:.2f} (Header: ${r['header_net_cents'] / 100.0:.2f}, Lines: ${r['lines_net_sum_cents'] / 100.0:.2f})"
+        f"{r['payout_id']} — Delta: {format_inr_paise(r['variance_cents'])} (Header: {format_inr_paise(r['header_net_cents'])}, Lines: {format_inr_paise(r['lines_net_sum_cents'])})"
         for r in disc_records
     ]
     selected_disc_str = st.selectbox("Select Discrepant Batch for Line-by-Line Forensic Audit", disc_options)
@@ -146,13 +148,13 @@ if disc_records:
 
     c_r1, c_r2, c_r3, c_r4 = st.columns(4)
     with c_r1:
-        render_metric_card("Payout Header Net", f"${selected_meta['header_net_cents'] / 100.0:.2f}", f"Batch: {selected_meta['payout_id']}")
+        render_metric_card("Payout Header Net", format_inr_paise(selected_meta['header_net_cents']), f"Batch: {selected_meta['payout_id']}")
     with c_r2:
-        render_metric_card("Sum of Child Lines", f"${selected_meta['lines_net_sum_cents'] / 100.0:.2f}", f"{selected_meta['line_count']} Child Lines")
+        render_metric_card("Sum of Child Lines", format_inr_paise(selected_meta['lines_net_sum_cents']), f"{selected_meta['line_count']} Child Lines")
     with c_r3:
         render_metric_card(
             "Arithmetic Variance", 
-            f"${selected_meta['variance_cents'] / 100.0:.2f}", 
+            format_inr_paise(selected_meta['variance_cents']), 
             "Header Net != Lines Sum",
             delta_color="danger"
         )
@@ -164,8 +166,8 @@ if disc_records:
         <div class="metric-card" style="margin-top: 15px; border-left: 4px solid #DC2626;">
             <h5 style="margin-top: 0; color: #DC2626;">Forensic Audit Finding & Mandatory Corrective Action:</h5>
             <p style="margin-bottom: 6px; font-size: 0.95rem;">
-                <b>Discrepancy Cause:</b> Header net payout was overridden or corrupted during batch header calculation, deviating from settled line items by <b>${selected_meta['variance_cents'] / 100.0:.2f}</b>.<br>
-                <b>Recommended Remediation:</b> Re-compute header net from sum of lines, void erroneous gateway transaction, and re-issue settlement batch for <b>${selected_meta['lines_net_sum_cents'] / 100.0:.2f}</b>.
+                <b>Discrepancy Cause:</b> Header net payout was overridden or corrupted during batch header calculation, deviating from settled line items by <b>{format_inr_paise(selected_meta['variance_cents'])}</b>.<br>
+                <b>Recommended Remediation:</b> Re-compute header net from sum of lines, void erroneous gateway transaction, and re-issue settlement batch for <b>{format_inr_paise(selected_meta['lines_net_sum_cents'])}</b>.
             </p>
         </div>
         """,

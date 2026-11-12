@@ -12,6 +12,7 @@ from dashboard.theme import (
     get_database,
     render_metric_card,
     render_page_header,
+    format_inr_paise,
     COLORS,
 )
 
@@ -42,10 +43,8 @@ gt_count = db.row_count("ground_truth") if db.table_exists("ground_truth") else 
 
 # Total GMV
 gmv_cents = db.query_df("SELECT COALESCE(SUM(total_amount_cents), 0) FROM orders;").iloc[0, 0]
-gmv_dollars = gmv_cents / 100.0
-
 with col1:
-    render_metric_card("Gross Merchandise Value", f"${gmv_dollars:,.2f}", "Total Platform GMV")
+    render_metric_card("Gross Merchandise Value", format_inr_paise(gmv_cents), f"Total Platform GMV ({format_inr_paise(gmv_cents, compact=True)})")
 with col2:
     render_metric_card("Active Sellers", f"{seller_count:,}", "2,000 Target Enforced")
 with col3:

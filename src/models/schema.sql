@@ -81,7 +81,7 @@ CREATE TABLE IF NOT EXISTS orders (
     customer_id VARCHAR(32) NOT NULL REFERENCES customers(customer_id),
     order_date TEXT NOT NULL,
     total_amount_cents INTEGER NOT NULL CHECK(total_amount_cents > 0),
-    currency VARCHAR(8) NOT NULL DEFAULT 'USD',
+    currency VARCHAR(8) NOT NULL DEFAULT 'INR',
     payment_method VARCHAR(32) NOT NULL,
     order_status VARCHAR(32) NOT NULL CHECK(order_status IN ('PLACED', 'CONFIRMED', 'PARTIALLY_SHIPPED', 'SHIPPED', 'DELIVERED', 'CANCELLED', 'RETURNED')),
     created_at TEXT NOT NULL,

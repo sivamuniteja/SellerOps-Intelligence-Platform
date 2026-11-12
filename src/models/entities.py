@@ -138,8 +138,12 @@ class ProductListing(BaseModel):
     updated_at: str
 
     @property
-    def price_dollars(self) -> Decimal:
+    def price_inr(self) -> Decimal:
         return cents_to_decimal(self.price_cents)
+
+    @property
+    def price_dollars(self) -> Decimal:
+        return self.price_inr
 
 
 # 5. Commission Rule
@@ -162,15 +166,19 @@ class Order(BaseModel):
     customer_id: str = Field(..., pattern=r"^CUST-\d{6}$")
     order_date: str
     total_amount_cents: int = Field(..., gt=0)
-    currency: str = "USD"
+    currency: str = "INR"
     payment_method: str
     order_status: OrderStatus
     created_at: str
     updated_at: str
 
     @property
-    def total_amount_dollars(self) -> Decimal:
+    def total_amount_inr(self) -> Decimal:
         return cents_to_decimal(self.total_amount_cents)
+
+    @property
+    def total_amount_dollars(self) -> Decimal:
+        return self.total_amount_inr
 
 
 # 7. Order Line (Item Level, Multi-Seller)
@@ -187,8 +195,12 @@ class OrderLine(BaseModel):
     created_at: str
 
     @property
-    def gross_amount_dollars(self) -> Decimal:
+    def gross_amount_inr(self) -> Decimal:
         return cents_to_decimal(self.gross_amount_cents)
+
+    @property
+    def gross_amount_dollars(self) -> Decimal:
+        return self.gross_amount_inr
 
 
 # 8. Fulfillment (Supporting Partial Fulfillment)

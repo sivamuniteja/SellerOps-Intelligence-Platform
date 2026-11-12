@@ -121,7 +121,7 @@ def generate_orders(
             "customer_id": cust_id,
             "order_date": order_date_str,
             "total_amount_cents": order_gross_cents,
-            "currency": "USD",
+            "currency": "INR",
             "payment_method": rng.choice(PAYMENT_METHODS),
             "order_status": derived_order_status,
             "created_at": order_date_str,

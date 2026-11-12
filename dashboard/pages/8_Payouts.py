@@ -10,6 +10,7 @@ from dashboard.theme import (
     render_page_header,
     render_empty_state,
     apply_plotly_white_layout,
+    format_inr_rupees,
     COLORS,
 )
 from src.validation.anomaly_detection import AnomalyDetectionEngine
@@ -44,9 +45,9 @@ premature_count = len(ano1_detected)
 
 c1, c2, c3, c4, c5 = st.columns(5)
 with c1:
-    render_metric_card("Total Net Disbursed", f"${tot_net:,.2f}", "Total Net Payouts")
+    render_metric_card("Total Net Disbursed", format_inr_rupees(tot_net), "Total Net Payouts")
 with c2:
-    render_metric_card("Rolling Reserve Held", f"${tot_res:,.2f}", "Risk Collateral Held")
+    render_metric_card("Rolling Reserve Held", format_inr_rupees(tot_res), "Risk Collateral Held")
 with c3:
     render_metric_card("Total Payout Batches", f"{tot_b:,}", "Disbursement Cycles")
 with c4:
@@ -112,7 +113,7 @@ if search_query.strip():
 col_monthly, col_status_pie = st.columns(2)
 
 with col_monthly:
-    st.subheader("Monthly Net Disbursement Volume ($)")
+    st.subheader("Monthly Net Disbursement Volume (₹)")
     monthly_df = db.query_df("""
         SELECT
             SUBSTR(batch_date, 1, 7) as month,
@@ -128,7 +129,7 @@ with col_monthly:
             x="month",
             y="net_disbursed",
             color_discrete_sequence=[COLORS["primary"]],
-            labels={"month": "Disbursement Month", "net_disbursed": "Net Disbursed ($)"},
+            labels={"month": "Disbursement Month", "net_disbursed": "Net Disbursed (₹)"},
         )
         apply_plotly_white_layout(fig_monthly)
         st.plotly_chart(fig_monthly, use_container_width=True)
@@ -226,7 +227,7 @@ st.subheader("🔍 Payout Batch Deep-Dive & Settlement Reconciliation")
 
 if not payouts_df.empty:
     payout_options = [
-        f"{r['payout_id']} — ${r['net_payout_dollars']:.2f} ({r['seller_name']}, Status: {r['payout_status']}, Date: {r['batch_date'][:10]})"
+        f"{r['payout_id']} — {format_inr_rupees(r['net_payout_dollars'])} ({r['seller_name']}, Status: {r['payout_status']}, Date: {r['batch_date'][:10]})"
         for r in payouts_df.head(50).to_dict(orient="records")
     ]
     selected_payout_str = st.selectbox("Select Payout Batch for Detailed Line-Item Audit", payout_options)
@@ -255,7 +256,7 @@ if not payouts_df.empty:
     with c_p1:
         render_metric_card("Payout ID", p_header["payout_id"], f"Seller: {p_header['seller_name']}")
     with c_p2:
-        render_metric_card("Net Amount", f"${p_header['net_dollars']:.2f}", f"Gross: ${p_header['gross_dollars']:.2f}")
+        render_metric_card("Net Amount", format_inr_rupees(p_header['net_dollars']), f"Gross: {format_inr_rupees(p_header['gross_dollars'])}")
     with c_p3:
         render_metric_card(
             "Payout Status", 
@@ -296,9 +297,9 @@ if not payouts_df.empty:
             lines_sum = lines_df["net_line_dollars"].sum()
             variance = round(p_header["net_dollars"] - lines_sum, 2)
             if abs(variance) < 0.01:
-                st.success(f"✅ Exact Balance: Sum of child lines (${lines_sum:.2f}) matches payout header net (${p_header['net_dollars']:.2f}).")
+                st.success(f"✅ Exact Balance: Sum of child lines ({format_inr_rupees(lines_sum)}) matches payout header net ({format_inr_rupees(p_header['net_dollars'])}).")
             else:
-                st.error(f"🚨 Anomaly 5 Discrepancy: Payout header (${p_header['net_dollars']:.2f}) does NOT match sum of lines (${lines_sum:.2f})! Variance: ${variance:.2f}")
+                st.error(f"🚨 Anomaly 5 Discrepancy: Payout header ({format_inr_rupees(p_header['net_dollars'])}) does NOT match sum of lines ({format_inr_rupees(lines_sum)})! Variance: {format_inr_rupees(variance)}")
         else:
             render_empty_state("No Lines Found", "No child settlement lines found for this payout batch.")
 

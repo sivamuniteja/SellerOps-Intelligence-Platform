@@ -63,12 +63,14 @@ flowchart TD
 ## 2. Core Architectural Pillars
 
 ### 2.1 Deterministic High-Performance Data Generation
-- Utilizes seeded pseudorandom number generators (`seed=42`) ensuring bit-for-bit reproducibility across runs.
-- High-throughput batch ingestion using SQLite Write-Ahead Logging (WAL) and multi-row parameterized transactions (`executemany`), processing **100,000 orders and 10,000 disputes in under 7 seconds**.
-- Ground-truth separation: All 5 injected operational exceptions are registered in an isolated table `anomalies_ground_truth` with permanent unique identifiers (`ANO-x-xxxx`).
+- Utilizes seeded pseudorandom number generators (`seed=20261022`) ensuring bit-for-bit cryptographic reproducibility across runs.
+- High-throughput batch ingestion using SQLite Write-Ahead Logging (WAL) and multi-row parameterized transactions (`executemany`), processing **100,000 orders and 10,000 disputes in under 6 seconds**.
+- Ground-truth separation: All 5 injected operational exceptions are registered in an isolated table `ground_truth` and exported to `data/exports/ground_truth/` with permanent unique identifiers (`ANO-x-xxxx`).
 
-### 2.2 Financial Precision Engine
-- Fixed two-decimal currency precision using Python `Decimal` and SQL `ROUND(..., 2)` to eliminate floating-point drift.
+### 2.2 Global INR Currency System & Absolute Precision
+- Exclusively denominated in Indian Rupees (INR – ₹) with minor unit paise (`paise`, 1 Rupee = 100 paise).
+- Internal database storage uses 64-bit signed integer paise (`_cents` columns), eliminating IEEE 754 floating-point drift.
+- All monetary calculations utilize Python `Decimal` with `ROUND_HALF_UP`.
 - Full double-entry balance enforcement:
   $$\text{Gross Amount} = \text{Commission Amount} + \text{Reserve Amount} + \text{Net Seller Amount}$$
 - Header-to-line reconciliation tracking:

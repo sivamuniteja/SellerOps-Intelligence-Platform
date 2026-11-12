@@ -331,3 +331,254 @@ def test_payout_state_transitions(engines):
             next_status="PROCESSING",
             occurred_at=occ_dt,
         )
+
+
+# ==========================================
+# MANDATORY INR FINANCIAL FIXTURE TESTS (SECTION 5)
+# ==========================================
+
+def test_inr_illustrative_payout_fixture(engines):
+    """
+    Mandatory Test Fixture 1: Exact Payout Calculation
+    Seller order-line gross: ₹10,000.00 (1,000,000 paise)
+    Assumed commission: 10% = ₹1,000.00 (100,000 paise)
+    Approved refund: ₹500.00 (50,000 paise)
+    Finalized lost dispute: ₹200.00 (20,000 paise)
+    Post-deduction balance: ₹10,000 - ₹1,000 - ₹500 - ₹200 = ₹8,300.00
+    New reserve hold: 5% of ₹8,300 = ₹415.00 (41,500 paise)
+    Net payable: ₹8,300 - ₹415 = ₹7,885.00 (788,500 paise)
+    """
+    _, payout_engine = engines
+    batch_dt = datetime(2026, 7, 10, 10, 0, 0)
+
+    gross_paise = 1000000  # ₹10,000.00
+    commission_paise = 100000  # ₹1,000.00 (10%)
+    refund_paise = 50000  # ₹500.00
+    dispute_paise = 20000  # ₹200.00
+    reserve_paise = 41500  # ₹415.00 (5% of ₹8,300.00)
+
+    expected_net_paise = gross_paise - commission_paise - refund_paise - dispute_paise - reserve_paise
+    assert expected_net_paise == 788500  # ₹7,885.00
+
+    items = [
+        {
+            "order_line_id": "ORDLN-INR-001",
+            "gross_amount_cents": gross_paise,
+            "commission_cents": commission_paise,
+            "refund_cents": refund_paise,
+            "dispute_cents": dispute_paise,
+            "reserve_held_cents": reserve_paise,
+        }
+    ]
+
+    res = payout_engine.create_payout_batch_cents(
+        payout_id="PO-INR-001",
+        seller_id="SELL-INR-01",
+        batch_date=batch_dt,
+        eligible_items=items,
+        seller_status="ACTIVE",
+    )
+
+    header = res["header"]
+    assert header["gross_sales_cents"] == 1000000
+    assert header["commission_cents"] == 100000
+    assert header["refunds_cents"] == 50000
+    assert header["disputes_cents"] == 20000
+    assert header["reserve_held_cents"] == 41500
+    assert header["net_payout_cents"] == 788500  # Exactly ₹7,885.00
+    assert header["reconciliation_status"] == "MATCHED"
+
+
+def test_inr_reserve_release_added_only_once(engines):
+    """
+    Mandatory Test Fixture 2: Reserve Release
+    Ensures previously held reserve amounts are added only once after their release date.
+    """
+    reserve_engine, payout_engine = engines
+    deliv_dt = datetime(2026, 6, 1, 10, 0, 0)
+    release_dt = deliv_dt + timedelta(days=14)
+    batch_dt = release_dt + timedelta(days=1)
+
+    # 1. Create reserve hold of ₹1,000.00 (100,000 paise)
+    entry = reserve_engine.create_reserve_entry(
+        order_line_id="ORDLN-INR-RSV-01",
+        seller_id="SELL-INR-RSV",
+        gross_amount_cents=1000000,
+        seller_tier="STANDARD",
+        risk_score=20.0,
+        delivery_date=deliv_dt,
+    )
+    assert entry["status"] == "HELD"
+
+    # 2. Release reserve on release date
+    rel = reserve_engine.release_reserve(
+        reserve_id_or_line_id=entry["reserve_id"],
+        as_of_date=release_dt,
+        seller_status="ACTIVE",
+    )
+    assert rel["status"] == "RELEASED"
+    assert rel["released_amount_cents"] == 100000  # ₹1,000.00
+
+    # 3. First payout disbursing the released reserve must succeed
+    payout_1 = payout_engine.create_payout_batch_cents(
+        payout_id="PO-RSV-REL-01",
+        seller_id="SELL-INR-RSV",
+        batch_date=batch_dt,
+        eligible_items=[{
+            "order_line_id": "ORDLN-INR-RSV-01",
+            "gross_amount_cents": 0,
+            "commission_cents": 0,
+            "reserve_released_cents": 100000,
+        }],
+        seller_status="ACTIVE",
+    )
+    assert payout_1["header"]["reserve_released_cents"] == 100000
+    assert payout_1["header"]["net_payout_cents"] == 100000
+
+    # 4. Attempting to disburse the same released reserve in another payout must be blocked
+    with pytest.raises(DuplicatePayoutLineError):
+        payout_engine.create_payout_batch_cents(
+            payout_id="PO-RSV-REL-02",
+            seller_id="SELL-INR-RSV",
+            batch_date=batch_dt + timedelta(days=7),
+            eligible_items=[{
+                "order_line_id": "ORDLN-INR-RSV-01",
+                "gross_amount_cents": 0,
+                "commission_cents": 0,
+                "reserve_released_cents": 100000,
+            }],
+            seller_status="ACTIVE",
+        )
+
+
+def test_inr_partial_refund_deduction(engines):
+    """
+    Mandatory Test Fixture 3: Partial Refund Deduction
+    Partial refund of ₹250.00 (25,000 paise) on a ₹5,000.00 (500,000 paise) line.
+    """
+    _, payout_engine = engines
+    batch_dt = datetime(2026, 7, 10, 10, 0, 0)
+
+    gross = 500000   # ₹5,000.00
+    comm = 50000     # ₹500.00 (10%)
+    partial_refund = 25000  # ₹250.00 (partial refund)
+    reserve = 21250  # 5% of (5000 - 500 - 250 = 4250) = ₹212.50
+
+    expected_net = gross - comm - partial_refund - reserve  # 403,750 paise (₹4,037.50)
+
+    items = [
+        {
+            "order_line_id": "ORDLN-PART-01",
+            "gross_amount_cents": gross,
+            "commission_cents": comm,
+            "refund_cents": partial_refund,
+            "reserve_held_cents": reserve,
+        }
+    ]
+
+    res = payout_engine.create_payout_batch_cents(
+        payout_id="PO-PART-001",
+        seller_id="SELL-INR-02",
+        batch_date=batch_dt,
+        eligible_items=items,
+        seller_status="ACTIVE",
+    )
+
+    header = res["header"]
+    assert header["gross_sales_cents"] == 500000
+    assert header["refunds_cents"] == 25000
+    assert header["net_payout_cents"] == expected_net
+    assert header["reconciliation_status"] == "MATCHED"
+
+
+def test_inr_multi_seller_order_payout_separation(engines):
+    """
+    Mandatory Test Fixture 4: Multiple Sellers in a Single Order
+    Verifying that each seller receives only their own eligible financial amounts.
+    Order total: ₹10,000.00
+      - Seller A: ₹6,000.00 (Line 1) -> 10% comm (₹600) -> Net: ₹5,400.00
+      - Seller B: ₹4,000.00 (Line 2) -> 12% comm (₹480) -> Net: ₹3,520.00
+    """
+    _, payout_engine = engines
+    batch_dt = datetime(2026, 7, 10, 10, 0, 0)
+
+    # Batch for Seller A
+    batch_a = payout_engine.create_payout_batch_cents(
+        payout_id="PO-SELLER-A",
+        seller_id="SELL-AAA",
+        batch_date=batch_dt,
+        eligible_items=[{
+            "order_line_id": "ORDLN-MULTI-01",
+            "gross_amount_cents": 600000,
+            "commission_cents": 60000,
+        }],
+        seller_status="ACTIVE",
+    )
+
+    # Batch for Seller B
+    batch_b = payout_engine.create_payout_batch_cents(
+        payout_id="PO-SELLER-B",
+        seller_id="SELL-BBB",
+        batch_date=batch_dt,
+        eligible_items=[{
+            "order_line_id": "ORDLN-MULTI-02",
+            "gross_amount_cents": 400000,
+            "commission_cents": 48000,
+        }],
+        seller_status="ACTIVE",
+    )
+
+    assert batch_a["header"]["seller_id"] == "SELL-AAA"
+    assert batch_a["header"]["gross_sales_cents"] == 600000
+    assert batch_a["header"]["net_payout_cents"] == 540000
+
+    assert batch_b["header"]["seller_id"] == "SELL-BBB"
+    assert batch_b["header"]["gross_sales_cents"] == 400000
+    assert batch_b["header"]["net_payout_cents"] == 352000
+
+    # Sum of gross across independent payouts equals total multi-seller order amount
+    assert batch_a["header"]["gross_sales_cents"] + batch_b["header"]["gross_sales_cents"] == 1000000
+
+
+def test_inr_finalized_dispute_deducted_exactly_once(engines):
+    """
+    Mandatory Test Fixture 5: Finalized Dispute Deducted Exactly Once
+    Lost dispute of ₹1,500.00 must be deducted in the first eligible payout,
+    and attempting to deduct the same dispute in another line raises DoubleDeductionError.
+    """
+    _, payout_engine = engines
+    batch_dt = datetime(2026, 7, 10, 10, 0, 0)
+
+    item1 = {
+        "order_line_id": "ORDLN-DSP-01",
+        "dispute_id": "DSP-INR-DED-01",
+        "gross_amount_cents": 800000,
+        "commission_cents": 80000,
+        "dispute_cents": 150000,  # ₹1,500.00 finalized lost dispute
+    }
+
+    batch1 = payout_engine.create_payout_batch_cents(
+        payout_id="PO-DSP-BATCH-01",
+        seller_id="SELL-DISPUTE-01",
+        batch_date=batch_dt,
+        eligible_items=[item1],
+        seller_status="ACTIVE",
+    )
+    assert batch1["header"]["disputes_cents"] == 150000
+    assert batch1["header"]["net_payout_cents"] == 800000 - 80000 - 150000
+
+    # Second batch attempting to deduct the same dispute ID raises DoubleDeductionError
+    with pytest.raises(DoubleDeductionError):
+        payout_engine.create_payout_batch_cents(
+            payout_id="PO-DSP-BATCH-02",
+            seller_id="SELL-DISPUTE-01",
+            batch_date=batch_dt + timedelta(days=7),
+            eligible_items=[{
+                "order_line_id": "ORDLN-DSP-02",
+                "dispute_id": "DSP-INR-DED-01",  # Same dispute ID
+                "gross_amount_cents": 800000,
+                "commission_cents": 80000,
+                "dispute_cents": 150000,
+            }],
+            seller_status="ACTIVE",
+        )

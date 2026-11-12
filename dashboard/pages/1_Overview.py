@@ -11,6 +11,7 @@ from dashboard.theme import (
     render_page_header,
     render_empty_state,
     apply_plotly_white_layout,
+    format_inr_rupees,
     COLORS,
 )
 
@@ -99,11 +100,11 @@ with c4:
 st.markdown("#### Financial Settlements & Reconciliation")
 c5, c6, c7, c8 = st.columns(4)
 with c5:
-    render_metric_card("Total Commissions", f"${tot_comm:,.2f}", f"Take Rate: {(tot_comm/total_gmv*100):.2f}%" if total_gmv > 0 else "0.0%")
+    render_metric_card("Total Commissions", format_inr_rupees(tot_comm), f"Take Rate: {(tot_comm/total_gmv*100):.2f}%" if total_gmv > 0 else "0.0%")
 with c6:
-    render_metric_card("Paid Payouts", f"${paid_payouts:,.2f}", f"{paid_count:,} Disbursed Batches")
+    render_metric_card("Paid Payouts", format_inr_rupees(paid_payouts), f"{paid_count:,} Disbursed Batches")
 with c7:
-    render_metric_card("Pending Payouts", f"${pending_payouts:,.2f}", f"{pending_count:,} Batches Held/Pending", delta_color="warning" if pending_count > 0 else "neutral")
+    render_metric_card("Pending Payouts", format_inr_rupees(pending_payouts), f"{pending_count:,} Batches Held/Pending", delta_color="warning" if pending_count > 0 else "neutral")
 with c8:
     render_metric_card("Reconciliation Status", f"{recon_disc} Variances", "1,943 Matched | 20 Flagged (Anomaly 5)", delta_color="danger" if recon_disc > 0 else "success")
 
@@ -129,7 +130,7 @@ with col_trend:
         y="monthly_gmv",
         markers=True,
         color_discrete_sequence=[COLORS["primary"]],
-        labels={"month": "Month", "monthly_gmv": "Gross Sales ($)"},
+        labels={"month": "Month", "monthly_gmv": "Gross Sales (₹)"},
     )
     apply_plotly_white_layout(fig_trend)
     st.plotly_chart(fig_trend, use_container_width=True)

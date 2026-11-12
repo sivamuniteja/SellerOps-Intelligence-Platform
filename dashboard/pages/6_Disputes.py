@@ -10,6 +10,7 @@ from dashboard.theme import (
     render_page_header,
     render_empty_state,
     apply_plotly_white_layout,
+    format_inr_rupees,
     COLORS,
 )
 
@@ -49,7 +50,7 @@ c1, c2, c3, c4, c5 = st.columns(5)
 with c1:
     render_metric_card("Total Disputes", f"{tot_d:,}", "Dispute Volume")
 with c2:
-    render_metric_card("Total Disputed Value", f"${tot_val:,.2f}", "Gross Claim Exposure")
+    render_metric_card("Total Disputed Value", format_inr_rupees(tot_val), "Gross Claim Exposure")
 with c3:
     render_metric_card("Platform Loss Rate", f"{loss_r:.1f}%", "Buyer Favor / CB Lost", delta_color="warning" if loss_r > 35 else "neutral")
 with c4:
@@ -232,7 +233,7 @@ st.subheader("🔍 Dispute Deep-Dive & Adjudication Audit Trail")
 
 if not disputes_df.empty:
     disp_options = [
-        f"{r['dispute_id']} — {r['dispute_reason']} (${r['disputed_amount_dollars']:.2f}, {r['dispute_status']})"
+        f"{r['dispute_id']} — {r['dispute_reason']} ({format_inr_rupees(r['disputed_amount_dollars'])}, {r['dispute_status']})"
         for r in disputes_df.head(50).to_dict(orient="records")
     ]
     selected_disp_str = st.selectbox("Select Dispute for Claim Adjudication History", disp_options)
@@ -268,7 +269,7 @@ if not disputes_df.empty:
             delta_color="danger" if disp_rec["dispute_status"] in ["RESOLVED_BUYER_FAVOR", "CHARGEBACK_LOST"] else "neutral"
         )
     with c_d3:
-        render_metric_card("Disputed Value", f"${disp_rec['disputed_dollars']:.2f}", f"Seller: {disp_rec['seller_name']}")
+        render_metric_card("Disputed Value", format_inr_rupees(disp_rec['disputed_dollars']), f"Seller: {disp_rec['seller_name']}")
     with c_d4:
         is_unclaw = disp_rec["dispute_status"] in ["RESOLVED_BUYER_FAVOR", "CHARGEBACK_LOST"] and disp_rec["clawback_applied"] == 0
         render_metric_card(

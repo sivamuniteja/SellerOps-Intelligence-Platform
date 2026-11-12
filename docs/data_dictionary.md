@@ -66,7 +66,7 @@ Catalog products published by merchants.
 | `seller_id` | VARCHAR(32) | NO (FK) | References `sellers(seller_id)`. |
 | `title` | VARCHAR(256) | NO | Product title. |
 | `category` | VARCHAR(64) | NO | Category (e.g. `Electronics`, `Home & Kitchen`). |
-| `price_cents` | INTEGER | NO | Unit price in integer cents ($> 0$). |
+| `price_cents` | INTEGER | NO | Unit price in integer paise ($> 0$). |
 | `inventory_count` | INTEGER | NO | Available inventory count ($\ge 0$). |
 | `status` | VARCHAR(32) | NO | `ACTIVE`, `OUT_OF_STOCK`, `SUSPENDED`, `ARCHIVED`. |
 | `created_at` | TEXT | NO | Listing publication date. |
@@ -82,8 +82,8 @@ Category and tier fee policy matrix.
 | `category` | VARCHAR(64) | NO | Target product category. |
 | `seller_tier` | VARCHAR(32) | NO | Target merchant tier. |
 | `base_rate_basis_points` | INTEGER | NO | Percentage in basis points ($800 = 8.00\%$). |
-| `min_commission_cents` | INTEGER | NO | Minimum commission floor in cents ($50 = \$0.50$). |
-| `fixed_fee_cents` | INTEGER | NO | Fixed per-order processing charge in cents ($30 = \$0.30$). |
+| `min_commission_cents` | INTEGER | NO | Minimum commission floor in paise ($50 = ₹0.50$). |
+| `fixed_fee_cents` | INTEGER | NO | Fixed per-order processing charge in paise ($30 = ₹0.30$). |
 | `effective_from` | TEXT | NO | Rule start date. |
 | `effective_to` | TEXT | NO | Rule expiration date. |
 | `is_active` | INTEGER | NO | Active status flag (`0` or `1`). |
@@ -98,8 +98,8 @@ Order transaction headers (supports multi-seller baskets).
 | `order_id` | VARCHAR(32) | NO (PK) | Format: `ORD-2026-000001`. |
 | `customer_id` | VARCHAR(32) | NO (FK) | References `customers(customer_id)`. |
 | `order_date` | TEXT | NO | Purchase placement timestamp. |
-| `total_amount_cents` | INTEGER | NO | Aggregate order gross total in cents. |
-| `currency` | VARCHAR(8) | NO | Currency code (`USD`). |
+| `total_amount_cents` | INTEGER | NO | Aggregate order gross total in integer paise. |
+| `currency` | VARCHAR(8) | NO | Currency code (`INR`). |
 | `payment_method` | VARCHAR(32) | NO | Payment instrument (e.g. `CREDIT_CARD`). |
 | `order_status` | VARCHAR(32) | NO | `PLACED`, `CONFIRMED`, `PARTIALLY_SHIPPED`, `SHIPPED`, `DELIVERED`, `CANCELLED`, `RETURNED`. |
 | `created_at` | TEXT | NO | Creation timestamp. |

@@ -57,12 +57,12 @@ Historical events are append-only and never overwritten:
 - `dispute_events`: Dispute adjudication audit trail (`BUYER`, `SELLER`, `ARBITRATOR`, `SYSTEM`).
 - `payout_events`: Banking gateway disbursement attempts and webhooks.
 
-### 2.4 Absolute Financial Precision (Integer Cents / Paise)
+### 2.4 Absolute Financial Precision (Integer Paise / Minor Units)
 All currency values are stored as 64-bit signed integers (`*_cents INTEGER NOT NULL`), eliminating IEEE 754 floating-point drift:
-- \$10.50 is stored as `1050`.
+- ₹10.50 is stored as `1050` paise.
 - Rate basis points: 1 basis point = 0.01% (e.g. 800 basis points = 8.00%).
 - Full double-entry balance check:
-  $$\text{Gross Cents} = \text{Commission Cents} + \text{Reserve Cents} + \text{Net Seller Cents}$$
+  $$\text{Gross Paise} = \text{Commission Paise} + \text{Reserve Paise} + \text{Net Seller Paise}$$
 
 ---
 
