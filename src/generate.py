@@ -44,11 +44,13 @@ def run_pipeline(
     target_mode: str = "starter",
     db_path: Optional[str] = None,
     seed: Optional[int] = None,
+    inject_anomalies: bool = True,
 ) -> Dict[str, Any]:
     """
     Execute full synthetic marketplace data generation pipeline.
     target_mode: 'starter' (50 sellers, 500 listings, 2,000 orders, 200 disputes)
                  'full' (2,000 sellers, 20,000 listings, 100,000 orders, 10,000 disputes)
+    inject_anomalies: True to inject controlled anomalies (Workflow B), False for baseline (Workflow A).
     """
     start_time = time.time()
     config = load_config()
@@ -69,6 +71,7 @@ def run_pipeline(
     print(f"🚀 Launching SellerOps Synthetic Pipeline [{target_mode.upper()} MODE]")
     print(f"Target DB: {db_path}")
     print(f"Deterministic Seed: {chosen_seed}")
+    print(f"Workflow: {'Controlled Anomaly Injection (Workflow B)' if inject_anomalies else 'Clean Baseline (Workflow A)'}")
     print(f"Targets: {target_cfg.sellers} sellers, {target_cfg.listings} listings, {target_cfg.orders} orders, {target_cfg.disputes} disputes")
     print(f"=======================================================\n")
 
@@ -85,7 +88,10 @@ def run_pipeline(
     customers = generate_customers(target_cfg.customers, seed=chosen_seed)
 
     # 3. Product Listings (+ Anomaly 3)
-    ano3_count = 5 if target_mode == "starter" else 20
+    if inject_anomalies:
+        ano3_count = 5 if target_mode == "starter" else 20
+    else:
+        ano3_count = 0
     print(f"[-] 3/14 Generating {target_cfg.listings} product listings...")
     listings, ano3 = generate_listings(target_cfg.listings, sellers, config, seed=chosen_seed, anomaly_count=ano3_count)
 
@@ -107,14 +113,22 @@ def run_pipeline(
     reviews = generate_reviews(order_lines, orders, fulfillments, seed=chosen_seed)
 
     # 10. Disputes & Events (+ Anomaly 4)
-    ano4_count = 5 if target_mode == "starter" else 25
+    if inject_anomalies:
+        ano4_count = 5 if target_mode == "starter" else 25
+    else:
+        ano4_count = 0
     print(f"[-] 10/14 Generating {target_cfg.disputes} disputes & adjudication events...")
     disputes, disp_events, ano4 = generate_disputes(target_cfg.disputes, order_lines, orders, seed=chosen_seed, anomaly_count=ano4_count)
 
     # 11, 12, 13, 14. Ledgers, Payouts & Payout Lines (+ Anomalies 1, 2, 5)
-    ano1_count = 5 if target_mode == "starter" else 25
-    ano2_count = 5 if target_mode == "starter" else 25
-    ano5_count = 5 if target_mode == "starter" else 20
+    if inject_anomalies:
+        ano1_count = 5 if target_mode == "starter" else 25
+        ano2_count = 5 if target_mode == "starter" else 25
+        ano5_count = 5 if target_mode == "starter" else 20
+    else:
+        ano1_count = 0
+        ano2_count = 0
+        ano5_count = 0
     print(f"[-] 11-14/14 Generating ledgers, payout batches & events...")
     cml_entries, rsv_entries, payouts, payout_lines, po_events, ano125 = generate_settlements_and_payouts(
         order_lines=order_lines,

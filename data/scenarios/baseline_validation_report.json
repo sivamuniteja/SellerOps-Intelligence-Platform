@@ -1,0 +1,126 @@
+{
+  "metadata": {
+    "report_timestamp": "2026-11-12T22:25:30.340982",
+    "database_path": "data/scenarios/sellerops_baseline.db",
+    "total_checks_evaluated": 14,
+    "passed_checks_count": 14,
+    "failed_checks_count": 0,
+    "core_integrity_valid": true
+  },
+  "validation_dimensions": {
+    "primary_key_uniqueness": {
+      "passed": true,
+      "violations_count": 0,
+      "details": []
+    },
+    "foreign_key_integrity": {
+      "passed": true,
+      "violations_count": 0,
+      "details": []
+    },
+    "id_formats": {
+      "passed": true,
+      "violations_count": 0,
+      "details": []
+    },
+    "required_values": {
+      "passed": true,
+      "violations_count": 0,
+      "details": []
+    },
+    "enum_validation": {
+      "passed": true,
+      "violations_count": 0,
+      "details": []
+    },
+    "date_ordering": {
+      "passed": true,
+      "violations_count": 0,
+      "details": {
+        "fulfillment_chronology": [],
+        "dispute_chronology": [],
+        "reserve_hold_chronology": []
+      }
+    },
+    "order_total_reconciliation": {
+      "passed": true,
+      "discrepancy_count": 0,
+      "details": []
+    },
+    "commission_correctness": {
+      "passed": true,
+      "discrepancy_count": 0,
+      "details": []
+    },
+    "reserve_reconciliation": {
+      "passed": true,
+      "discrepancy_count": 0,
+      "details": []
+    },
+    "dispute_deductions": {
+      "passed": true,
+      "discrepancy_count": 0,
+      "details": []
+    },
+    "payout_reconciliation": {
+      "passed": true,
+      "discrepancy_count": 0,
+      "details": []
+    },
+    "duplicate_detection": {
+      "passed": true,
+      "violations_count": 0,
+      "details": []
+    },
+    "lifecycle_transitions": {
+      "passed": true,
+      "violations_count": 0,
+      "details": []
+    },
+    "reproducibility": {
+      "passed": true,
+      "table_hashes": {
+        "sellers": "1cbd94b542c6d7602d3bd29c65d9b1d2",
+        "customers": "7af37ceaaca0ac79ccc08fb6287927c6",
+        "listings": "a04cdf4b262d33854f52ac32dfcedc56",
+        "orders": "5e51e4842f688ba4790da5cee6d4de15",
+        "order_lines": "bbfe2fc25fa10f66742674d95ae03f2d",
+        "fulfillments": "fade680b37763de12ee94cbaae0b6e48"
+      }
+    }
+  },
+  "anomaly_detection": {
+    "summary": {
+      "total_anomalies_detected": 0,
+      "anomaly_1_count": 0,
+      "anomaly_2_count": 0,
+      "anomaly_3_count": 0,
+      "anomaly_4_count": 0,
+      "anomaly_5_count": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "false_positives": 0,
+      "false_negatives": 0
+    },
+    "benchmark": {
+      "ground_truth_total": 0,
+      "detected_total": 0,
+      "true_positives": 0,
+      "false_positives": 0,
+      "false_negatives": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1_score": 1.0,
+      "scenarios": {}
+    },
+    "detected_scenarios": {
+      "premature_payouts_count": 0,
+      "double_commissions_count": 0,
+      "suspended_seller_activity_count": 0,
+      "unclawbacked_disputes_count": 0,
+      "payout_total_mismatches_count": 0
+    },
+    "all_detected_records": []
+  }
+}
