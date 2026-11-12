@@ -47,15 +47,207 @@ CUSTOM_CSS = """
         color: #111827 !important;
     }
     
+    /* Top-Left Hamburger Toggle Button (Collapsed State) */
+    [data-testid="stSidebarCollapsedControl"] {
+        position: fixed !important;
+        top: 14px !important;
+        left: 18px !important;
+        z-index: 100000 !important;
+        display: block !important;
+        visibility: visible !important;
+    }
+    
+    [data-testid="stSidebarCollapsedControl"] button,
+    [data-testid="stSidebarCollapsedControl"] [kind="headerNoPadding"] {
+        width: 38px !important;
+        height: 38px !important;
+        min-width: 38px !important;
+        border-radius: 8px !important;
+        background-color: #FFFFFF !important;
+        border: 1px solid #E2E8F0 !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        cursor: pointer !important;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        padding: 0 !important;
+    }
+    
+    [data-testid="stSidebarCollapsedControl"] button:hover {
+        background-color: #F8FAFC !important;
+        border-color: #CBD5E1 !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12) !important;
+    }
+    
+    /* Hide default Streamlit SVG chevron in collapsed control */
+    [data-testid="stSidebarCollapsedControl"] svg {
+        display: none !important;
+    }
+    
+    /* Clean 3-bar hamburger icon (☰) */
+    [data-testid="stSidebarCollapsedControl"] button::before {
+        content: "☰" !important;
+        font-size: 1.45rem !important;
+        color: #111827 !important;
+        font-weight: 700 !important;
+        line-height: 1 !important;
+        display: block !important;
+    }
+    
+    /* Sidebar Header & Close Button (Expanded State) */
+    [data-testid="stSidebarCollapseButton"] button,
+    [data-testid="stSidebarCollapseButton"] [kind="headerNoPadding"] {
+        width: 34px !important;
+        height: 34px !important;
+        min-width: 34px !important;
+        border-radius: 8px !important;
+        background-color: #F8FAFC !important;
+        border: 1px solid #E2E8F0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        cursor: pointer !important;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        padding: 0 !important;
+    }
+    
+    [data-testid="stSidebarCollapseButton"] button:hover {
+        background-color: #EFF6FF !important;
+        border-color: #93C5FD !important;
+    }
+    
+    /* Hide default Streamlit left chevron SVG in collapse button */
+    [data-testid="stSidebarCollapseButton"] svg {
+        display: none !important;
+    }
+    
+    /* Close toggle icon */
+    [data-testid="stSidebarCollapseButton"] button::before {
+        content: "✕" !important;
+        font-size: 1.15rem !important;
+        color: #475569 !important;
+        font-weight: 700 !important;
+        line-height: 1 !important;
+        display: block !important;
+    }
+
+    /* Sidebar Layout - Full Height, Solid White & Flexbox Order */
     [data-testid="stSidebar"] {
         background-color: #FFFFFF !important;
         border-right: 1px solid #E2E8F0 !important;
+        height: 100vh !important;
+        max-height: 100vh !important;
+        box-shadow: 2px 0 8px rgba(0, 0, 0, 0.02) !important;
     }
 
     [data-testid="stSidebar"] * {
         color: #111827 !important;
     }
     
+    [data-testid="stSidebarContent"] {
+        display: flex !important;
+        flex-direction: column !important;
+        height: 100vh !important;
+        max-height: 100vh !important;
+        overflow: hidden !important;
+        padding: 0 !important;
+        background-color: #FFFFFF !important;
+    }
+
+    /* Order 0: Sidebar Header containing collapse button */
+    [data-testid="stSidebarHeader"] {
+        order: 0 !important;
+        display: flex !important;
+        justify-content: flex-end !important;
+        align-items: center !important;
+        padding: 14px 18px 4px 18px !important;
+        margin: 0 !important;
+        background-color: #FFFFFF !important;
+    }
+
+    /* Order 1: SellerOps Platform Branding at the TOP of the Sidebar */
+    [data-testid="stSidebarUserContent"] {
+        order: 1 !important;
+        padding: 0 16px 4px 16px !important;
+        margin: 0 !important;
+        flex-shrink: 0 !important;
+        background-color: #FFFFFF !important;
+    }
+
+    /* Order 2: Navigation Menu below application branding */
+    [data-testid="stSidebarNav"] {
+        order: 2 !important;
+        flex: 1 1 auto !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        padding: 4px 12px 24px 12px !important;
+        background-color: #FFFFFF !important;
+    }
+
+    /* Expand all navigation items without 'View more / View less' truncation */
+    [data-testid="stSidebarNavItems"] {
+        max-height: none !important;
+        gap: 3px !important;
+    }
+
+    [data-testid="stSidebarNavViewButton"] {
+        display: none !important;
+    }
+
+    /* Navigation links typography and active state */
+    [data-testid="stSidebarNavLink"] {
+        border-radius: 6px !important;
+        padding: 8px 12px !important;
+        margin: 2px 0 !important;
+        transition: background-color 0.15s ease, color 0.15s ease !important;
+        font-weight: 500 !important;
+        font-size: 0.88rem !important;
+        color: #334155 !important;
+    }
+
+    [data-testid="stSidebarNavLink"]:hover {
+        background-color: #F8FAFC !important;
+        color: #111827 !important;
+    }
+
+    [data-testid="stSidebarNavLink"][aria-current="page"] {
+        background-color: #EFF6FF !important;
+        color: #2563EB !important;
+        font-weight: 600 !important;
+        border-left: 3px solid #2563EB !important;
+    }
+
+    /* Standardize first nav item (app.py) label */
+    [data-testid="stSidebarNav"] li:first-child [data-testid="stSidebarNavLink"] span {
+        font-size: 0 !important;
+    }
+    [data-testid="stSidebarNav"] li:first-child [data-testid="stSidebarNavLink"] span::after {
+        content: "Platform Hub" !important;
+        font-size: 0.88rem !important;
+        font-weight: 600 !important;
+    }
+    
+    /* Main Content Area - Center Aligned Safe Area */
+    .main .block-container,
+    [data-testid="stAppViewBlockContainer"] {
+        max-width: 1440px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        padding-top: 2rem !important;
+        padding-bottom: 3.5rem !important;
+        padding-left: 2.25rem !important;
+        padding-right: 2.25rem !important;
+        box-sizing: border-box !important;
+        transition: max-width 0.25s ease, padding 0.25s ease !important;
+    }
+
+    /* Header Bar */
+    [data-testid="stHeader"] {
+        background-color: transparent !important;
+        border-bottom: none !important;
+    }
+
     html, body, p, span, div, label, li {
         color: #111827 !important;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", Helvetica, Arial, sans-serif !important;
@@ -67,13 +259,37 @@ CUSTOM_CSS = """
         letter-spacing: -0.02em !important;
     }
 
+    /* Responsive KPI Row and Column Wrap */
+    [data-testid="stHorizontalBlock"] {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 14px !important;
+        align-items: stretch !important;
+    }
+
+    [data-testid="stColumn"] {
+        flex: 1 1 185px !important;
+        min-width: 175px !important;
+        box-sizing: border-box !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+    [data-testid="stColumn"] > div {
+        flex-grow: 1 !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+    [data-testid="stColumn"] .metric-card {
+        flex: 1 1 auto !important;
+    }
+
     /* Enterprise Metric Card */
     .metric-card {
         background-color: #FFFFFF;
         border: 1px solid #E2E8F0;
         border-radius: 8px;
         padding: 16px 18px;
-        margin-bottom: 16px;
+        margin-bottom: 12px;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
         transition: transform 0.15s ease, box-shadow 0.15s ease;
         height: 100%;
@@ -91,29 +307,33 @@ CUSTOM_CSS = """
         margin-bottom: 6px;
     }
     .metric-title {
-        font-size: 0.78rem;
+        font-size: 0.74rem;
         font-weight: 600;
         color: #64748B !important;
         text-transform: uppercase;
         letter-spacing: 0.05em;
         line-height: 1.35;
         white-space: normal;
-        word-break: break-word;
+        word-break: normal;
+        overflow-wrap: normal;
     }
     .metric-value-container {
         flex-grow: 1;
         display: flex;
         align-items: center;
         margin: 4px 0;
+        overflow: hidden;
     }
     .metric-value {
-        font-size: clamp(1.15rem, 1.85vw, 1.65rem);
+        font-size: clamp(1.05rem, 1.35vw, 1.45rem) !important;
         font-weight: 700;
         color: #111827 !important;
-        line-height: 1.2;
-        word-break: break-word;
-        overflow-wrap: anywhere;
-        white-space: normal;
+        line-height: 1.25 !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        word-break: keep-all !important;
+        overflow-wrap: normal !important;
     }
     .metric-subtitle {
         font-size: 0.80rem;
@@ -124,21 +344,7 @@ CUSTOM_CSS = """
         gap: 6px;
         flex-wrap: wrap;
         line-height: 1.35;
-        word-break: break-word;
-    }
-
-    /* Column card alignment */
-    [data-testid="column"] {
-        display: flex;
-        flex-direction: column;
-    }
-    [data-testid="column"] > div {
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-    }
-    [data-testid="column"] .metric-card {
-        flex: 1 1 auto;
+        word-break: normal;
     }
     
     /* Status Badges */
@@ -253,6 +459,32 @@ CUSTOM_CSS = """
     /* Clean Streamlit elements */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
+
+    /* Mobile Responsive Rules */
+    @media (max-width: 768px) {
+        [data-testid="stSidebar"] {
+            width: 100vw !important;
+            max-width: 320px !important;
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            height: 100vh !important;
+            z-index: 1000000 !important;
+            box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15) !important;
+        }
+        
+        .main .block-container,
+        [data-testid="stAppViewBlockContainer"] {
+            padding-left: 1.2rem !important;
+            padding-right: 1.2rem !important;
+            padding-top: 4.2rem !important;
+        }
+        
+        [data-testid="stColumn"] {
+            flex: 1 1 100% !important;
+            min-width: 100% !important;
+        }
+    }
 </style>
 """
 
@@ -270,16 +502,16 @@ def get_database():
 
 
 def render_sidebar_branding():
-    """Render standardized platform branding in the sidebar."""
+    """Render standardized platform branding at the top of the sidebar."""
     with st.sidebar:
         st.markdown(
             """
-            <div style="padding: 12px 0 20px 0; border-bottom: 1px solid #E2E8F0; margin-bottom: 16px;">
-                <div style="display: flex; align-items: center; gap: 8px;">
-                    <div style="background-color: #2563EB; width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 16px;">⚡</div>
-                    <div>
-                        <div style="font-weight: 700; font-size: 1.15rem; color: #111827; line-height: 1.2;">SellerOps</div>
-                        <div style="font-size: 0.72rem; color: #64748B; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em;">Intelligence Platform</div>
+            <div class="sidebar-brand-card" style="padding: 6px 4px 14px 4px; border-bottom: 1px solid #E2E8F0; margin-bottom: 10px;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="background-color: #2563EB; width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 18px; box-shadow: 0 2px 4px rgba(37,99,235,0.25); flex-shrink: 0;">⚡</div>
+                    <div style="display: flex; flex-direction: column;">
+                        <div style="font-weight: 700; font-size: 1.15rem; color: #111827; line-height: 1.15; letter-spacing: -0.01em;">SellerOps</div>
+                        <div style="font-size: 0.65rem; color: #64748B; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; line-height: 1.2; margin-top: 2px;">INTELLIGENCE PLATFORM</div>
                     </div>
                 </div>
             </div>

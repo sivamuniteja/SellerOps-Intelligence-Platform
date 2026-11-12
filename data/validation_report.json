@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "report_timestamp": "2026-11-13T00:16:14.737826",
+    "report_timestamp": "2026-11-13T00:44:06.080448",
     "database_path": "data/sellerops.db",
     "total_checks_evaluated": 14,
     "passed_checks_count": 11,
@@ -372,6 +372,24 @@
           "clawback_applied": 0
         },
         {
+          "dispute_id": "DSP-2026-000016",
+          "order_id": "ORD-2026-014727",
+          "order_line_id": "ORDLN-2026-014727-02",
+          "seller_id": "SELL-001476",
+          "disputed_amount_cents": 6546,
+          "dispute_status": "CHARGEBACK_LOST",
+          "clawback_applied": 0
+        },
+        {
+          "dispute_id": "DSP-2026-000018",
+          "order_id": "ORD-2026-022379",
+          "order_line_id": "ORDLN-2026-022379-01",
+          "seller_id": "SELL-001927",
+          "disputed_amount_cents": 5711,
+          "dispute_status": "CHARGEBACK_LOST",
+          "clawback_applied": 0
+        },
+        {
           "dispute_id": "DSP-2026-000007",
           "order_id": "ORD-2026-005448",
           "order_line_id": "ORDLN-2026-005448-01",
@@ -426,30 +444,12 @@
           "clawback_applied": 0
         },
         {
-          "dispute_id": "DSP-2026-000016",
-          "order_id": "ORD-2026-014727",
-          "order_line_id": "ORDLN-2026-014727-02",
-          "seller_id": "SELL-001476",
-          "disputed_amount_cents": 6546,
-          "dispute_status": "CHARGEBACK_LOST",
-          "clawback_applied": 0
-        },
-        {
           "dispute_id": "DSP-2026-000017",
           "order_id": "ORD-2026-006656",
           "order_line_id": "ORDLN-2026-006656-01",
           "seller_id": "SELL-000970",
           "disputed_amount_cents": 3438,
           "dispute_status": "RESOLVED_BUYER_FAVOR",
-          "clawback_applied": 0
-        },
-        {
-          "dispute_id": "DSP-2026-000018",
-          "order_id": "ORD-2026-022379",
-          "order_line_id": "ORDLN-2026-022379-01",
-          "seller_id": "SELL-001927",
-          "disputed_amount_cents": 5711,
-          "dispute_status": "CHARGEBACK_LOST",
           "clawback_applied": 0
         },
         {
@@ -1883,7 +1883,7 @@
       },
       {
         "scenario_id": "SCENARIO-3",
-        "entity_id": "LIST-SELL-000025-000001",
+        "entity_id": "LIST-SELL-001739-000001",
         "entity_type": "LISTING",
         "issue_type": "SUSPENDED_SELLER_ACTIVE",
         "ground_truth_label": "ANOMALY_3_SUSPENDED_SELLER_ACTIVE",
@@ -1892,18 +1892,18 @@
         "actual_detection_result": "DETECTED_ANOMALY",
         "severity": "CRITICAL",
         "details": {
-          "seller_id": "SELL-000025",
-          "seller_name": "Mcdonald-Richard 41",
+          "seller_id": "SELL-001739",
+          "seller_name": "King PLC 67",
           "seller_status": "SUSPENDED",
-          "listing_id": "LIST-SELL-000025-000001",
-          "listing_title": "Polarized Classic Sunglasses UV400 - Series 788",
+          "listing_id": "LIST-SELL-001739-000001",
+          "listing_title": "World History Illustrated Almanac - Series 389",
           "listing_status": "ACTIVE"
         },
-        "description": "Listing LIST-SELL-000025-000001 ('Polarized Classic Sunglasses UV400 - Series 788') remains ACTIVE while seller SELL-000025 is SUSPENDED."
+        "description": "Listing LIST-SELL-001739-000001 ('World History Illustrated Almanac - Series 389') remains ACTIVE while seller SELL-001739 is SUSPENDED."
       },
       {
         "scenario_id": "SCENARIO-3",
-        "entity_id": "LIST-SELL-000085-000001",
+        "entity_id": "LIST-SELL-001631-000001",
         "entity_type": "LISTING",
         "issue_type": "SUSPENDED_SELLER_ACTIVE",
         "ground_truth_label": "ANOMALY_3_SUSPENDED_SELLER_ACTIVE",
@@ -1912,18 +1912,18 @@
         "actual_detection_result": "DETECTED_ANOMALY",
         "severity": "CRITICAL",
         "details": {
-          "seller_id": "SELL-000085",
-          "seller_name": "Wolf LLC 77",
+          "seller_id": "SELL-001631",
+          "seller_name": "Barnes PLC 73",
           "seller_status": "SUSPENDED",
-          "listing_id": "LIST-SELL-000085-000001",
-          "listing_title": "Programmable Digital Air Fryer 5.8Qt - Series 363",
+          "listing_id": "LIST-SELL-001631-000001",
+          "listing_title": "Fast Wireless Charging Dock 3-in-1 - Series 626",
           "listing_status": "ACTIVE"
         },
-        "description": "Listing LIST-SELL-000085-000001 ('Programmable Digital Air Fryer 5.8Qt - Series 363') remains ACTIVE while seller SELL-000085 is SUSPENDED."
+        "description": "Listing LIST-SELL-001631-000001 ('Fast Wireless Charging Dock 3-in-1 - Series 626') remains ACTIVE while seller SELL-001631 is SUSPENDED."
       },
       {
         "scenario_id": "SCENARIO-3",
-        "entity_id": "LIST-SELL-000129-000001",
+        "entity_id": "LIST-SELL-000836-000001",
         "entity_type": "LISTING",
         "issue_type": "SUSPENDED_SELLER_ACTIVE",
         "ground_truth_label": "ANOMALY_3_SUSPENDED_SELLER_ACTIVE",
@@ -1932,14 +1932,14 @@
         "actual_detection_result": "DETECTED_ANOMALY",
         "severity": "CRITICAL",
         "details": {
-          "seller_id": "SELL-000129",
-          "seller_name": "Burton LLC 89",
+          "seller_id": "SELL-000836",
+          "seller_name": "Davis and Sons 93",
           "seller_status": "SUSPENDED",
-          "listing_id": "LIST-SELL-000129-000001",
-          "listing_title": "Classic Premium Cotton Crewneck Tee - Series 543",
+          "listing_id": "LIST-SELL-000836-000001",
+          "listing_title": "Hardcover Collector Edition Best-Seller - Series 721",
           "listing_status": "ACTIVE"
         },
-        "description": "Listing LIST-SELL-000129-000001 ('Classic Premium Cotton Crewneck Tee - Series 543') remains ACTIVE while seller SELL-000129 is SUSPENDED."
+        "description": "Listing LIST-SELL-000836-000001 ('Hardcover Collector Edition Best-Seller - Series 721') remains ACTIVE while seller SELL-000836 is SUSPENDED."
       },
       {
         "scenario_id": "SCENARIO-3",
@@ -1983,7 +1983,7 @@
       },
       {
         "scenario_id": "SCENARIO-3",
-        "entity_id": "LIST-SELL-000592-000001",
+        "entity_id": "LIST-SELL-001597-000001",
         "entity_type": "LISTING",
         "issue_type": "SUSPENDED_SELLER_ACTIVE",
         "ground_truth_label": "ANOMALY_3_SUSPENDED_SELLER_ACTIVE",
@@ -1992,94 +1992,14 @@
         "actual_detection_result": "DETECTED_ANOMALY",
         "severity": "CRITICAL",
         "details": {
-          "seller_id": "SELL-000592",
-          "seller_name": "Nelson, Martinez and Melendez 93",
+          "seller_id": "SELL-001597",
+          "seller_name": "Rodriguez-Mccormick 43",
           "seller_status": "SUSPENDED",
-          "listing_id": "LIST-SELL-000592-000001",
-          "listing_title": "Hardcover Collector Edition Best-Seller - Series 315",
+          "listing_id": "LIST-SELL-001597-000001",
+          "listing_title": "Fast Wireless Charging Dock 3-in-1 - Series 499",
           "listing_status": "ACTIVE"
         },
-        "description": "Listing LIST-SELL-000592-000001 ('Hardcover Collector Edition Best-Seller - Series 315') remains ACTIVE while seller SELL-000592 is SUSPENDED."
-      },
-      {
-        "scenario_id": "SCENARIO-3",
-        "entity_id": "LIST-SELL-000670-000001",
-        "entity_type": "LISTING",
-        "issue_type": "SUSPENDED_SELLER_ACTIVE",
-        "ground_truth_label": "ANOMALY_3_SUSPENDED_SELLER_ACTIVE",
-        "expected_result": "Suspended sellers must have all catalog listings deactivated and cannot maintain active storefront inventory.",
-        "expected_corrective_action": "Immediately transition listing status to SUSPENDED and quarantine catalog items from marketplace search.",
-        "actual_detection_result": "DETECTED_ANOMALY",
-        "severity": "CRITICAL",
-        "details": {
-          "seller_id": "SELL-000670",
-          "seller_name": "Daniels Group 40",
-          "seller_status": "SUSPENDED",
-          "listing_id": "LIST-SELL-000670-000001",
-          "listing_title": "Slim-Fit Stretch Denim Jeans - Series 147",
-          "listing_status": "ACTIVE"
-        },
-        "description": "Listing LIST-SELL-000670-000001 ('Slim-Fit Stretch Denim Jeans - Series 147') remains ACTIVE while seller SELL-000670 is SUSPENDED."
-      },
-      {
-        "scenario_id": "SCENARIO-3",
-        "entity_id": "LIST-SELL-000836-000001",
-        "entity_type": "LISTING",
-        "issue_type": "SUSPENDED_SELLER_ACTIVE",
-        "ground_truth_label": "ANOMALY_3_SUSPENDED_SELLER_ACTIVE",
-        "expected_result": "Suspended sellers must have all catalog listings deactivated and cannot maintain active storefront inventory.",
-        "expected_corrective_action": "Immediately transition listing status to SUSPENDED and quarantine catalog items from marketplace search.",
-        "actual_detection_result": "DETECTED_ANOMALY",
-        "severity": "CRITICAL",
-        "details": {
-          "seller_id": "SELL-000836",
-          "seller_name": "Davis and Sons 93",
-          "seller_status": "SUSPENDED",
-          "listing_id": "LIST-SELL-000836-000001",
-          "listing_title": "Hardcover Collector Edition Best-Seller - Series 721",
-          "listing_status": "ACTIVE"
-        },
-        "description": "Listing LIST-SELL-000836-000001 ('Hardcover Collector Edition Best-Seller - Series 721') remains ACTIVE while seller SELL-000836 is SUSPENDED."
-      },
-      {
-        "scenario_id": "SCENARIO-3",
-        "entity_id": "LIST-SELL-000913-000001",
-        "entity_type": "LISTING",
-        "issue_type": "SUSPENDED_SELLER_ACTIVE",
-        "ground_truth_label": "ANOMALY_3_SUSPENDED_SELLER_ACTIVE",
-        "expected_result": "Suspended sellers must have all catalog listings deactivated and cannot maintain active storefront inventory.",
-        "expected_corrective_action": "Immediately transition listing status to SUSPENDED and quarantine catalog items from marketplace search.",
-        "actual_detection_result": "DETECTED_ANOMALY",
-        "severity": "CRITICAL",
-        "details": {
-          "seller_id": "SELL-000913",
-          "seller_name": "Frazier LLC 21",
-          "seller_status": "SUSPENDED",
-          "listing_id": "LIST-SELL-000913-000001",
-          "listing_title": "Fast Wireless Charging Dock 3-in-1 - Series 755",
-          "listing_status": "ACTIVE"
-        },
-        "description": "Listing LIST-SELL-000913-000001 ('Fast Wireless Charging Dock 3-in-1 - Series 755') remains ACTIVE while seller SELL-000913 is SUSPENDED."
-      },
-      {
-        "scenario_id": "SCENARIO-3",
-        "entity_id": "LIST-SELL-000944-000001",
-        "entity_type": "LISTING",
-        "issue_type": "SUSPENDED_SELLER_ACTIVE",
-        "ground_truth_label": "ANOMALY_3_SUSPENDED_SELLER_ACTIVE",
-        "expected_result": "Suspended sellers must have all catalog listings deactivated and cannot maintain active storefront inventory.",
-        "expected_corrective_action": "Immediately transition listing status to SUSPENDED and quarantine catalog items from marketplace search.",
-        "actual_detection_result": "DETECTED_ANOMALY",
-        "severity": "CRITICAL",
-        "details": {
-          "seller_id": "SELL-000944",
-          "seller_name": "Lewis, Lawson and Mitchell 13",
-          "seller_status": "SUSPENDED",
-          "listing_id": "LIST-SELL-000944-000001",
-          "listing_title": "Modern Software Architecture Handbook - Series 242",
-          "listing_status": "ACTIVE"
-        },
-        "description": "Listing LIST-SELL-000944-000001 ('Modern Software Architecture Handbook - Series 242') remains ACTIVE while seller SELL-000944 is SUSPENDED."
+        "description": "Listing LIST-SELL-001597-000001 ('Fast Wireless Charging Dock 3-in-1 - Series 499') remains ACTIVE while seller SELL-001597 is SUSPENDED."
       },
       {
         "scenario_id": "SCENARIO-3",
@@ -2103,26 +2023,6 @@
       },
       {
         "scenario_id": "SCENARIO-3",
-        "entity_id": "LIST-SELL-001042-000001",
-        "entity_type": "LISTING",
-        "issue_type": "SUSPENDED_SELLER_ACTIVE",
-        "ground_truth_label": "ANOMALY_3_SUSPENDED_SELLER_ACTIVE",
-        "expected_result": "Suspended sellers must have all catalog listings deactivated and cannot maintain active storefront inventory.",
-        "expected_corrective_action": "Immediately transition listing status to SUSPENDED and quarantine catalog items from marketplace search.",
-        "actual_detection_result": "DETECTED_ANOMALY",
-        "severity": "CRITICAL",
-        "details": {
-          "seller_id": "SELL-001042",
-          "seller_name": "Sanchez and Sons 53",
-          "seller_status": "SUSPENDED",
-          "listing_id": "LIST-SELL-001042-000001",
-          "listing_title": "Ionic Hair Dryer with Diffuser - Series 154",
-          "listing_status": "ACTIVE"
-        },
-        "description": "Listing LIST-SELL-001042-000001 ('Ionic Hair Dryer with Diffuser - Series 154') remains ACTIVE while seller SELL-001042 is SUSPENDED."
-      },
-      {
-        "scenario_id": "SCENARIO-3",
         "entity_id": "LIST-SELL-001104-000001",
         "entity_type": "LISTING",
         "issue_type": "SUSPENDED_SELLER_ACTIVE",
@@ -2143,7 +2043,7 @@
       },
       {
         "scenario_id": "SCENARIO-3",
-        "entity_id": "LIST-SELL-001359-000001",
+        "entity_id": "LIST-SELL-000025-000001",
         "entity_type": "LISTING",
         "issue_type": "SUSPENDED_SELLER_ACTIVE",
         "ground_truth_label": "ANOMALY_3_SUSPENDED_SELLER_ACTIVE",
@@ -2152,14 +2052,54 @@
         "actual_detection_result": "DETECTED_ANOMALY",
         "severity": "CRITICAL",
         "details": {
-          "seller_id": "SELL-001359",
-          "seller_name": "Graves and Sons 68",
+          "seller_id": "SELL-000025",
+          "seller_name": "Mcdonald-Richard 41",
           "seller_status": "SUSPENDED",
-          "listing_id": "LIST-SELL-001359-000001",
-          "listing_title": "Hydrating Vitamin C Facial Serum 50ml - Series 107",
+          "listing_id": "LIST-SELL-000025-000001",
+          "listing_title": "Polarized Classic Sunglasses UV400 - Series 788",
           "listing_status": "ACTIVE"
         },
-        "description": "Listing LIST-SELL-001359-000001 ('Hydrating Vitamin C Facial Serum 50ml - Series 107') remains ACTIVE while seller SELL-001359 is SUSPENDED."
+        "description": "Listing LIST-SELL-000025-000001 ('Polarized Classic Sunglasses UV400 - Series 788') remains ACTIVE while seller SELL-000025 is SUSPENDED."
+      },
+      {
+        "scenario_id": "SCENARIO-3",
+        "entity_id": "LIST-SELL-001042-000001",
+        "entity_type": "LISTING",
+        "issue_type": "SUSPENDED_SELLER_ACTIVE",
+        "ground_truth_label": "ANOMALY_3_SUSPENDED_SELLER_ACTIVE",
+        "expected_result": "Suspended sellers must have all catalog listings deactivated and cannot maintain active storefront inventory.",
+        "expected_corrective_action": "Immediately transition listing status to SUSPENDED and quarantine catalog items from marketplace search.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "seller_id": "SELL-001042",
+          "seller_name": "Sanchez and Sons 53",
+          "seller_status": "SUSPENDED",
+          "listing_id": "LIST-SELL-001042-000001",
+          "listing_title": "Ionic Hair Dryer with Diffuser - Series 154",
+          "listing_status": "ACTIVE"
+        },
+        "description": "Listing LIST-SELL-001042-000001 ('Ionic Hair Dryer with Diffuser - Series 154') remains ACTIVE while seller SELL-001042 is SUSPENDED."
+      },
+      {
+        "scenario_id": "SCENARIO-3",
+        "entity_id": "LIST-SELL-000592-000001",
+        "entity_type": "LISTING",
+        "issue_type": "SUSPENDED_SELLER_ACTIVE",
+        "ground_truth_label": "ANOMALY_3_SUSPENDED_SELLER_ACTIVE",
+        "expected_result": "Suspended sellers must have all catalog listings deactivated and cannot maintain active storefront inventory.",
+        "expected_corrective_action": "Immediately transition listing status to SUSPENDED and quarantine catalog items from marketplace search.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "seller_id": "SELL-000592",
+          "seller_name": "Nelson, Martinez and Melendez 93",
+          "seller_status": "SUSPENDED",
+          "listing_id": "LIST-SELL-000592-000001",
+          "listing_title": "Hardcover Collector Edition Best-Seller - Series 315",
+          "listing_status": "ACTIVE"
+        },
+        "description": "Listing LIST-SELL-000592-000001 ('Hardcover Collector Edition Best-Seller - Series 315') remains ACTIVE while seller SELL-000592 is SUSPENDED."
       },
       {
         "scenario_id": "SCENARIO-3",
@@ -2183,6 +2123,46 @@
       },
       {
         "scenario_id": "SCENARIO-3",
+        "entity_id": "LIST-SELL-000085-000001",
+        "entity_type": "LISTING",
+        "issue_type": "SUSPENDED_SELLER_ACTIVE",
+        "ground_truth_label": "ANOMALY_3_SUSPENDED_SELLER_ACTIVE",
+        "expected_result": "Suspended sellers must have all catalog listings deactivated and cannot maintain active storefront inventory.",
+        "expected_corrective_action": "Immediately transition listing status to SUSPENDED and quarantine catalog items from marketplace search.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "seller_id": "SELL-000085",
+          "seller_name": "Wolf LLC 77",
+          "seller_status": "SUSPENDED",
+          "listing_id": "LIST-SELL-000085-000001",
+          "listing_title": "Programmable Digital Air Fryer 5.8Qt - Series 363",
+          "listing_status": "ACTIVE"
+        },
+        "description": "Listing LIST-SELL-000085-000001 ('Programmable Digital Air Fryer 5.8Qt - Series 363') remains ACTIVE while seller SELL-000085 is SUSPENDED."
+      },
+      {
+        "scenario_id": "SCENARIO-3",
+        "entity_id": "LIST-SELL-000670-000001",
+        "entity_type": "LISTING",
+        "issue_type": "SUSPENDED_SELLER_ACTIVE",
+        "ground_truth_label": "ANOMALY_3_SUSPENDED_SELLER_ACTIVE",
+        "expected_result": "Suspended sellers must have all catalog listings deactivated and cannot maintain active storefront inventory.",
+        "expected_corrective_action": "Immediately transition listing status to SUSPENDED and quarantine catalog items from marketplace search.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "seller_id": "SELL-000670",
+          "seller_name": "Daniels Group 40",
+          "seller_status": "SUSPENDED",
+          "listing_id": "LIST-SELL-000670-000001",
+          "listing_title": "Slim-Fit Stretch Denim Jeans - Series 147",
+          "listing_status": "ACTIVE"
+        },
+        "description": "Listing LIST-SELL-000670-000001 ('Slim-Fit Stretch Denim Jeans - Series 147') remains ACTIVE while seller SELL-000670 is SUSPENDED."
+      },
+      {
+        "scenario_id": "SCENARIO-3",
         "entity_id": "LIST-SELL-001586-000001",
         "entity_type": "LISTING",
         "issue_type": "SUSPENDED_SELLER_ACTIVE",
@@ -2203,7 +2183,7 @@
       },
       {
         "scenario_id": "SCENARIO-3",
-        "entity_id": "LIST-SELL-001597-000001",
+        "entity_id": "LIST-SELL-000913-000001",
         "entity_type": "LISTING",
         "issue_type": "SUSPENDED_SELLER_ACTIVE",
         "ground_truth_label": "ANOMALY_3_SUSPENDED_SELLER_ACTIVE",
@@ -2212,18 +2192,18 @@
         "actual_detection_result": "DETECTED_ANOMALY",
         "severity": "CRITICAL",
         "details": {
-          "seller_id": "SELL-001597",
-          "seller_name": "Rodriguez-Mccormick 43",
+          "seller_id": "SELL-000913",
+          "seller_name": "Frazier LLC 21",
           "seller_status": "SUSPENDED",
-          "listing_id": "LIST-SELL-001597-000001",
-          "listing_title": "Fast Wireless Charging Dock 3-in-1 - Series 499",
+          "listing_id": "LIST-SELL-000913-000001",
+          "listing_title": "Fast Wireless Charging Dock 3-in-1 - Series 755",
           "listing_status": "ACTIVE"
         },
-        "description": "Listing LIST-SELL-001597-000001 ('Fast Wireless Charging Dock 3-in-1 - Series 499') remains ACTIVE while seller SELL-001597 is SUSPENDED."
+        "description": "Listing LIST-SELL-000913-000001 ('Fast Wireless Charging Dock 3-in-1 - Series 755') remains ACTIVE while seller SELL-000913 is SUSPENDED."
       },
       {
         "scenario_id": "SCENARIO-3",
-        "entity_id": "LIST-SELL-001631-000001",
+        "entity_id": "LIST-SELL-001359-000001",
         "entity_type": "LISTING",
         "issue_type": "SUSPENDED_SELLER_ACTIVE",
         "ground_truth_label": "ANOMALY_3_SUSPENDED_SELLER_ACTIVE",
@@ -2232,14 +2212,34 @@
         "actual_detection_result": "DETECTED_ANOMALY",
         "severity": "CRITICAL",
         "details": {
-          "seller_id": "SELL-001631",
-          "seller_name": "Barnes PLC 73",
+          "seller_id": "SELL-001359",
+          "seller_name": "Graves and Sons 68",
           "seller_status": "SUSPENDED",
-          "listing_id": "LIST-SELL-001631-000001",
-          "listing_title": "Fast Wireless Charging Dock 3-in-1 - Series 626",
+          "listing_id": "LIST-SELL-001359-000001",
+          "listing_title": "Hydrating Vitamin C Facial Serum 50ml - Series 107",
           "listing_status": "ACTIVE"
         },
-        "description": "Listing LIST-SELL-001631-000001 ('Fast Wireless Charging Dock 3-in-1 - Series 626') remains ACTIVE while seller SELL-001631 is SUSPENDED."
+        "description": "Listing LIST-SELL-001359-000001 ('Hydrating Vitamin C Facial Serum 50ml - Series 107') remains ACTIVE while seller SELL-001359 is SUSPENDED."
+      },
+      {
+        "scenario_id": "SCENARIO-3",
+        "entity_id": "LIST-SELL-000129-000001",
+        "entity_type": "LISTING",
+        "issue_type": "SUSPENDED_SELLER_ACTIVE",
+        "ground_truth_label": "ANOMALY_3_SUSPENDED_SELLER_ACTIVE",
+        "expected_result": "Suspended sellers must have all catalog listings deactivated and cannot maintain active storefront inventory.",
+        "expected_corrective_action": "Immediately transition listing status to SUSPENDED and quarantine catalog items from marketplace search.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "CRITICAL",
+        "details": {
+          "seller_id": "SELL-000129",
+          "seller_name": "Burton LLC 89",
+          "seller_status": "SUSPENDED",
+          "listing_id": "LIST-SELL-000129-000001",
+          "listing_title": "Classic Premium Cotton Crewneck Tee - Series 543",
+          "listing_status": "ACTIVE"
+        },
+        "description": "Listing LIST-SELL-000129-000001 ('Classic Premium Cotton Crewneck Tee - Series 543') remains ACTIVE while seller SELL-000129 is SUSPENDED."
       },
       {
         "scenario_id": "SCENARIO-3",
@@ -2263,7 +2263,7 @@
       },
       {
         "scenario_id": "SCENARIO-3",
-        "entity_id": "LIST-SELL-001739-000001",
+        "entity_id": "LIST-SELL-000944-000001",
         "entity_type": "LISTING",
         "issue_type": "SUSPENDED_SELLER_ACTIVE",
         "ground_truth_label": "ANOMALY_3_SUSPENDED_SELLER_ACTIVE",
@@ -2272,14 +2272,14 @@
         "actual_detection_result": "DETECTED_ANOMALY",
         "severity": "CRITICAL",
         "details": {
-          "seller_id": "SELL-001739",
-          "seller_name": "King PLC 67",
+          "seller_id": "SELL-000944",
+          "seller_name": "Lewis, Lawson and Mitchell 13",
           "seller_status": "SUSPENDED",
-          "listing_id": "LIST-SELL-001739-000001",
-          "listing_title": "World History Illustrated Almanac - Series 389",
+          "listing_id": "LIST-SELL-000944-000001",
+          "listing_title": "Modern Software Architecture Handbook - Series 242",
           "listing_status": "ACTIVE"
         },
-        "description": "Listing LIST-SELL-001739-000001 ('World History Illustrated Almanac - Series 389') remains ACTIVE while seller SELL-001739 is SUSPENDED."
+        "description": "Listing LIST-SELL-000944-000001 ('Modern Software Architecture Handbook - Series 242') remains ACTIVE while seller SELL-000944 is SUSPENDED."
       },
       {
         "scenario_id": "SCENARIO-4",
@@ -2301,6 +2301,48 @@
           "clawback_applied": 0
         },
         "description": "Dispute DSP-2026-000001 resolved as CHARGEBACK_LOST for 2581 cents was never clawed back (clawback_applied = 0)."
+      },
+      {
+        "scenario_id": "SCENARIO-4",
+        "entity_id": "DSP-2026-000016",
+        "entity_type": "DISPUTE",
+        "issue_type": "UNCLAWBACKED_DISPUTE",
+        "ground_truth_label": "ANOMALY_4_UNCLAWBACKED_DISPUTE",
+        "expected_result": "Finalized lost disputes must be deducted as financial clawbacks from seller settlement balances.",
+        "expected_corrective_action": "Execute retroactive dispute clawback deduction against seller reserve or pending payout balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "dispute_id": "DSP-2026-000016",
+          "order_id": "ORD-2026-014727",
+          "order_line_id": "ORDLN-2026-014727-02",
+          "seller_id": "SELL-001476",
+          "dispute_status": "CHARGEBACK_LOST",
+          "disputed_amount_cents": 6546,
+          "clawback_applied": 0
+        },
+        "description": "Dispute DSP-2026-000016 resolved as CHARGEBACK_LOST for 6546 cents was never clawed back (clawback_applied = 0)."
+      },
+      {
+        "scenario_id": "SCENARIO-4",
+        "entity_id": "DSP-2026-000018",
+        "entity_type": "DISPUTE",
+        "issue_type": "UNCLAWBACKED_DISPUTE",
+        "ground_truth_label": "ANOMALY_4_UNCLAWBACKED_DISPUTE",
+        "expected_result": "Finalized lost disputes must be deducted as financial clawbacks from seller settlement balances.",
+        "expected_corrective_action": "Execute retroactive dispute clawback deduction against seller reserve or pending payout balance.",
+        "actual_detection_result": "DETECTED_ANOMALY",
+        "severity": "HIGH",
+        "details": {
+          "dispute_id": "DSP-2026-000018",
+          "order_id": "ORD-2026-022379",
+          "order_line_id": "ORDLN-2026-022379-01",
+          "seller_id": "SELL-001927",
+          "dispute_status": "CHARGEBACK_LOST",
+          "disputed_amount_cents": 5711,
+          "clawback_applied": 0
+        },
+        "description": "Dispute DSP-2026-000018 resolved as CHARGEBACK_LOST for 5711 cents was never clawed back (clawback_applied = 0)."
       },
       {
         "scenario_id": "SCENARIO-4",
@@ -2430,27 +2472,6 @@
       },
       {
         "scenario_id": "SCENARIO-4",
-        "entity_id": "DSP-2026-000016",
-        "entity_type": "DISPUTE",
-        "issue_type": "UNCLAWBACKED_DISPUTE",
-        "ground_truth_label": "ANOMALY_4_UNCLAWBACKED_DISPUTE",
-        "expected_result": "Finalized lost disputes must be deducted as financial clawbacks from seller settlement balances.",
-        "expected_corrective_action": "Execute retroactive dispute clawback deduction against seller reserve or pending payout balance.",
-        "actual_detection_result": "DETECTED_ANOMALY",
-        "severity": "HIGH",
-        "details": {
-          "dispute_id": "DSP-2026-000016",
-          "order_id": "ORD-2026-014727",
-          "order_line_id": "ORDLN-2026-014727-02",
-          "seller_id": "SELL-001476",
-          "dispute_status": "CHARGEBACK_LOST",
-          "disputed_amount_cents": 6546,
-          "clawback_applied": 0
-        },
-        "description": "Dispute DSP-2026-000016 resolved as CHARGEBACK_LOST for 6546 cents was never clawed back (clawback_applied = 0)."
-      },
-      {
-        "scenario_id": "SCENARIO-4",
         "entity_id": "DSP-2026-000017",
         "entity_type": "DISPUTE",
         "issue_type": "UNCLAWBACKED_DISPUTE",
@@ -2469,27 +2490,6 @@
           "clawback_applied": 0
         },
         "description": "Dispute DSP-2026-000017 resolved as RESOLVED_BUYER_FAVOR for 3438 cents was never clawed back (clawback_applied = 0)."
-      },
-      {
-        "scenario_id": "SCENARIO-4",
-        "entity_id": "DSP-2026-000018",
-        "entity_type": "DISPUTE",
-        "issue_type": "UNCLAWBACKED_DISPUTE",
-        "ground_truth_label": "ANOMALY_4_UNCLAWBACKED_DISPUTE",
-        "expected_result": "Finalized lost disputes must be deducted as financial clawbacks from seller settlement balances.",
-        "expected_corrective_action": "Execute retroactive dispute clawback deduction against seller reserve or pending payout balance.",
-        "actual_detection_result": "DETECTED_ANOMALY",
-        "severity": "HIGH",
-        "details": {
-          "dispute_id": "DSP-2026-000018",
-          "order_id": "ORD-2026-022379",
-          "order_line_id": "ORDLN-2026-022379-01",
-          "seller_id": "SELL-001927",
-          "dispute_status": "CHARGEBACK_LOST",
-          "disputed_amount_cents": 5711,
-          "clawback_applied": 0
-        },
-        "description": "Dispute DSP-2026-000018 resolved as CHARGEBACK_LOST for 5711 cents was never clawed back (clawback_applied = 0)."
       },
       {
         "scenario_id": "SCENARIO-4",
