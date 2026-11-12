@@ -1,0 +1,26 @@
+{
+  "generated_at": "2026-11-12T21:29:09.268148",
+  "target_mode": "starter",
+  "seed": 42,
+  "execution_seconds": 0.5,
+  "counts": {
+    "sellers": 200,
+    "customers": 1000,
+    "listings": 2000,
+    "orders": 10000,
+    "fulfillments": 10000,
+    "reviews": 3577,
+    "disputes": 1000,
+    "settlements": 10000,
+    "payout_batches": 219,
+    "payout_lines": 5642,
+    "ground_truth_anomalies": 115
+  },
+  "anomalies_breakdown": {
+    "anomaly_1_premature_payout": 25,
+    "anomaly_2_double_commission": 25,
+    "anomaly_3_suspended_seller_active": 20,
+    "anomaly_4_unclawbacked_dispute": 25,
+    "anomaly_5_payout_total_mismatch": 20
+  }
+}

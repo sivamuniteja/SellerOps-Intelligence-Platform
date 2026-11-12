@@ -1,0 +1,119 @@
+# SellerOps Intelligence Platform Configuration
+
+project:
+  name: "SellerOps Intelligence Platform"
+  version: "1.0.0"
+  description: "Enterprise multi-sided marketplace operations, SLA, dispute, commission, and reconciliation engine."
+  seed: 42
+
+database:
+  default_path: "data/sellerops.db"
+  starter_path: "data/starter/sellerops_starter.db"
+  full_path: "data/full/sellerops_full.db"
+  timeout_seconds: 30
+
+dataset_targets:
+  starter:
+    sellers: 200
+    customers: 1000
+    listings: 2000
+    orders: 10000
+    disputes: 1000
+  full:
+    sellers: 2000
+    customers: 10000
+    listings: 20000
+    orders: 100000
+    disputes: 10000
+
+categories:
+  - name: "Electronics"
+    base_commission_rate: 0.08
+    min_commission: 0.50
+    return_window_days: 14
+  - name: "Fashion & Apparel"
+    base_commission_rate: 0.15
+    min_commission: 0.50
+    return_window_days: 30
+  - name: "Home & Kitchen"
+    base_commission_rate: 0.12
+    min_commission: 0.50
+    return_window_days: 30
+  - name: "Beauty & Personal Care"
+    base_commission_rate: 0.14
+    min_commission: 0.50
+    return_window_days: 14
+  - name: "Sports & Outdoors"
+    base_commission_rate: 0.10
+    min_commission: 0.50
+    return_window_days: 30
+  - name: "Books & Media"
+    base_commission_rate: 0.15
+    min_commission: 0.50
+    return_window_days: 14
+  - name: "Automotive"
+    base_commission_rate: 0.10
+    min_commission: 0.50
+    return_window_days: 30
+  - name: "Health & Wellness"
+    base_commission_rate: 0.125
+    min_commission: 0.50
+    return_window_days: 14
+
+seller_tiers:
+  ENTERPRISE:
+    commission_discount: 0.02
+    reserve_rate: 0.05
+    hold_days: 7
+    min_volume: 50000.0
+  PREFERRED:
+    commission_discount: 0.01
+    reserve_rate: 0.08
+    hold_days: 14
+    min_volume: 10000.0
+  STANDARD:
+    commission_discount: 0.00
+    reserve_rate: 0.10
+    hold_days: 14
+    min_volume: 0.0
+  PROBATION:
+    commission_discount: -0.02
+    reserve_rate: 0.20
+    hold_days: 30
+    min_volume: 0.0
+  SUSPENDED:
+    commission_discount: 0.00
+    reserve_rate: 1.00
+    hold_days: 90
+    min_volume: 0.0
+
+sla_thresholds:
+  dispatch_window_hours: 48
+  max_late_shipment_rate: 0.040
+  max_cancellation_rate: 0.025
+  max_order_defect_rate: 0.010
+  min_seller_rating: 4.2
+
+payout_rules:
+  fixed_transaction_fee: 0.30
+  min_payout_threshold: 25.00
+  payout_frequency_days: 7
+
+anomalies:
+  seed: 42
+  scenarios:
+    anomaly_1_premature_payout:
+      count: 25
+      description: "Payout disbursed prior to order delivery confirmation or during mandatory reserve hold period."
+    anomaly_2_double_commission:
+      count: 25
+      description: "Platform commission fee applied twice on an identical order item settlement."
+    anomaly_3_suspended_seller_active:
+      count: 20
+      description: "Seller flagged as SUSPENDED has active listings and continues generating new order transactions."
+    anomaly_4_unclawbacked_dispute:
+      count: 25
+      description: "Dispute decided in buyer's favor without deducting chargeback amount from seller payout balance."
+    anomaly_5_payout_total_mismatch:
+      count: 20
+      description: "Total payout disbursement amount in batch header does not equal arithmetic sum of line items."

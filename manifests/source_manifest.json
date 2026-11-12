@@ -1,0 +1,36 @@
+{
+  "project": "SellerOps Intelligence Platform",
+  "version": "1.0.0",
+  "environment": {
+    "python_version": "3.13.5 | packaged by Anaconda, Inc. | (main, Jun 12 2025, 11:23:37) [Clang 14.0.6 ]",
+    "sqlite_version": "3"
+  },
+  "generators": {
+    "sellers": "src.generators.sellers",
+    "customers": "src.generators.customers",
+    "listings": "src.generators.listings",
+    "orders": "src.generators.orders",
+    "fulfillments": "src.generators.fulfillments",
+    "reviews": "src.generators.reviews",
+    "disputes": "src.generators.disputes",
+    "payouts": "src.generators.payouts"
+  },
+  "config_snapshot": {
+    "categories_count": 8,
+    "tiers": [
+      "ENTERPRISE",
+      "PREFERRED",
+      "STANDARD",
+      "PROBATION",
+      "SUSPENDED"
+    ],
+    "sla_thresholds": {
+      "dispatch_window_hours": 48,
+      "max_late_shipment_rate": 0.04,
+      "max_cancellation_rate": 0.025,
+      "max_order_defect_rate": 0.01,
+      "min_seller_rating": 4.2
+    },
+    "seed": 42
+  }
+}
