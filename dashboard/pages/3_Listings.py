@@ -98,7 +98,7 @@ listings_df = db.query_df(f"""
         s.status as seller_status,
         l.title as product_name,
         l.category,
-        ROUND(l.price_cents / 100.0, 2) as price_dollars,
+        ROUND(l.price_cents / 100.0, 2) as price_inr,
         l.inventory_count as stock,
         l.status as listing_status,
         l.created_at
@@ -126,10 +126,10 @@ with col_box:
         fig_box = px.box(
             listings_df.head(1000),
             x="category",
-            y="price_dollars",
+            y="price_inr",
             color="category",
             color_discrete_sequence=px.colors.qualitative.Plotly,
-            labels={"price_dollars": "Item Price (₹)", "category": "Product Category"},
+            labels={"price_inr": "Item Price (₹)", "category": "Product Category"},
         )
         apply_plotly_white_layout(fig_box)
         st.plotly_chart(fig_box, use_container_width=True)
@@ -166,7 +166,7 @@ if not listings_df.empty:
         "seller_name",
         "product_name",
         "category",
-        "price_dollars",
+        "price_inr",
         "stock",
         "listing_status",
     ]
@@ -197,7 +197,7 @@ breach_details = db.query_df("""
         s.risk_score,
         l.title as product_name,
         l.category,
-        ROUND(l.price_cents / 100.0, 2) as price_dollars,
+        ROUND(l.price_cents / 100.0, 2) as price_inr,
         l.inventory_count as stock,
         l.status as listing_status
     FROM listings l
@@ -224,7 +224,7 @@ st.subheader("🔍 Listing Deep-Dive & Sales Velocity")
 
 if not listings_df.empty:
     listing_options = [
-        f"{r['listing_id']} — {r['product_name'][:40]} ({format_inr_rupees(r['price_dollars'])}, {r['listing_status']})"
+        f"{r['listing_id']} — {r['product_name'][:40]} ({format_inr_rupees(r['price_inr'])}, {r['listing_status']})"
         for r in listings_df.head(50).to_dict(orient="records")
     ]
     selected_listing_str = st.selectbox("Select Listing for Deep-Dive Audit", listing_options)
@@ -241,7 +241,7 @@ if not listings_df.empty:
             s.risk_score as seller_risk_score,
             l.title as product_name,
             l.category,
-            ROUND(l.price_cents / 100.0, 2) as price_dollars,
+            ROUND(l.price_cents / 100.0, 2) as price_inr,
             l.inventory_count as stock,
             l.status as listing_status,
             l.created_at
@@ -254,7 +254,7 @@ if not listings_df.empty:
     with c_i1:
         render_metric_card("Product SKU", item_row["listing_id"], item_row["category"])
     with c_i2:
-        render_metric_card("Price & Stock", format_inr_rupees(item_row['price_dollars']), f"Units in Stock: {item_row['stock']}")
+        render_metric_card("Price & Stock", format_inr_rupees(item_row['price_inr']), f"Units in Stock: {item_row['stock']}")
     with c_i3:
         render_metric_card(
             "Listing Status", 
@@ -279,8 +279,8 @@ if not listings_df.empty:
             o.order_date,
             o.customer_id,
             ol.quantity,
-            ROUND(ol.unit_price_cents / 100.0, 2) as unit_price_dollars,
-            ROUND(ol.gross_amount_cents / 100.0, 2) as line_gross_dollars,
+            ROUND(ol.unit_price_cents / 100.0, 2) as unit_price_inr,
+            ROUND(ol.gross_amount_cents / 100.0, 2) as line_gross_inr,
             ol.line_status
         FROM order_lines ol
         JOIN orders o ON ol.order_id = o.order_id

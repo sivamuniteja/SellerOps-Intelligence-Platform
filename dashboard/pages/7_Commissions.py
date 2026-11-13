@@ -90,11 +90,11 @@ ledger_df = db.query_df(f"""
         cr.category,
         cr.seller_tier,
         c.rule_id,
-        ROUND(c.gross_amount_cents / 100.0, 2) as gross_dollars,
+        ROUND(c.gross_amount_cents / 100.0, 2) as gross_inr,
         ROUND(c.rate_basis_points / 100.0, 2) as rate_percent,
-        ROUND(c.variable_fee_cents / 100.0, 2) as variable_fee_dollars,
-        ROUND(c.fixed_fee_cents / 100.0, 2) as fixed_fee_dollars,
-        ROUND(c.total_commission_cents / 100.0, 2) as total_commission_dollars,
+        ROUND(c.variable_fee_cents / 100.0, 2) as variable_fee_inr,
+        ROUND(c.fixed_fee_cents / 100.0, 2) as fixed_fee_inr,
+        ROUND(c.total_commission_cents / 100.0, 2) as total_commission_inr,
         ROUND(c.total_commission_cents * 100.0 / NULLIF(c.gross_amount_cents, 0), 2) as actual_take_rate_pct
     FROM commission_ledger c
     JOIN sellers s ON c.seller_id = s.seller_id
@@ -171,8 +171,8 @@ rules_df = db.query_df("""
         category,
         seller_tier,
         ROUND(base_rate_basis_points / 100.0, 2) as base_rate_percent,
-        ROUND(min_commission_cents / 100.0, 2) as min_commission_dollars,
-        ROUND(fixed_fee_cents / 100.0, 2) as fixed_fee_dollars,
+        ROUND(min_commission_cents / 100.0, 2) as min_commission_inr,
+        ROUND(fixed_fee_cents / 100.0, 2) as fixed_fee_inr,
         effective_from,
         effective_to,
         is_active
@@ -192,11 +192,11 @@ if not ledger_df.empty:
         "seller_name",
         "category",
         "seller_tier",
-        "gross_dollars",
+        "gross_inr",
         "rate_percent",
-        "variable_fee_dollars",
-        "fixed_fee_dollars",
-        "total_commission_dollars",
+        "variable_fee_inr",
+        "fixed_fee_inr",
+        "total_commission_inr",
         "actual_take_rate_pct",
     ]
     st.dataframe(
@@ -225,10 +225,10 @@ if ano2_detected:
             "entry_id": a["entity_id"],
             "order_line_id": d.get("order_line_id", ""),
             "seller_id": d.get("seller_id", ""),
-            "gross_dollars": round(d.get("gross_amount_cents", 0) / 100.0, 2),
-            "actual_commission_dollars": round(d.get("actual_commission_cents", 0) / 100.0, 2),
-            "expected_commission_dollars": round(d.get("expected_commission_cents", 0) / 100.0, 2),
-            "overcharge_variance_dollars": round(d.get("variance_cents", 0) / 100.0, 2),
+            "gross_inr": round(d.get("gross_amount_cents", 0) / 100.0, 2),
+            "actual_commission_inr": round(d.get("actual_commission_cents", 0) / 100.0, 2),
+            "expected_commission_inr": round(d.get("expected_commission_cents", 0) / 100.0, 2),
+            "overcharge_variance_inr": round(d.get("variance_cents", 0) / 100.0, 2),
             "severity": a["severity"],
             "expected_action": a["expected_corrective_action"],
         })
@@ -252,7 +252,7 @@ st.subheader("🔍 Commission Entry Deep-Dive & Formula Verification")
 
 if not ledger_df.empty:
     entry_options = [
-        f"{r['entry_id']} — {format_inr_rupees(r['total_commission_dollars'])} (Gross: {format_inr_rupees(r['gross_dollars'])}, Line: {r['order_line_id']})"
+        f"{r['entry_id']} — {format_inr_rupees(r['total_commission_inr'])} (Gross: {format_inr_rupees(r['gross_inr'])}, Line: {r['order_line_id']})"
         for r in ledger_df.head(50).to_dict(orient="records")
     ]
     selected_entry_str = st.selectbox("Select Ledger Entry for Fee Formula Audit", entry_options)
@@ -267,12 +267,12 @@ if not ledger_df.empty:
             cr.rule_id,
             cr.category,
             cr.seller_tier,
-            ROUND(c.gross_amount_cents / 100.0, 2) as gross_dollars,
+            ROUND(c.gross_amount_cents / 100.0, 2) as gross_inr,
             ROUND(c.rate_basis_points / 100.0, 2) as rate_percent,
-            ROUND(c.variable_fee_cents / 100.0, 2) as variable_fee_dollars,
-            ROUND(c.fixed_fee_cents / 100.0, 2) as fixed_fee_dollars,
-            ROUND(c.total_commission_cents / 100.0, 2) as total_commission_dollars,
-            ROUND(cr.min_commission_cents / 100.0, 2) as min_commission_dollars,
+            ROUND(c.variable_fee_cents / 100.0, 2) as variable_fee_inr,
+            ROUND(c.fixed_fee_cents / 100.0, 2) as fixed_fee_inr,
+            ROUND(c.total_commission_cents / 100.0, 2) as total_commission_inr,
+            ROUND(cr.min_commission_cents / 100.0, 2) as min_commission_inr,
             c.created_at
         FROM commission_ledger c
         JOIN sellers s ON c.seller_id = s.seller_id
@@ -286,20 +286,20 @@ if not ledger_df.empty:
     with c_e2:
         render_metric_card("Order Line ID", entry_rec["order_line_id"], f"Seller: {entry_rec['seller_name']}")
     with c_e3:
-        render_metric_card("Gross Sales Amount", format_inr_rupees(entry_rec['gross_dollars']), f"Category: {entry_rec['category']}")
+        render_metric_card("Gross Sales Amount", format_inr_rupees(entry_rec['gross_inr']), f"Category: {entry_rec['category']}")
     with c_e4:
-        render_metric_card("Platform Take", format_inr_rupees(entry_rec['total_commission_dollars']), f"Tier: {entry_rec['seller_tier']}")
+        render_metric_card("Platform Take", format_inr_rupees(entry_rec['total_commission_inr']), f"Tier: {entry_rec['seller_tier']}")
 
     st.markdown(
         f"""
         <div class="metric-card" style="margin-top: 15px;">
             <h5 style="margin-top: 0; color: #111827;">Deterministic Formula Audit:</h5>
             <p style="margin-bottom: 6px; font-family: monospace; font-size: 0.95rem;">
-                <b>Variable Take:</b> Gross ({format_inr_rupees(entry_rec['gross_dollars'])}) × Rate ({entry_rec['rate_percent']:.2f}%) = <b>{format_inr_rupees(entry_rec['variable_fee_dollars'])}</b><br>
-                <b>Fixed Handling Fee:</b> <b>{format_inr_rupees(entry_rec['fixed_fee_dollars'])}</b><br>
-                <b>Base Sum:</b> {format_inr_rupees(entry_rec['variable_fee_dollars'])} + {format_inr_rupees(entry_rec['fixed_fee_dollars'])} = <b>{format_inr_rupees(entry_rec['variable_fee_dollars'] + entry_rec['fixed_fee_dollars'])}</b><br>
-                <b>Category Minimum Guarantee:</b> {format_inr_rupees(entry_rec['min_commission_dollars'])}<br>
-                <b>Final Charged Commission:</b> <span style="color: #2563EB; font-weight: bold;">{format_inr_rupees(entry_rec['total_commission_dollars'])}</span>
+                <b>Variable Take:</b> Gross ({format_inr_rupees(entry_rec['gross_inr'])}) × Rate ({entry_rec['rate_percent']:.2f}%) = <b>{format_inr_rupees(entry_rec['variable_fee_inr'])}</b><br>
+                <b>Fixed Handling Fee:</b> <b>{format_inr_rupees(entry_rec['fixed_fee_inr'])}</b><br>
+                <b>Base Sum:</b> {format_inr_rupees(entry_rec['variable_fee_inr'])} + {format_inr_rupees(entry_rec['fixed_fee_inr'])} = <b>{format_inr_rupees(entry_rec['variable_fee_inr'] + entry_rec['fixed_fee_inr'])}</b><br>
+                <b>Category Minimum Guarantee:</b> {format_inr_rupees(entry_rec['min_commission_inr'])}<br>
+                <b>Final Charged Commission:</b> <span style="color: #2563EB; font-weight: bold;">{format_inr_rupees(entry_rec['total_commission_inr'])}</span>
             </p>
         </div>
         """,

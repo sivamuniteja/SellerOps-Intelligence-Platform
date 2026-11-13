@@ -37,7 +37,7 @@ disc_b = payout_res["discrepancy_count"]
 disc_records = payout_res["discrepancies"]
 
 total_variance_cents = sum(abs(r["variance_cents"]) for r in disc_records) if disc_records else 0
-total_variance_dollars = total_variance_cents / 100.0
+total_variance_inr = total_variance_cents / 100.0
 
 c1, c2, c3, c4, c5 = st.columns(5)
 with c1:
@@ -47,7 +47,7 @@ with c2:
 with c3:
     render_metric_card("Discrepant Batches", f"{disc_b}", "Anomaly 5 Inconsistencies", delta_color="danger" if disc_b > 0 else "success")
 with c4:
-    render_metric_card("Total Net Variance", format_inr_rupees(total_variance_dollars), "Header vs Lines Drift", delta_color="danger" if total_variance_dollars > 0 else "success")
+    render_metric_card("Total Net Variance", format_inr_rupees(total_variance_inr), "Header vs Lines Drift", delta_color="danger" if total_variance_inr > 0 else "success")
 with c5:
     render_metric_card("Multi-Seller Orders", "100.0% Matched", "Order Total = Line Sums", delta_color="success")
 
@@ -80,13 +80,13 @@ with col_right:
     st.subheader("Batch Variance Breakdown (₹)")
     if disc_records:
         var_df = pd.DataFrame(disc_records)
-        var_df["variance_dollars"] = var_df["variance_cents"] / 100.0
+        var_df["variance_inr"] = var_df["variance_cents"] / 100.0
         fig_var = px.bar(
             var_df,
             x="payout_id",
-            y="variance_dollars",
+            y="variance_inr",
             color_discrete_sequence=[COLORS["danger"]],
-            labels={"payout_id": "Discrepant Payout ID", "variance_dollars": "Variance (₹)"},
+            labels={"payout_id": "Discrepant Payout ID", "variance_inr": "Variance (₹)"},
         )
         apply_plotly_white_layout(fig_var)
         st.plotly_chart(fig_var, use_container_width=True)
@@ -99,10 +99,10 @@ st.markdown("---")
 st.subheader("⚠️ Discrepant Payout Batches (Anomaly 5: Header Net != Sum of Lines)")
 if disc_records:
     table_df = pd.DataFrame(disc_records)
-    table_df["header_dollars"] = table_df["header_net_cents"] / 100.0
-    table_df["lines_sum_dollars"] = table_df["lines_net_sum_cents"] / 100.0
-    table_df["variance_dollars"] = table_df["variance_cents"] / 100.0
-    display_df = table_df[["payout_id", "seller_id", "batch_date", "header_dollars", "lines_sum_dollars", "variance_dollars", "line_count"]]
+    table_df["header_inr"] = table_df["header_net_cents"] / 100.0
+    table_df["lines_sum_inr"] = table_df["lines_net_sum_cents"] / 100.0
+    table_df["variance_inr"] = table_df["variance_cents"] / 100.0
+    display_df = table_df[["payout_id", "seller_id", "batch_date", "header_inr", "lines_sum_inr", "variance_inr", "line_count"]]
     st.dataframe(display_df, use_container_width=True)
 
     csv_disc = display_df.to_csv(index=False).encode("utf-8")
@@ -179,11 +179,11 @@ if disc_records:
         SELECT 
             pl.line_id,
             pl.order_line_id,
-            ROUND(pl.gross_amount_cents / 100.0, 2) as gross_dollars,
-            ROUND(pl.commission_deducted_cents / 100.0, 2) as commission_dollars,
-            ROUND(pl.reserve_deducted_cents / 100.0, 2) as reserve_dollars,
-            ROUND(pl.dispute_deducted_cents / 100.0, 2) as dispute_dollars,
-            ROUND(pl.net_line_amount_cents / 100.0, 2) as net_line_dollars
+            ROUND(pl.gross_amount_cents / 100.0, 2) as gross_inr,
+            ROUND(pl.commission_deducted_cents / 100.0, 2) as commission_inr,
+            ROUND(pl.reserve_deducted_cents / 100.0, 2) as reserve_inr,
+            ROUND(pl.dispute_deducted_cents / 100.0, 2) as dispute_inr,
+            ROUND(pl.net_line_amount_cents / 100.0, 2) as net_line_inr
         FROM payout_lines pl
         WHERE pl.payout_id = '{selected_payout_id}';
     """)

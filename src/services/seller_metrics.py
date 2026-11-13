@@ -282,7 +282,6 @@ class SellerMetricsEngine:
         cancellation_rate = round(cancelled_lines / total_lines, 4) if total_lines > 0 else 0.0
 
         gmv_inr = round(gmv_cents / 100.0, 2)
-        gmv_dollars = gmv_inr
         scorecard = self.compute_seller_scorecard(
             total_orders=total_orders,
             late_shipments=late_shipments,
@@ -306,7 +305,6 @@ class SellerMetricsEngine:
             "gmv_cents": gmv_cents,
             "gmv": gmv_inr,
             "gmv_inr": gmv_inr,
-            "gmv_dollars": gmv_dollars,
             # SLA & Defect Rates
             "total_shipped_orders": shipped_lines,
             "late_shipment_count": late_shipments,

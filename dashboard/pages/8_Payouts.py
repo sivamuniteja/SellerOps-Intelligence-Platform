@@ -87,11 +87,11 @@ payouts_df = db.query_df(f"""
         s.name as seller_name,
         p.batch_date,
         p.total_lines_count,
-        ROUND(p.gross_sales_cents / 100.0, 2) as gross_dollars,
-        ROUND(p.total_commission_cents / 100.0, 2) as commission_dollars,
-        ROUND(p.total_reserve_held_cents / 100.0, 2) as reserve_dollars,
-        ROUND(p.total_disputes_deducted_cents / 100.0, 2) as disputes_dollars,
-        ROUND(p.net_payout_amount_cents / 100.0, 2) as net_payout_dollars,
+        ROUND(p.gross_sales_cents / 100.0, 2) as gross_inr,
+        ROUND(p.total_commission_cents / 100.0, 2) as commission_inr,
+        ROUND(p.total_reserve_held_cents / 100.0, 2) as reserve_inr,
+        ROUND(p.total_disputes_deducted_cents / 100.0, 2) as disputes_inr,
+        ROUND(p.net_payout_amount_cents / 100.0, 2) as net_payout_inr,
         p.payout_status,
         p.reconciliation_status
     FROM payouts p
@@ -166,11 +166,11 @@ if not payouts_df.empty:
         "seller_name",
         "batch_date",
         "total_lines_count",
-        "gross_dollars",
-        "commission_dollars",
-        "reserve_dollars",
-        "disputes_dollars",
-        "net_payout_dollars",
+        "gross_inr",
+        "commission_inr",
+        "reserve_inr",
+        "disputes_inr",
+        "net_payout_inr",
         "payout_status",
         "reconciliation_status",
     ]
@@ -203,7 +203,7 @@ if ano1_detected:
             "line_status": d.get("line_status", ""),
             "release_scheduled_date": d.get("release_scheduled_date", ""),
             "batch_date": d.get("batch_date", ""),
-            "net_amount_dollars": round(d.get("net_amount_cents", 0) / 100.0, 2),
+            "net_amount_inr": round(d.get("net_amount_cents", 0) / 100.0, 2),
             "severity": a["severity"],
             "expected_action": a["expected_corrective_action"],
         })
@@ -227,7 +227,7 @@ st.subheader("🔍 Payout Batch Deep-Dive & Settlement Reconciliation")
 
 if not payouts_df.empty:
     payout_options = [
-        f"{r['payout_id']} — {format_inr_rupees(r['net_payout_dollars'])} ({r['seller_name']}, Status: {r['payout_status']}, Date: {r['batch_date'][:10]})"
+        f"{r['payout_id']} — {format_inr_rupees(r['net_payout_inr'])} ({r['seller_name']}, Status: {r['payout_status']}, Date: {r['batch_date'][:10]})"
         for r in payouts_df.head(50).to_dict(orient="records")
     ]
     selected_payout_str = st.selectbox("Select Payout Batch for Detailed Line-Item Audit", payout_options)
@@ -240,11 +240,11 @@ if not payouts_df.empty:
             s.name as seller_name,
             p.batch_date,
             p.total_lines_count,
-            ROUND(p.gross_sales_cents / 100.0, 2) as gross_dollars,
-            ROUND(p.total_commission_cents / 100.0, 2) as commission_dollars,
-            ROUND(p.total_reserve_held_cents / 100.0, 2) as reserve_dollars,
-            ROUND(p.total_disputes_deducted_cents / 100.0, 2) as disputes_dollars,
-            ROUND(p.net_payout_amount_cents / 100.0, 2) as net_dollars,
+            ROUND(p.gross_sales_cents / 100.0, 2) as gross_inr,
+            ROUND(p.total_commission_cents / 100.0, 2) as commission_inr,
+            ROUND(p.total_reserve_held_cents / 100.0, 2) as reserve_inr,
+            ROUND(p.total_disputes_deducted_cents / 100.0, 2) as disputes_inr,
+            ROUND(p.net_payout_amount_cents / 100.0, 2) as net_inr,
             p.payout_status,
             p.reconciliation_status
         FROM payouts p
@@ -256,7 +256,7 @@ if not payouts_df.empty:
     with c_p1:
         render_metric_card("Payout ID", p_header["payout_id"], f"Seller: {p_header['seller_name']}")
     with c_p2:
-        render_metric_card("Net Amount", format_inr_rupees(p_header['net_dollars']), f"Gross: {format_inr_rupees(p_header['gross_dollars'])}")
+        render_metric_card("Net Amount", format_inr_rupees(p_header['net_inr']), f"Gross: {format_inr_rupees(p_header['gross_inr'])}")
     with c_p3:
         render_metric_card(
             "Payout Status", 
@@ -283,23 +283,23 @@ if not payouts_df.empty:
             SELECT 
                 pl.line_id,
                 pl.order_line_id,
-                ROUND(pl.gross_amount_cents / 100.0, 2) as gross_dollars,
-                ROUND(pl.commission_deducted_cents / 100.0, 2) as commission_dollars,
-                ROUND(pl.reserve_deducted_cents / 100.0, 2) as reserve_dollars,
-                ROUND(pl.dispute_deducted_cents / 100.0, 2) as dispute_dollars,
-                ROUND(pl.net_line_amount_cents / 100.0, 2) as net_line_dollars
+                ROUND(pl.gross_amount_cents / 100.0, 2) as gross_inr,
+                ROUND(pl.commission_deducted_cents / 100.0, 2) as commission_inr,
+                ROUND(pl.reserve_deducted_cents / 100.0, 2) as reserve_inr,
+                ROUND(pl.dispute_deducted_cents / 100.0, 2) as dispute_inr,
+                ROUND(pl.net_line_amount_cents / 100.0, 2) as net_line_inr
             FROM payout_lines pl
             WHERE pl.payout_id = '{selected_payout_id}';
         """)
         if not lines_df.empty:
             st.dataframe(lines_df, use_container_width=True)
             # Arithmetic verification
-            lines_sum = lines_df["net_line_dollars"].sum()
-            variance = round(p_header["net_dollars"] - lines_sum, 2)
+            lines_sum = lines_df["net_line_inr"].sum()
+            variance = round(p_header["net_inr"] - lines_sum, 2)
             if abs(variance) < 0.01:
-                st.success(f"✅ Exact Balance: Sum of child lines ({format_inr_rupees(lines_sum)}) matches payout header net ({format_inr_rupees(p_header['net_dollars'])}).")
+                st.success(f"✅ Exact Balance: Sum of child lines ({format_inr_rupees(lines_sum)}) matches payout header net ({format_inr_rupees(p_header['net_inr'])}).")
             else:
-                st.error(f"🚨 Anomaly 5 Discrepancy: Payout header ({format_inr_rupees(p_header['net_dollars'])}) does NOT match sum of lines ({format_inr_rupees(lines_sum)})! Variance: {format_inr_rupees(variance)}")
+                st.error(f"🚨 Anomaly 5 Discrepancy: Payout header ({format_inr_rupees(p_header['net_inr'])}) does NOT match sum of lines ({format_inr_rupees(lines_sum)})! Variance: {format_inr_rupees(variance)}")
         else:
             render_empty_state("No Lines Found", "No child settlement lines found for this payout batch.")
 

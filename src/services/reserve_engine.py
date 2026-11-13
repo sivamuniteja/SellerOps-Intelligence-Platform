@@ -321,7 +321,4 @@ class ReserveEngine:
             "total_reserve_held_inr": round(total_held / 100.0, 2),
             "total_reserve_released_inr": round(total_released / 100.0, 2),
             "remaining_reserve_inr": round(remaining_reserve_cents / 100.0, 2),
-            "total_reserve_held_dollars": round(total_held / 100.0, 2),
-            "total_reserve_released_dollars": round(total_released / 100.0, 2),
-            "remaining_reserve_dollars": round(remaining_reserve_cents / 100.0, 2),
         }

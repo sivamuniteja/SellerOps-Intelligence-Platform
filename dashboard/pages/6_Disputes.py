@@ -99,7 +99,7 @@ disputes_df = db.query_df(f"""
         d.customer_id,
         d.dispute_date,
         d.dispute_reason,
-        ROUND(d.disputed_amount_cents / 100.0, 2) as disputed_amount_dollars,
+        ROUND(d.disputed_amount_cents / 100.0, 2) as disputed_amount_inr,
         d.status as dispute_status,
         d.resolution_date,
         CASE WHEN d.clawback_applied = 1 THEN 'YES ✅' ELSE 'NO ⚠️' END as clawback_status,
@@ -172,7 +172,7 @@ if not disputes_df.empty:
         "seller_name",
         "dispute_date",
         "dispute_reason",
-        "disputed_amount_dollars",
+        "disputed_amount_inr",
         "dispute_status",
         "resolution_date",
         "clawback_status",
@@ -204,7 +204,7 @@ unclawbacked_table = db.query_df("""
         s.name as seller_name,
         d.dispute_date,
         d.dispute_reason,
-        ROUND(d.disputed_amount_cents / 100.0, 2) as disputed_dollars,
+        ROUND(d.disputed_amount_cents / 100.0, 2) as disputed_inr,
         d.status as dispute_status,
         d.resolution_date,
         d.clawback_applied
@@ -233,7 +233,7 @@ st.subheader("🔍 Dispute Deep-Dive & Adjudication Audit Trail")
 
 if not disputes_df.empty:
     disp_options = [
-        f"{r['dispute_id']} — {r['dispute_reason']} ({format_inr_rupees(r['disputed_amount_dollars'])}, {r['dispute_status']})"
+        f"{r['dispute_id']} — {r['dispute_reason']} ({format_inr_rupees(r['disputed_amount_inr'])}, {r['dispute_status']})"
         for r in disputes_df.head(50).to_dict(orient="records")
     ]
     selected_disp_str = st.selectbox("Select Dispute for Claim Adjudication History", disp_options)
@@ -249,7 +249,7 @@ if not disputes_df.empty:
             d.customer_id,
             d.dispute_date,
             d.dispute_reason,
-            ROUND(d.disputed_amount_cents / 100.0, 2) as disputed_dollars,
+            ROUND(d.disputed_amount_cents / 100.0, 2) as disputed_inr,
             d.status as dispute_status,
             d.resolution_date,
             d.clawback_applied
@@ -269,7 +269,7 @@ if not disputes_df.empty:
             delta_color="danger" if disp_rec["dispute_status"] in ["RESOLVED_BUYER_FAVOR", "CHARGEBACK_LOST"] else "neutral"
         )
     with c_d3:
-        render_metric_card("Disputed Value", format_inr_rupees(disp_rec['disputed_dollars']), f"Seller: {disp_rec['seller_name']}")
+        render_metric_card("Disputed Value", format_inr_rupees(disp_rec['disputed_inr']), f"Seller: {disp_rec['seller_name']}")
     with c_d4:
         is_unclaw = disp_rec["dispute_status"] in ["RESOLVED_BUYER_FAVOR", "CHARGEBACK_LOST"] and disp_rec["clawback_applied"] == 0
         render_metric_card(
@@ -313,8 +313,8 @@ if not disputes_df.empty:
                 l.title as product_title,
                 l.category,
                 ol.quantity,
-                ROUND(ol.unit_price_cents / 100.0, 2) as unit_price_dollars,
-                ROUND(ol.gross_amount_cents / 100.0, 2) as line_gross_dollars,
+                ROUND(ol.unit_price_cents / 100.0, 2) as unit_price_inr,
+                ROUND(ol.gross_amount_cents / 100.0, 2) as line_gross_inr,
                 ol.line_status
             FROM order_lines ol
             JOIN listings l ON ol.listing_id = l.listing_id

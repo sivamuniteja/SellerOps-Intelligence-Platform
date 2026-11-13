@@ -70,10 +70,10 @@ def main():
             ('CR-000001', 'Electronics', 'ENTERPRISE', 600, 50, 30, '2024-01-01 00:00:00', '2027-12-31 23:59:59', 1, ?);
         """, (now_str,))
 
-        # F. Order Header (Multi-seller order: $149.99 * 2 + $35.00 * 1 = $334.98 = 33498 cents)
+        # F. Order Header (Multi-seller order: ₹149.99 * 2 + ₹35.00 * 1 = ₹334.98 = 33498 paise)
         conn.execute("""
             INSERT INTO orders VALUES
-            ('ORD-2026-000001', 'CUST-000001', '2026-02-10 14:15:00', 33498, 'USD', 'CREDIT_CARD', 'CONFIRMED', ?, ?);
+            ('ORD-2026-000001', 'CUST-000001', '2026-02-10 14:15:00', 33498, 'INR', 'CREDIT_CARD', 'CONFIRMED', ?, ?);
         """, (now_str, now_str))
 
         # G. Order Lines (Multi-Seller items under single order)
@@ -130,7 +130,7 @@ def main():
         """, (now_str,))
 
         # N. Payout Batch & Payout Line & Payout Event
-        # Net for Line 1: 29998 - 1830 - 1500 = 26668 cents ($266.68)
+        # Net for Line 1: 29998 - 1830 - 1500 = 26668 paise (₹266.68)
         conn.execute("""
             INSERT INTO payouts VALUES
             ('PAYOUT-2026-000001', 'SELL-000001', '2026-02-22 00:00:00', 1, 29998, 1830, 1500, 0, 26668, 'PAID', 'MATCHED', ?);
@@ -180,10 +180,10 @@ def main():
 
         gross, comm, res, net = row
         equation_balanced = (gross == comm + res + net)
-        print(f"    • Gross: {gross} cents (${cents_to_decimal(gross)})")
-        print(f"    • Commission: {comm} cents (${cents_to_decimal(comm)})")
-        print(f"    • Reserve: {res} cents (${cents_to_decimal(res)})")
-        print(f"    • Net Line: {net} cents (${cents_to_decimal(net)})")
+        print(f"    • Gross: {gross} paise (₹{cents_to_decimal(gross)})")
+        print(f"    • Commission: {comm} paise (₹{cents_to_decimal(comm)})")
+        print(f"    • Reserve: {res} paise (₹{cents_to_decimal(res)})")
+        print(f"    • Net Line: {net} paise (₹{cents_to_decimal(net)})")
         print(f"    • Equation Check: {gross} == {comm} + {res} + {net} -> {'BALANCED ✅' if equation_balanced else 'UNBALANCED ❌'}")
 
     # 5. Table Inventory Count

@@ -141,10 +141,6 @@ class ProductListing(BaseModel):
     def price_inr(self) -> Decimal:
         return cents_to_decimal(self.price_cents)
 
-    @property
-    def price_dollars(self) -> Decimal:
-        return self.price_inr
-
 
 # 5. Commission Rule
 class CommissionRule(BaseModel):
@@ -176,10 +172,6 @@ class Order(BaseModel):
     def total_amount_inr(self) -> Decimal:
         return cents_to_decimal(self.total_amount_cents)
 
-    @property
-    def total_amount_dollars(self) -> Decimal:
-        return self.total_amount_inr
-
 
 # 7. Order Line (Item Level, Multi-Seller)
 class OrderLine(BaseModel):
@@ -197,10 +189,6 @@ class OrderLine(BaseModel):
     @property
     def gross_amount_inr(self) -> Decimal:
         return cents_to_decimal(self.gross_amount_cents)
-
-    @property
-    def gross_amount_dollars(self) -> Decimal:
-        return self.gross_amount_inr
 
 
 # 8. Fulfillment (Supporting Partial Fulfillment)

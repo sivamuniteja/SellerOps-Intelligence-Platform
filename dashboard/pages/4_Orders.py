@@ -101,7 +101,7 @@ orders_df = db.query_df(f"""
         o.order_id,
         o.customer_id,
         o.order_date,
-        ROUND(o.total_amount_cents / 100.0, 2) as order_total_dollars,
+        ROUND(o.total_amount_cents / 100.0, 2) as order_total_inr,
         o.payment_method,
         o.order_status,
         COUNT(DISTINCT ol.seller_id) as seller_count,
@@ -178,7 +178,7 @@ if not orders_df.empty:
         "order_id",
         "customer_id",
         "order_date",
-        "order_total_dollars",
+        "order_total_inr",
         "order_status",
         "seller_count",
         "line_count",
@@ -205,7 +205,7 @@ st.subheader("🔍 Order Deep-Dive & Multi-Seller Line Inspection")
 
 if not orders_df.empty:
     order_options = [
-        f"{r['order_id']} — {format_inr_rupees(r['order_total_dollars'])} ({r['order_status']}, {r['seller_count']} Sellers, {r['order_date'][:10]})"
+        f"{r['order_id']} — {format_inr_rupees(r['order_total_inr'])} ({r['order_status']}, {r['seller_count']} Sellers, {r['order_date'][:10]})"
         for r in orders_df.head(50).to_dict(orient="records")
     ]
     selected_order_str = st.selectbox("Select Order for Detailed Adjudication", order_options)
@@ -215,7 +215,7 @@ if not orders_df.empty:
         SELECT 
             o.order_id,
             o.order_date,
-            ROUND(o.total_amount_cents / 100.0, 2) as total_dollars,
+            ROUND(o.total_amount_cents / 100.0, 2) as total_inr,
             o.order_status,
             o.payment_method,
             c.customer_id,
@@ -235,7 +235,7 @@ if not orders_df.empty:
     with c_o3:
         render_metric_card(
             "Total Amount", 
-            format_inr_rupees(order_info['total_dollars']), 
+            format_inr_rupees(order_info['total_inr']), 
             f"Payment: {order_info['payment_method']}"
         )
     with c_o4:
@@ -265,8 +265,8 @@ if not orders_df.empty:
                 l.title as product_title,
                 l.category,
                 ol.quantity,
-                ROUND(ol.unit_price_cents / 100.0, 2) as unit_price_dollars,
-                ROUND(ol.gross_amount_cents / 100.0, 2) as line_gross_dollars,
+                ROUND(ol.unit_price_cents / 100.0, 2) as unit_price_inr,
+                ROUND(ol.gross_amount_cents / 100.0, 2) as line_gross_inr,
                 ol.line_status
             FROM order_lines ol
             JOIN sellers s ON ol.seller_id = s.seller_id
@@ -277,12 +277,12 @@ if not orders_df.empty:
         if not lines_df.empty:
             st.dataframe(lines_df, use_container_width=True)
             # Arithmetic verification check
-            lines_sum = lines_df["line_gross_dollars"].sum()
-            variance = abs(lines_sum - order_info["total_dollars"])
+            lines_sum = lines_df["line_gross_inr"].sum()
+            variance = abs(lines_sum - order_info["total_inr"])
             if variance < 0.01:
-                st.success(f"✅ Exact Mathematical Consistency: Sum of order lines ({format_inr_rupees(lines_sum)}) matches order header total ({format_inr_rupees(order_info['total_dollars'])}).")
+                st.success(f"✅ Exact Mathematical Consistency: Sum of order lines ({format_inr_rupees(lines_sum)}) matches order header total ({format_inr_rupees(order_info['total_inr'])}).")
             else:
-                st.error(f"🚨 Arithmetic Mismatch: Order lines sum ({format_inr_rupees(lines_sum)}) differs from header ({format_inr_rupees(order_info['total_dollars'])}) by {format_inr_rupees(variance)}!")
+                st.error(f"🚨 Arithmetic Mismatch: Order lines sum ({format_inr_rupees(lines_sum)}) differs from header ({format_inr_rupees(order_info['total_inr'])}) by {format_inr_rupees(variance)}!")
         else:
             render_empty_state("No Lines Found", "No child order lines recorded.")
 
