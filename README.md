@@ -150,7 +150,7 @@ SellerOps-Intelligence-Platform/
 │       ├── 11_Data_Quality.py         # 14-dimension data quality audit matrix
 │       └── 12_Reports.py              # Dynamic operational report generator & export downloads
 │
-├── tests/                             # Comprehensive Automated PyTest Suite (72 Tests)
+├── tests/                             # Comprehensive Automated PyTest Suite (92 Tests)
 │   ├── test_ids.py                    # Canonical ID regex pattern verification
 │   ├── test_foreign_keys.py           # Referential integrity & orphan prevention tests
 │   ├── test_currency.py               # INR arithmetic, paise conversion & grouping tests
@@ -170,7 +170,7 @@ SellerOps-Intelligence-Platform/
 │   ├── data_dictionary.md             # Column-by-column dictionary for all 19 entities
 │   ├── business_rules.md              # Mathematical formulas, reserve policies, SLA rules
 │   ├── validation_report.md           # 14-dimension validation results & benchmark report
-│   ├── testing_report.md              # PyTest test execution matrix across all 72 tests
+│   ├── testing_report.md              # PyTest test execution matrix across all 92 tests
 │   ├── assumptions.md                 # Operational assumptions & parameters
 │   └── limitations.md                 # Architectural boundaries & scaling roadmap
 │
