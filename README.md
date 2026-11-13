@@ -1,7 +1,18 @@
+# 🌐 Live Deployed Application (Streamlit)
+
+👉 **Streamlit App Link:**
+
+[🚀 Open SellerOps Intelligence Platform](https://yottaflex-sellerops.streamlit.app/Reports)
+
+The SellerOps Intelligence Platform is a data-driven marketplace operations and financial reconciliation application designed to manage sellers, product listings, orders, fulfillment, disputes, commissions, reserves, payouts, and anomaly detection.
+
+---
+
 # SellerOps Intelligence Platform
 *Enterprise Multi-Sided Marketplace Operations, SLA Monitoring & Financial Reconciliation Engine*
 
-[![Python](https://img.shields.io/badge/Python-3.13+-2563EB.svg)](https://www.python.org/)
+[![Streamlit Cloud](https://img.shields.io/badge/Streamlit%20Cloud-Live%20App-FF4B4B.svg?style=flat&logo=streamlit)](https://yottaflex-sellerops.streamlit.app/Reports)
+[![Python](https://img.shields.io/badge/Python-3.11+-2563EB.svg)](https://www.python.org/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.30+-FF4B4B.svg)](https://streamlit.io/)
 [![SQLite](https://img.shields.io/badge/SQLite-3.0+-003B57.svg)](https://www.sqlite.org/)
 [![PyTest](https://img.shields.io/badge/PyTest-92%20Passed-16A34A.svg)](https://pytest.org/)
@@ -128,11 +139,11 @@ SellerOps-Intelligence-Platform/
 │   │   └── connection.py              # SQLite connection manager with WAL mode & FK enforcement
 │   │
 │   └── exports/                       # Enterprise Multi-Format Data Exporter (Phase 8)
-│       ├── csv_export.py              # Memory-efficient chunked CSV exporter
-│       ├── json_export.py             # Streaming JSON exporter
-│       ├── sql_export.py              # Master SQL seed exporter & re-import verifier
-│       └── manager.py                 # Master orchestrator, checksum generator, manifest compiler
-│
+│   │   ├── csv_export.py              # Memory-efficient chunked CSV exporter
+│   │   ├── json_export.py             # Streaming JSON exporter
+│   │   ├── sql_export.py              # Master SQL seed exporter & re-import verifier
+│   │   └── manager.py                 # Master orchestrator, checksum generator, manifest compiler
+│   │
 ├── dashboard/
 │   ├── app.py                         # Enterprise dashboard landing page & macro KPIs
 │   ├── theme.py                       # Pure white enterprise CSS, Plotly white layouts, INR helpers
