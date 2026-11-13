@@ -14,8 +14,30 @@ class DatabaseManager:
     """Manages SQLite database connections, schema setup, and versioned migrations."""
 
     def __init__(self, db_path: Union[str, Path] = "data/sellerops.db"):
-        self.db_path = Path(db_path)
+        path = Path(db_path)
+        if not path.is_absolute():
+            project_root = Path(__file__).resolve().parent.parent.parent
+            candidate = project_root / path
+            if candidate.exists() or candidate.with_suffix(candidate.suffix + ".gz").exists():
+                path = candidate
+            elif not path.exists():
+                path = candidate
+        self.db_path = path
         self.db_path.parent.mkdir(parents=True, exist_ok=True)
+        self._ensure_db_extracted()
+
+    def _ensure_db_extracted(self) -> None:
+        """Decompress .db.gz archive into .db if the database file is absent or 0 bytes."""
+        if not self.db_path.exists() or self.db_path.stat().st_size == 0:
+            gz_path = self.db_path.with_name(self.db_path.name + ".gz")
+            if gz_path.exists():
+                import gzip
+                import shutil
+                tmp_path = self.db_path.with_suffix(self.db_path.suffix + ".tmp")
+                with gzip.open(gz_path, "rb") as f_in:
+                    with open(tmp_path, "wb") as f_out:
+                        shutil.copyfileobj(f_in, f_out)
+                tmp_path.replace(self.db_path)
 
     def get_connection(self) -> sqlite3.Connection:
         """Create and configure a SQLite connection with foreign keys and WAL mode enabled."""
