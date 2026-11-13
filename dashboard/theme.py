@@ -28,11 +28,8 @@ EXPAND_NAV_SCRIPT = """
         } catch(e) {}
     }
     autoExpandNav();
-    setTimeout(autoExpandNav, 50);
-    setTimeout(autoExpandNav, 150);
-    setTimeout(autoExpandNav, 300);
-    setTimeout(autoExpandNav, 600);
-    setTimeout(autoExpandNav, 1200);
+    const interval = setInterval(autoExpandNav, 150);
+    setTimeout(function() { clearInterval(interval); }, 4000);
 })();
 </script>
 """
@@ -83,7 +80,9 @@ CUSTOM_CSS = """
     }
     
     /* Top-Left Hamburger Toggle Button (Collapsed State) */
-    [data-testid="stSidebarCollapsedControl"] {
+    [data-testid="stSidebarCollapsedControl"],
+    [data-testid="stExpandSidebarButton"],
+    [data-testid="collapsedControl"] {
         position: fixed !important;
         top: 14px !important;
         left: 18px !important;
@@ -93,7 +92,12 @@ CUSTOM_CSS = """
     }
     
     [data-testid="stSidebarCollapsedControl"] button,
-    [data-testid="stSidebarCollapsedControl"] [kind="headerNoPadding"] {
+    [data-testid="stSidebarCollapsedControl"] [kind="headerNoPadding"],
+    [data-testid="stSidebarCollapseButton"] button,
+    [data-testid="stSidebarCollapseButton"] [kind="headerNoPadding"],
+    [data-testid="stExpandSidebarButton"],
+    [data-testid="stExpandSidebarButton"] button,
+    [data-testid="collapsedControl"] button {
         width: 38px !important;
         height: 38px !important;
         min-width: 38px !important;
@@ -107,64 +111,52 @@ CUSTOM_CSS = """
         cursor: pointer !important;
         transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
         padding: 0 !important;
+        font-size: 0 !important;
+        color: transparent !important;
+        overflow: hidden !important;
+        position: relative !important;
     }
     
-    [data-testid="stSidebarCollapsedControl"] button:hover {
+    [data-testid="stSidebarCollapsedControl"] button:hover,
+    [data-testid="stSidebarCollapseButton"] button:hover,
+    [data-testid="stExpandSidebarButton"]:hover,
+    [data-testid="stExpandSidebarButton"] button:hover,
+    [data-testid="collapsedControl"] button:hover {
         background-color: #F8FAFC !important;
         border-color: #CBD5E1 !important;
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12) !important;
     }
-    
-    /* Hide default Streamlit SVG chevron in collapsed control */
-    [data-testid="stSidebarCollapsedControl"] svg {
+
+    /* Completely eliminate any Material Icon text ligatures (e.g. keyboard_double, keyboard_double_arrow_right), SVGs, or spans */
+    [data-testid="stSidebarCollapsedControl"] button *,
+    [data-testid="stSidebarCollapseButton"] button *,
+    [data-testid="stExpandSidebarButton"] *,
+    [data-testid="stExpandSidebarButton"] button *,
+    [data-testid="collapsedControl"] button * {
         display: none !important;
+        visibility: hidden !important;
+        font-size: 0 !important;
+        line-height: 0 !important;
+        width: 0 !important;
+        height: 0 !important;
+        opacity: 0 !important;
+        overflow: hidden !important;
     }
     
-    /* Clean 3-bar hamburger icon (☰) */
-    [data-testid="stSidebarCollapsedControl"] button::before {
-        content: "☰" !important;
-        font-size: 1.45rem !important;
-        color: #111827 !important;
-        font-weight: 700 !important;
-        line-height: 1 !important;
+    /* Exact THREE-HORIZONTAL-LINE Hamburger Menu Icon (☰) on BOTH open and close buttons */
+    [data-testid="stSidebarCollapsedControl"] button::before,
+    [data-testid="stSidebarCollapseButton"] button::before,
+    [data-testid="stExpandSidebarButton"]::before,
+    [data-testid="stExpandSidebarButton"] button::before,
+    [data-testid="collapsedControl"] button::before {
+        content: "" !important;
         display: block !important;
-    }
-    
-    /* Sidebar Header & Close Button (Expanded State) */
-    [data-testid="stSidebarCollapseButton"] button,
-    [data-testid="stSidebarCollapseButton"] [kind="headerNoPadding"] {
-        width: 34px !important;
-        height: 34px !important;
-        min-width: 34px !important;
-        border-radius: 8px !important;
-        background-color: #F8FAFC !important;
-        border: 1px solid #E2E8F0 !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        cursor: pointer !important;
-        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
-        padding: 0 !important;
-    }
-    
-    [data-testid="stSidebarCollapseButton"] button:hover {
-        background-color: #EFF6FF !important;
-        border-color: #93C5FD !important;
-    }
-    
-    /* Hide default Streamlit left chevron SVG in collapse button */
-    [data-testid="stSidebarCollapseButton"] svg {
-        display: none !important;
-    }
-    
-    /* Close toggle icon */
-    [data-testid="stSidebarCollapseButton"] button::before {
-        content: "✕" !important;
-        font-size: 1.15rem !important;
-        color: #475569 !important;
-        font-weight: 700 !important;
-        line-height: 1 !important;
-        display: block !important;
+        width: 20px !important;
+        height: 16px !important;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='16' viewBox='0 0 20 16' fill='none'%3E%3Cline x1='1' y1='2.5' x2='19' y2='2.5' stroke='%23111827' stroke-width='2.2' stroke-linecap='round'/%3E%3Cline x1='1' y1='8' x2='19' y2='8' stroke='%23111827' stroke-width='2.2' stroke-linecap='round'/%3E%3Cline x1='1' y1='13.5' x2='19' y2='13.5' stroke='%23111827' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+        background-size: 20px 16px !important;
     }
 
     /* Sidebar Layout - Full Height, Solid White & Flexbox Order */
@@ -190,13 +182,13 @@ CUSTOM_CSS = """
         background-color: #FFFFFF !important;
     }
 
-    /* Order 0: Sidebar Header containing collapse button */
+    /* Order 0: Sidebar Header containing 3-line hamburger button aligned top-left */
     [data-testid="stSidebarHeader"] {
         order: 0 !important;
         display: flex !important;
-        justify-content: flex-end !important;
+        justify-content: flex-start !important;
         align-items: center !important;
-        padding: 14px 18px 4px 18px !important;
+        padding: 14px 16px 6px 16px !important;
         margin: 0 !important;
         background-color: #FFFFFF !important;
     }
