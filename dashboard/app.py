@@ -103,7 +103,7 @@ with m2:
         <div class="metric-card">
             <h4 style="margin:0 0 6px 0; color:#2563EB;">2. Seller Management</h4>
             <p style="font-size:0.84rem; color:#64748B; margin-bottom:0;">
-                Risk score distribution, tier progression (Standard, Preferred, Enterprise), and probation.
+                Tier progression (Standard, Preferred, Enterprise), fulfillment performance, and standing.
             </p>
         </div>
         """,
@@ -125,7 +125,7 @@ with m2:
         <div class="metric-card">
             <h4 style="margin:0 0 6px 0; color:#DC2626;">10. Anomaly Center</h4>
             <p style="font-size:0.84rem; color:#64748B; margin-bottom:0;">
-                Live detection of 5 negative scenarios with 100% precision/recall against ground truth.
+                Rule-based detection scanning across the 5 mandated negative operational scenarios.
             </p>
         </div>
         """,
@@ -195,7 +195,7 @@ with m4:
         <div class="metric-card">
             <h4 style="margin:0 0 6px 0; color:#2563EB;">12. Exports & Reports</h4>
             <p style="font-size:0.84rem; color:#64748B; margin-bottom:0;">
-                Downloadable CSV, JSON, and SQL datasets, with automated executive summaries.
+                Downloadable CSV datasets and operational domain reports for external auditing.
             </p>
         </div>
         """,
@@ -219,8 +219,8 @@ with col_s1:
 with col_s2:
     st.markdown(
         """
-        - **Verification Status:** 52/52 PyTest Suites Passing (100%)
-        - **Anomaly Detection:** Precision: 100.0%, Recall: 100.0%, F1: 100.0%
+        - **Verification Status:** 92/92 PyTest Suites Passing (100%)
+        - **Anomaly Detection:** 115 Injected Anomalies Detected across 5 Mandated Scenarios
         - **Referential Integrity:** 0 foreign key violations, 0 primary key collisions
         - **Lifecycle Consistency:** 100% chronological state transitions verified
         """

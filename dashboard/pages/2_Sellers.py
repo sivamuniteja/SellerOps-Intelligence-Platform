@@ -18,14 +18,14 @@ apply_theme()
 db = get_database()
 
 render_page_header(
-    title="Seller Operations & Risk Management",
-    subtitle="Monitor 2,000 sellers across SLA performance tiers, risk scores, fulfillment compliance, and suspension history.",
+    title="Seller Operations & Compliance",
+    subtitle="Monitor 2,000 sellers across SLA performance tiers, fulfillment compliance, dispute rates, and account standing.",
     badge="2,000 Managed Sellers",
 )
 
 # 1. Tier & Standing KPIs
 tier_df = db.query_df("""
-    SELECT tier, COUNT(*) as count, ROUND(AVG(risk_score), 1) as avg_risk, ROUND(AVG(rating), 2) as avg_rating
+    SELECT tier, COUNT(*) as count, ROUND(AVG(rating), 2) as avg_rating
     FROM sellers
     GROUP BY tier;
 """)
@@ -34,25 +34,25 @@ tier_counts = {r["tier"]: r for r in tier_df.to_dict(orient="records")}
 t1, t2, t3, t4, t5 = st.columns(5)
 with t1:
     ent = tier_counts.get("ENTERPRISE", {})
-    render_metric_card("Enterprise", f"{ent.get('count', 0):,}", f"Avg Risk: {ent.get('avg_risk', 0.0)}")
+    render_metric_card("Enterprise", f"{ent.get('count', 0):,}", f"Avg Rating: {ent.get('avg_rating', 0.0):.2f} ⭐")
 with t2:
     pref = tier_counts.get("PREFERRED", {})
-    render_metric_card("Preferred", f"{pref.get('count', 0):,}", f"Avg Risk: {pref.get('avg_risk', 0.0)}")
+    render_metric_card("Preferred", f"{pref.get('count', 0):,}", f"Avg Rating: {pref.get('avg_rating', 0.0):.2f} ⭐")
 with t3:
     std = tier_counts.get("STANDARD", {})
-    render_metric_card("Standard", f"{std.get('count', 0):,}", f"Avg Risk: {std.get('avg_risk', 0.0)}")
+    render_metric_card("Standard", f"{std.get('count', 0):,}", f"Avg Rating: {std.get('avg_rating', 0.0):.2f} ⭐")
 with t4:
     prob = tier_counts.get("PROBATION", {})
-    render_metric_card("Probation", f"{prob.get('count', 0):,}", f"Avg Risk: {prob.get('avg_risk', 0.0)}", delta_color="warning")
+    render_metric_card("Probation", f"{prob.get('count', 0):,}", f"Avg Rating: {prob.get('avg_rating', 0.0):.2f} ⭐", delta_color="warning")
 with t5:
     susp = tier_counts.get("SUSPENDED", {})
-    render_metric_card("Suspended", f"{susp.get('count', 0):,}", f"Avg Risk: {susp.get('avg_risk', 0.0)}", delta_color="danger")
+    render_metric_card("Suspended", f"{susp.get('count', 0):,}", f"Avg Rating: {susp.get('avg_rating', 0.0):.2f} ⭐", delta_color="danger")
 
 st.markdown("---")
 
 # 2. Filter Controls
 st.markdown("#### Filter Seller Directory")
-f_col1, f_col2, f_col3, f_col4 = st.columns([1, 1, 1.5, 1.5])
+f_col1, f_col2, f_col3 = st.columns([1, 1, 2])
 with f_col1:
     all_tiers = ["ENTERPRISE", "PREFERRED", "STANDARD", "PROBATION", "SUSPENDED"]
     selected_tiers = st.multiselect("Seller Tier", all_tiers, default=all_tiers)
@@ -60,12 +60,10 @@ with f_col2:
     all_statuses = ["ACTIVE", "PROBATION", "SUSPENDED", "UNDER_REVIEW"]
     selected_statuses = st.multiselect("Seller Status", all_statuses, default=all_statuses)
 with f_col3:
-    risk_range = st.slider("Risk Score Range (0 - 100)", 0.0, 100.0, (0.0, 100.0), step=1.0)
-with f_col4:
     search_query = st.text_input("🔍 Search Seller ID or Name", placeholder="e.g. SELL-000001 or Hall Inc")
 
 # 3. Macro Visualizations
-col_hist, col_scatter = st.columns(2)
+col_tier, col_perf = st.columns(2)
 
 base_sellers = db.query_df("""
     SELECT 
@@ -73,7 +71,6 @@ base_sellers = db.query_df("""
         s.name,
         s.tier,
         s.status,
-        s.risk_score,
         s.rating,
         s.onboarding_date,
         COALESCE(l.listing_count, 0) as listing_count,
@@ -109,8 +106,6 @@ base_sellers = db.query_df("""
 filtered_sellers = base_sellers[
     (base_sellers["tier"].isin(selected_tiers))
     & (base_sellers["status"].isin(selected_statuses))
-    & (base_sellers["risk_score"] >= risk_range[0])
-    & (base_sellers["risk_score"] <= risk_range[1])
 ]
 
 if search_query.strip():
@@ -120,13 +115,15 @@ if search_query.strip():
         | filtered_sellers["name"].str.lower().str.contains(q)
     ]
 
-with col_hist:
-    st.subheader("Seller Risk Score Distribution (0 - 100)")
+with col_tier:
+    st.subheader("Seller Distribution by Tier")
     if not filtered_sellers.empty:
-        fig_hist = px.histogram(
-            filtered_sellers,
-            x="risk_score",
-            nbins=25,
+        tier_counts_df = filtered_sellers["tier"].value_counts().reset_index()
+        tier_counts_df.columns = ["tier", "count"]
+        fig_tier = px.bar(
+            tier_counts_df,
+            x="tier",
+            y="count",
             color="tier",
             color_discrete_map={
                 "ENTERPRISE": COLORS["primary"],
@@ -135,21 +132,21 @@ with col_hist:
                 "PROBATION": COLORS["warning"],
                 "SUSPENDED": COLORS["danger"],
             },
-            labels={"risk_score": "Risk Score", "count": "Seller Count"},
+            labels={"tier": "Seller Tier", "count": "Seller Count"},
         )
-        apply_plotly_white_layout(fig_hist)
-        st.plotly_chart(fig_hist, use_container_width=True)
+        apply_plotly_white_layout(fig_tier)
+        st.plotly_chart(fig_tier, use_container_width=True)
     else:
         render_empty_state("No Sellers Match Filters", "Adjust tier or status filters above.")
 
-with col_scatter:
-    st.subheader("Customer Rating vs Risk Score")
+with col_perf:
+    st.subheader("Fulfillment Compliance by Tier (%)")
     if not filtered_sellers.empty:
-        sample_size = min(500, len(filtered_sellers))
-        fig_scatter = px.scatter(
-            filtered_sellers.sample(sample_size, random_state=42),
-            x="risk_score",
-            y="rating",
+        tier_perf = filtered_sellers.groupby("tier")["fulfillment_pct"].mean().round(1).reset_index()
+        fig_perf = px.bar(
+            tier_perf,
+            x="tier",
+            y="fulfillment_pct",
             color="tier",
             color_discrete_map={
                 "ENTERPRISE": COLORS["primary"],
@@ -158,12 +155,12 @@ with col_scatter:
                 "PROBATION": COLORS["warning"],
                 "SUSPENDED": COLORS["danger"],
             },
-            labels={"risk_score": "Risk Score", "rating": "Avg Customer Rating (1-5)"},
+            labels={"tier": "Seller Tier", "fulfillment_pct": "Avg On-Time Fulfillment (%)"},
         )
-        apply_plotly_white_layout(fig_scatter)
-        st.plotly_chart(fig_scatter, use_container_width=True)
+        apply_plotly_white_layout(fig_perf)
+        st.plotly_chart(fig_perf, use_container_width=True)
     else:
-        render_empty_state("No Scatter Data", "Select at least one tier to view rating correlation.")
+        render_empty_state("No Performance Data", "Select at least one tier to view performance.")
 
 st.markdown("---")
 
@@ -175,7 +172,6 @@ if not filtered_sellers.empty:
         "name",
         "tier",
         "status",
-        "risk_score",
         "listing_count",
         "order_count",
         "fulfillment_pct",
@@ -185,7 +181,7 @@ if not filtered_sellers.empty:
         "payout_status",
     ]
     st.dataframe(
-        filtered_sellers.sort_values(by="risk_score", ascending=False)[display_cols].head(100),
+        filtered_sellers.sort_values(by="order_count", ascending=False)[display_cols].head(100),
         use_container_width=True,
     )
     csv_sellers = filtered_sellers[display_cols].to_csv(index=False).encode("utf-8")
@@ -206,7 +202,7 @@ st.subheader("🔍 Seller Deep-Dive & Historical Audit")
 if not filtered_sellers.empty:
     seller_options = [
         f"{r['seller_id']} — {r['name']} ({r['status']}, {r['tier']})"
-        for r in filtered_sellers.sort_values(by="risk_score", ascending=False).head(50).to_dict(orient="records")
+        for r in filtered_sellers.sort_values(by="order_count", ascending=False).head(50).to_dict(orient="records")
     ]
     selected_seller_str = st.selectbox("Select Seller for Full Operational Audit", seller_options)
     selected_seller_id = selected_seller_str.split(" — ")[0]
@@ -224,7 +220,7 @@ if not filtered_sellers.empty:
             delta_color="danger" if seller_rec["status"] == "SUSPENDED" else ("warning" if seller_rec["status"] == "PROBATION" else "success")
         )
     with c_s3:
-        render_metric_card("Risk Score", f"{seller_rec['risk_score']:.1f} / 100", f"Rating: {seller_rec['rating']:.2f} ⭐")
+        render_metric_card("Customer Rating", f"{seller_rec['rating']:.2f} ⭐", f"Tier: {seller_rec['tier']}")
     with c_s4:
         account_standing = (
             "Account Suspended 🚨" if seller_rec["status"] == "SUSPENDED"

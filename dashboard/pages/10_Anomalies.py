@@ -22,7 +22,7 @@ db = get_database()
 render_page_header(
     title="Operational Exception & Anomaly Detection Center",
     subtitle="Automated detection engine scanning database records for the 5 mandated operational negative scenarios.",
-    badge="100% Precision & Recall",
+    badge="Rule-Based Engine",
 )
 
 # 1. Run live detector
@@ -33,18 +33,18 @@ anomalies = report["anomalies"]
 benchmark = report["ground_truth_benchmark"]
 all_detected = report["all_detected_list"]
 
-# Top Metrics - Evaluated dynamically against ground truth
+# Top Metrics - 5 Mandated Scenarios
 c1, c2, c3, c4, c5 = st.columns(5)
 with c1:
     render_metric_card("Total Anomalies", f"{summary['total_anomalies_detected']}", "5 Mandated Scenarios", delta_color="danger")
 with c2:
-    render_metric_card("Detection Precision", f"{benchmark['precision'] * 100:.1f}%", f"{benchmark['true_positives']} TP / {benchmark['false_positives']} FP", delta_color="success")
+    render_metric_card("Premature Payouts", f"{summary['anomaly_1_count']}", "Paid Before Delivery/Hold (Ano 1)", delta_color="danger")
 with c3:
-    render_metric_card("Detection Recall", f"{benchmark['recall'] * 100:.1f}%", f"{benchmark['false_negatives']} FN (Zero Missed)", delta_color="success")
+    render_metric_card("Double Commissions", f"{summary['anomaly_2_count']}", "Duplicate Rule Take (Ano 2)", delta_color="warning")
 with c4:
-    render_metric_card("F1-Score Benchmark", f"{benchmark['f1_score']:.4f}", "Harmonic Mean (Dynamic)", delta_color="success")
+    render_metric_card("Suspended Listings", f"{summary['anomaly_3_count']}", "Active Under Suspended (Ano 3)", delta_color="danger")
 with c5:
-    render_metric_card("False Positives", f"{benchmark['false_positives']}", "Zero False Discoveries", delta_color="success")
+    render_metric_card("Reconciliation Variances", f"{summary['anomaly_4_count'] + summary['anomaly_5_count']}", "Unclawbacked & Discrepancies", delta_color="warning")
 
 st.markdown("---")
 
@@ -135,23 +135,13 @@ if all_detected:
         ]
         st.dataframe(filtered_df[display_cols], use_container_width=True)
 
-        d_col1, d_col2 = st.columns(2)
-        with d_col1:
-            csv_anomalies = filtered_df[display_cols].to_csv(index=False).encode("utf-8")
-            st.download_button(
-                label="⬇️ Export Anomalies Registry (CSV)",
-                data=csv_anomalies,
-                file_name="detected_anomalies_registry.csv",
-                mime="text/csv",
-            )
-        with d_col2:
-            json_anomalies = json.dumps(all_detected, indent=2).encode("utf-8")
-            st.download_button(
-                label="⬇️ Export Complete Anomaly Report (JSON)",
-                data=json_anomalies,
-                file_name="detected_anomalies_full.json",
-                mime="application/json",
-            )
+        csv_anomalies = filtered_df[display_cols].to_csv(index=False).encode("utf-8")
+        st.download_button(
+            label="⬇️ Export Anomalies Registry (CSV)",
+            data=csv_anomalies,
+            file_name="detected_anomalies_registry.csv",
+            mime="text/csv",
+        )
     else:
         render_empty_state("No Anomalies Match Filters", "Adjust your scenario or severity filters above.")
 else:
@@ -198,8 +188,5 @@ if all_detected:
         """,
         unsafe_allow_html=True,
     )
-
-    st.markdown("#### Raw Technical Details Payload")
-    st.json(anomaly_item.get("details", {}))
 else:
     render_empty_state("No Anomaly Selected", "Zero anomalies found.")
